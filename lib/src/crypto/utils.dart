@@ -9,12 +9,20 @@ BigInt listToBigInt(List<int> bytes) {
 }
 
 List<int> hexToList(String hexString) {
-  String hex = hexString.startsWith('0x') ? hexString.substring(2) : hexString;
-  return bigIntToList(BigInt.parse(hex, radix: 16));
+  return bigIntToList(BigInt.parse(cleanHexPrefix(hexString), radix: 16));
 }
 
 String listToHex(List<int> bytes) {
   return listToBigInt(bytes).toRadixString(16);
+}
+
+String listToWholeHex(List<int> bytes) {
+  String hex = listToBigInt(bytes).toRadixString(16);
+  return hex.length % 2 == 0 ? hex : '0${hex}';
+}
+
+String cleanHexPrefix(String hex) {
+  return hex.startsWith('0x') ? hex.substring(2) : hex;
 }
 
 List<int> toBytesPadded(BigInt value, int length) {

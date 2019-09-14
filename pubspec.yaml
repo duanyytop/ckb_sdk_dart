@@ -10,6 +10,7 @@ environment:
 dependencies:
   dio: ^2.0.15
   pointycastle: ^1.0.1
+  bip_bech32: ^0.1.3
 
 dev_dependencies:
   pedantic: ^1.7.0

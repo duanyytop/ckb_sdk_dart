@@ -20,8 +20,12 @@ class Blake2b {
     blake2bDigest.update(input, 0, input.length);
   }
 
-  updateWithString(String hex) {
-    blake2bDigest.update(utf8.encode(hex), 0, utf8.encode(hex).length);
+  updateWithUtf8(String utf8String) {
+    update(utf8.encode(utf8String));
+  }
+
+  updateWithHex(String hex) {
+    update(hexToList(hex));
   }
 
   Uint8List doFinal() {
