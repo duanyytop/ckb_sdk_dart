@@ -24,8 +24,8 @@ import './rpc.dart';
 class Api {
   Rpc _rpc;
 
-  Api(String nodeUrl, {openLogger = false}) {
-    _rpc = Rpc(nodeUrl, openLogger: openLogger);
+  Api(String nodeUrl, {hasLogger = false}) {
+    _rpc = Rpc(nodeUrl, hasLogger: hasLogger);
   }
 
   // Chain RPC

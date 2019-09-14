@@ -10,10 +10,10 @@ var random = Random.secure();
 
 class Rpc {
   String nodeUrl;
-  bool openLogger;
+  bool hasLogger;
 
-  Rpc(this.nodeUrl, {this.openLogger = false}) {
-    if (openLogger) {
+  Rpc(this.nodeUrl, {this.hasLogger = false}) {
+    if (hasLogger) {
       dio.interceptors.add(LogInterceptor(responseBody: false));
     }
   }
