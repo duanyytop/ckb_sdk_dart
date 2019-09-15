@@ -1,3 +1,8 @@
+import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
+import 'package:ckb_sdk_dart/src/crypto/sign.dart';
+import 'package:ckb_sdk_dart/src/type/utils/serializer.dart';
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
+
 import 'cell_dep.dart';
 import 'cell_input.dart';
 import 'cell_output.dart';
@@ -48,11 +53,49 @@ class Transaction {
       'version': version,
       'hash': hash,
       'cell_deps': cellDeps,
-      'version': version,
-      'header_deps': hash,
+      'header_deps': headerDeps,
+      'inputs': inputs,
       'outputs': outputs,
       'outputs_data': outputsData,
       'witnesses': witnesses
     };
+  }
+
+  String computeHash() {
+    Blake2b blake2b = Blake2b();
+    blake2b.update(Serializer.serializeTransaction(this).toBytes());
+    return blake2b.doFinalString();
+  }
+
+  Transaction sign(String privateKey) {
+    if (witnesses.length < inputs.length) {
+      throw ("Invalid number of witnesses");
+    }
+    String txHash = computeHash();
+    List<Witness> signedWitnesses = [];
+    for (Witness witness in witnesses) {
+      List<String> oldData = witness.data;
+      Blake2b blake2b = Blake2b();
+      blake2b.update(hexToList(txHash));
+      for (String datum in witness.data) {
+        blake2b.update(hexToList(datum));
+      }
+      String message = blake2b.doFinalString();
+
+      String signature = listToHex(
+          Sign.signMessage(hexToList(message), privateKey).getSignature());
+      witness.data = [signature];
+      witness.data.addAll(oldData);
+      signedWitnesses.add(witness);
+    }
+    return Transaction(
+        version: version,
+        hash: txHash,
+        cellDeps: cellDeps,
+        headerDeps: headerDeps,
+        inputs: inputs,
+        outputs: outputs,
+        outputsData: outputsData,
+        witnesses: signedWitnesses);
   }
 }

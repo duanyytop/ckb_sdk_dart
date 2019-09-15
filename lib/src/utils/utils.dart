@@ -25,6 +25,10 @@ String cleanHexPrefix(String hex) {
   return hex.startsWith('0x') ? hex.substring(2) : hex;
 }
 
+String appendHexPrefix(String hex) {
+  return hex.startsWith('0x') ? hex : '0x$hex';
+}
+
 List<int> toBytesPadded(BigInt value, int length) {
   List<int> result = [];
   for (int i = 0; i < length; i++) {

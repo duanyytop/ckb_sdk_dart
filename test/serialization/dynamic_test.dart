@@ -26,7 +26,7 @@ void main() {
         ..add(Table(types))
         ..add(Empty()));
 
-      _dynamic = Dynamic(<DynType>[]..add(table));
+      _dynamic = Dynamic(<SerializeType>[table]);
     });
 
     test('Dynamic', () {

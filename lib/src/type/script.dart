@@ -1,3 +1,7 @@
+import 'package:ckb_sdk_dart/ckb_crypto.dart';
+import '../type/utils/serializer.dart';
+import '../utils/utils.dart';
+
 class Script {
   static const String data = 'data';
   static const String type = 'type';
@@ -23,5 +27,11 @@ class Script {
       'args': args,
       'hash_type': hashType
     };
+  }
+
+  String computeHash() {
+    Blake2b blake2b = Blake2b();
+    blake2b.update(Serializer.serializeScript(this).toBytes());
+    return blake2b.doFinalString();
   }
 }

@@ -1,8 +1,8 @@
 import 'package:ckb_sdk_dart/src/type/out_point.dart';
 
 class CellDep {
-  final String code = 'code';
-  final String depGroup = 'dep_group';
+  static final String code = 'code';
+  static final String depGroup = 'dep_group';
 
   OutPoint outPoint;
   String depType;

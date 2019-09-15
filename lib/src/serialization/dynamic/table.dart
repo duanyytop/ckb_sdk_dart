@@ -2,9 +2,8 @@ import 'dart:typed_data';
 
 import '../fixed/uint32.dart';
 import '../base/serialize_type.dart';
-import '../base/dyn_type.dart';
 
-class Table extends DynType<List<SerializeType>> {
+class Table extends SerializeType<List<SerializeType>> {
   List<SerializeType> _value;
 
   Table(this._value);
