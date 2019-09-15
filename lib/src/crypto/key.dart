@@ -1,5 +1,6 @@
-import './utils.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
+
+import '../utils/utils.dart';
 
 String publicKeyFromPrivate(String privateKey, {bool compress = true}) {
   BigInt bigPrivateKey = BigInt.parse(privateKey, radix: 16);

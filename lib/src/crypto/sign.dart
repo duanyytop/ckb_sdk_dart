@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
-import './ecdsa_signature.dart';
-import './key.dart';
-import './utils.dart';
-
 import 'package:pointycastle/export.dart';
 import 'package:pointycastle/impl.dart';
+
+import './ecdsa_signature.dart';
+import './key.dart';
+import '../utils/utils.dart';
 
 final ECDomainParameters params = ECCurve_secp256k1();
 final BigInt _halfCurveOrder = params.n ~/ BigInt.two;

@@ -1,5 +1,5 @@
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
-import 'package:ckb_sdk_dart/src/crypto/utils.dart';
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {

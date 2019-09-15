@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:bip_bech32/bip_bech32.dart';
 
 import '../crypto/blake2b.dart';
-import '../crypto/utils.dart';
+import '../utils/utils.dart';
 
 final String type = "01";
 final String codeHashIndex = "00";

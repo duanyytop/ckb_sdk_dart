@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:pointycastle/digests/blake2b.dart';
 
-import './utils.dart';
+import '../utils/utils.dart';
 
 class Blake2b {
   final String ckbHashPersonalization = "ckb-default-hash";

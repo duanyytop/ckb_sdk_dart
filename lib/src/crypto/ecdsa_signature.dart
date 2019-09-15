@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:ckb_sdk_dart/src/crypto/utils.dart';
+import '../utils/utils.dart';
 
 class EcdaSignature {
   final Uint8List r;
