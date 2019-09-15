@@ -1,4 +1,4 @@
-import 'package:ckb_sdk_dart/src/addrss/address_generator.dart';
+import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:test/test.dart';
 
 void main() {
