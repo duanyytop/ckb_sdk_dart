@@ -15,7 +15,6 @@ void main() {
       String codeHash = appendHexPrefix(blake2b.doFinalString());
       Script script =
           Script(codeHash: codeHash, args: [], hashType: Script.data);
-      print(script.toJson());
       Api api = Api('http://localhost:8114');
       String scriptHash = await api.computeScriptHash(script);
       expect(script.computeHash(), scriptHash);

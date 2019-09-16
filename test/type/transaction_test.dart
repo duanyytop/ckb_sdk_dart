@@ -9,7 +9,7 @@ void main() {
     test('Transaction hash', () async {
       Api api = Api('http://localhost:8114');
       Block block = await api.getBlockByNumber("0x0");
-      Transaction transaction = block.transactions[0];
+      Transaction transaction = block.transactions[1];
       String txHash = await api.computeTransactionHash(transaction);
       expect(transaction.computeHash(), txHash);
     });
@@ -67,13 +67,13 @@ void main() {
       Transaction signedTx = tx.sign(privateKey);
 
       List<String> expectedData = [
-        "0x68a57373f4e98aecfb9501ec1cc4a78c048361332e4b6706bdc1469d30bd52ea42feca657dd1de1eff384e6ed24a6910b011d49d855bd1ed209f5ce77d8116ac01",
+        "0xa648c11759b9f73734e0051a3c2dc1624f7532d5a03761ea7d1c92daf227ab5f56220d4f4489194d5ecc94bf0bf451b93590ccc0c82f1571b17427574eac773400",
         "0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb"
       ];
       expect(signedTx.witnesses[0].data, expectedData);
 
       expectedData = [
-        "0x3b13c362f254e7becb0e731e4756e742bfddbf2f5d7c16cd609ba127d2b7e07f1d588c3a7132fc20c478e2de14f6370fbb9e4402d240e4b32c8d671177e1f31101"
+        "0x78f4c847f0607718fa79a42ed921d565a2939067fdc1bb61f08fcaab4618fbdd790744aa9481588e48a0190f02c4c69c70be6eb295cf3ff46a53f8938ad9e73e01"
       ];
       expect(signedTx.witnesses[1].data, expectedData);
     });
