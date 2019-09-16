@@ -8,12 +8,13 @@ class CellInput {
 
   factory CellInput.fromJson(Map<String, dynamic> json) {
     return CellInput(
-        previousOutput: json['previous_ouput'], since: json['since']);
+        previousOutput: OutPoint.fromJson(json['previous_output']),
+        since: json['since']);
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'previous_ouput': previousOutput,
+      'previous_output': previousOutput,
       'since': since,
     };
   }

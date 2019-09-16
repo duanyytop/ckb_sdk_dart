@@ -64,7 +64,7 @@ class Transaction {
   String computeHash() {
     Blake2b blake2b = Blake2b();
     blake2b.update(Serializer.serializeTransaction(this).toBytes());
-    return blake2b.doFinalString();
+    return appendHexPrefix(blake2b.doFinalString());
   }
 
   Transaction sign(String privateKey) {
@@ -82,12 +82,13 @@ class Transaction {
       }
       String message = blake2b.doFinalString();
 
-      String signature = listToHex(
-          Sign.signMessage(hexToList(message), privateKey).getSignature());
+      String signature = appendHexPrefix(listToHex(
+          Sign.signMessage(hexToList(message), privateKey).getSignature()));
       witness.data = [signature];
       witness.data.addAll(oldData);
       signedWitnesses.add(witness);
     }
+
     return Transaction(
         version: version,
         hash: txHash,

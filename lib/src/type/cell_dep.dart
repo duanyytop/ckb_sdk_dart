@@ -10,7 +10,9 @@ class CellDep {
   CellDep({this.outPoint, this.depType});
 
   factory CellDep.fromJson(Map<String, dynamic> json) {
-    return CellDep(outPoint: json['out_point'], depType: json['dep_type']);
+    return CellDep(
+        outPoint: OutPoint.fromJson(json['out_point']),
+        depType: json['dep_type']);
   }
 
   Map<String, dynamic> toJson() {

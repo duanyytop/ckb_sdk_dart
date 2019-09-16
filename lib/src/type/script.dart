@@ -1,6 +1,6 @@
 import 'package:ckb_sdk_dart/ckb_crypto.dart';
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import '../type/utils/serializer.dart';
-import '../utils/utils.dart';
 
 class Script {
   static const String data = 'data';
@@ -32,6 +32,6 @@ class Script {
   String computeHash() {
     Blake2b blake2b = Blake2b();
     blake2b.update(Serializer.serializeScript(this).toBytes());
-    return blake2b.doFinalString();
+    return appendHexPrefix(blake2b.doFinalString());
   }
 }

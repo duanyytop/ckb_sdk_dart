@@ -1,7 +1,9 @@
 import 'dart:core';
 
 import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/src/rpc/convert.dart';
 import 'package:ckb_sdk_dart/src/serialization/base/fixed_type.dart';
+import 'package:ckb_sdk_dart/src/serialization/base/serialize_type.dart';
 import 'package:ckb_sdk_dart/src/serialization/dynamic/bytes.dart';
 import 'package:ckb_sdk_dart/src/serialization/dynamic/dynamic.dart';
 import 'package:ckb_sdk_dart/src/serialization/dynamic/table.dart';
@@ -21,18 +23,17 @@ class Serializer {
   }
 
   static Table serializeScript(Script script) {
-    List<Bytes> args = script.args.map((arg) => Bytes.fromHex(arg)).toList();
     return Table([
       Byte32.fromHex(script.codeHash),
       Byte1.fromHex(Script.data == script.hashType ? "00" : "01"),
-      Dynamic(args)
+      Dynamic(script.args.map((arg) => Bytes.fromHex(arg)).toList())
     ]);
   }
 
   static Struct serializeCellInput(CellInput cellInput) {
     Uint64 sinceUInt64 = Uint64.fromHex(cellInput.since);
     Struct outPointStruct = serializeOutPoint(cellInput.previousOutput);
-    return Struct(<FixedType>[sinceUInt64, outPointStruct]);
+    return Struct(<SerializeType>[sinceUInt64, outPointStruct]);
   }
 
   static Table serializeCellOutput(CellOutput cellOutput) {
@@ -61,36 +62,28 @@ class Serializer {
   }
 
   static Dynamic<Table> serializeCellOutputs(List<CellOutput> cellOutputs) {
-    return Dynamic(
-        cellOutputs.map((cellOutput) => serializeCellOutput(cellOutput)));
+    return Dynamic(cellOutputs
+        .map((cellOutput) => serializeCellOutput(cellOutput))
+        .toList());
   }
 
   static Dynamic<Bytes> serializeBytes(List<String> bytes) {
-    return Dynamic(bytes.map((byte) => Bytes.fromHex(byte)));
+    return Dynamic(bytes.map((byte) => Bytes.fromHex(byte)).toList());
   }
 
   static Fixed<Byte32> serializeByte32(List<String> bytes) {
-    return Fixed(bytes.map((byte) => Byte32.fromHex(byte)));
+    return Fixed(bytes.map((byte) => Byte32.fromHex(byte)).toList());
   }
 
   static Table serializeTransaction(Transaction transaction) {
-    Uint32 versionUInt32 = Uint32.fromHex(transaction.version);
-    Fixed<Struct> cellDepFixed =
-        Serializer.serializeCellDeps(transaction.cellDeps);
-    Fixed<Byte32> headerDepFixed =
-        Serializer.serializeByte32(transaction.headerDeps);
-    Fixed<Struct> inputsFixed =
-        Serializer.serializeCellInputs(transaction.inputs);
-    Dynamic<Table> outputsVec =
-        Serializer.serializeCellOutputs(transaction.outputs);
-    Dynamic<Bytes> dataVec = Serializer.serializeBytes(transaction.outputsData);
+    Transaction tx = Convert.parseTransaction(transaction);
     return Table([
-      versionUInt32,
-      cellDepFixed,
-      headerDepFixed,
-      inputsFixed,
-      outputsVec,
-      dataVec
+      Uint32.fromHex(tx.version),
+      Serializer.serializeCellDeps(tx.cellDeps),
+      Serializer.serializeByte32(tx.headerDeps),
+      Serializer.serializeCellInputs(tx.inputs),
+      Serializer.serializeCellOutputs(tx.outputs),
+      Serializer.serializeBytes(tx.outputsData)
     ]);
   }
 }
