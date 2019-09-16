@@ -7,6 +7,44 @@ void main() {
     setUp(() {});
 
     test('Byte32', () {
+      Byte32 byte32 = Byte32.fromHex('0x');
+      expect(byte32.toBytes(), [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]);
+    });
+
+    test('Byte32', () {
       Byte32 byte32 = Byte32.fromHex(
           '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88');
       expect(
