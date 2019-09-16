@@ -14,7 +14,8 @@ class Sign {
   static EcdaSignature signMessage(Uint8List messageHash, String privateKey) {
     var digest = SHA256Digest();
     var signer = ECDSASigner(null, HMac(digest, 64));
-    var key = ECPrivateKey(BigInt.parse(privateKey, radix: 16), params);
+    var key = ECPrivateKey(
+        BigInt.parse(cleanHexPrefix(privateKey), radix: 16), params);
 
     signer.init(true, PrivateKeyParameter(key));
     ECSignature sig = signer.generateSignature(messageHash);
