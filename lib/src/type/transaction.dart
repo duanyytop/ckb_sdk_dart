@@ -1,6 +1,6 @@
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
-import 'package:ckb_sdk_dart/src/type/utils/serializer.dart';
+import 'package:ckb_sdk_dart/src/type/serializer/serializer.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import 'cell_dep.dart';

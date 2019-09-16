@@ -1,19 +1,20 @@
 import 'dart:core';
 
 import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/rpc/convert.dart';
-import 'package:ckb_sdk_dart/src/serialization/base/fixed_type.dart';
-import 'package:ckb_sdk_dart/src/serialization/base/serialize_type.dart';
-import 'package:ckb_sdk_dart/src/serialization/dynamic/bytes.dart';
-import 'package:ckb_sdk_dart/src/serialization/dynamic/dynamic.dart';
-import 'package:ckb_sdk_dart/src/serialization/dynamic/table.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/byte1.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/byte32.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/empty.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/fixed.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/struct.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/uint32.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/uint64.dart';
+
+import '../../rpc/convert.dart';
+import '../../serialization/base/fixed_type.dart';
+import '../../serialization/base/serialize_type.dart';
+import '../../serialization/dynamic/bytes.dart';
+import '../../serialization/dynamic/dynamic.dart';
+import '../../serialization/dynamic/table.dart';
+import '../../serialization/fixed/byte1.dart';
+import '../../serialization/fixed/byte32.dart';
+import '../../serialization/fixed/empty.dart';
+import '../../serialization/fixed/fixed.dart';
+import '../../serialization/fixed/struct.dart';
+import '../../serialization/fixed/uint32.dart';
+import '../../serialization/fixed/uint64.dart';
 
 class Serializer {
   static Struct serializeOutPoint(OutPoint outPoint) {

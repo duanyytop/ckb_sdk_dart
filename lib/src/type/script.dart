@@ -1,6 +1,6 @@
 import 'package:ckb_sdk_dart/ckb_crypto.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
-import '../type/utils/serializer.dart';
+import '../type/serializer/serializer.dart';
 
 class Script {
   static const String data = 'data';
