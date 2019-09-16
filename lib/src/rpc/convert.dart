@@ -10,17 +10,24 @@ class Convert {
   }
 
   static Transaction parseTransaction(Transaction transaction) {
-    List<CellDep> cellDeps = transaction.cellDeps.map((cellDep) => CellDep(
-        outPoint: parseOutPoint(cellDep.outPoint), depType: cellDep.depType));
+    List<CellDep> cellDeps = transaction.cellDeps
+        .map((cellDep) => CellDep(
+            outPoint: parseOutPoint(cellDep.outPoint),
+            depType: cellDep.depType))
+        .toList();
 
-    List<CellInput> inputs = transaction.inputs.map((input) => CellInput(
-        previousOutput: parseOutPoint(input.previousOutput),
-        since: toHexString(input.since)));
+    List<CellInput> inputs = transaction.inputs
+        .map((input) => CellInput(
+            previousOutput: parseOutPoint(input.previousOutput),
+            since: toHexString(input.since)))
+        .toList();
 
-    List<CellOutput> outputs = transaction.outputs.map((output) => CellOutput(
-        capacity: toHexString(output.capacity),
-        lock: output.lock,
-        type: output.type));
+    List<CellOutput> outputs = transaction.outputs
+        .map((output) => CellOutput(
+            capacity: toHexString(output.capacity),
+            lock: output.lock,
+            type: output.type))
+        .toList();
 
     return Transaction(
         version: toHexString(transaction.version),
