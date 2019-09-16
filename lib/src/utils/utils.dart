@@ -1,22 +1,30 @@
+import 'dart:typed_data';
+
 import 'package:pointycastle/src/utils.dart' as utils;
 
-List<int> bigIntToList(BigInt value) {
+Uint8List bigIntToList(BigInt value) {
   return utils.encodeBigInt(value);
 }
 
-BigInt listToBigInt(List<int> bytes) {
+BigInt listToBigInt(Uint8List bytes) {
   return utils.decodeBigInt(bytes);
 }
 
-List<int> hexToList(String hexString) {
-  return bigIntToList(BigInt.parse(cleanHexPrefix(hexString), radix: 16));
+Uint8List hexToList(String hexString) {
+  try {
+    BigInt big = BigInt.parse(cleanHexPrefix(hexString), radix: 16);
+    if (big.toInt() == 0) return Uint8List.fromList([0]);
+    return bigIntToList(big);
+  } catch (error) {
+    return Uint8List.fromList([]);
+  }
 }
 
-String listToHex(List<int> bytes) {
+String listToHex(Uint8List bytes) {
   return listToBigInt(bytes).toRadixString(16);
 }
 
-String listToWholeHex(List<int> bytes) {
+String listToWholeHex(Uint8List bytes) {
   String hex = listToBigInt(bytes).toRadixString(16);
   return hex.length % 2 == 0 ? hex : '0${hex}';
 }
@@ -27,6 +35,15 @@ String cleanHexPrefix(String hex) {
 
 String appendHexPrefix(String hex) {
   return hex.startsWith('0x') ? hex : '0x$hex';
+}
+
+String toHexString(String value) {
+  if (value.startsWith('0x')) return value;
+  try {
+    return BigInt.parse(value).toRadixString(16);
+  } catch (error) {
+    throw ('Input value format error, please input integer or hex string');
+  }
 }
 
 List<int> toBytesPadded(BigInt value, int length) {
