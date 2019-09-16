@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
+
 import '../base/fixed_type.dart';
 
 class Uint64 extends FixedType<BigInt> {
@@ -7,7 +9,13 @@ class Uint64 extends FixedType<BigInt> {
 
   Uint64(this._value);
 
-  factory Uint64.fromHex(String hex) => Uint64(BigInt.parse(hex, radix: 16));
+  factory Uint64.fromHex(String hex) {
+    try {
+      return Uint64(BigInt.parse(cleanHexPrefix(hex), radix: 16));
+    } catch (error) {
+      return Uint64(BigInt.from(0));
+    }
+  }
 
   @override
   int getLength() {

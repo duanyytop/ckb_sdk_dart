@@ -11,9 +11,11 @@ class Struct extends FixedType<List<SerializeType>> {
 
   @override
   int getLength() {
-    return _value
-        .map((type) => type.getLength())
-        .reduce((value, element) => value + element);
+    int length = 0;
+    for (SerializeType type in _value) {
+      length += type.getLength();
+    }
+    return length;
   }
 
   @override

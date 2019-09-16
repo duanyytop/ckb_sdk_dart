@@ -10,10 +10,11 @@ class Dynamic<T extends SerializeType> implements SerializeType<List<T>> {
 
   @override
   int getLength() {
-    return (1 + _value.length) * Uint32.byteSize +
-        _value
-            .map((type) => type.getLength())
-            .reduce((value, element) => value + element);
+    int length = (1 + _value.length) * Uint32.byteSize;
+    for (SerializeType type in _value) {
+      length += type.getLength();
+    }
+    return length;
   }
 
   @override
@@ -25,19 +26,15 @@ class Dynamic<T extends SerializeType> implements SerializeType<List<T>> {
   Uint8List toBytes() {
     List<int> dest = <int>[]..addAll(Uint32(getLength()).toBytes());
 
-    int offset = Uint32.byteSize;
     int typeOffset = Uint32.byteSize * (1 + _value.length);
 
     for (var type in _value) {
-      dest.insertAll(offset, Uint32(typeOffset).toBytes());
-      offset += Uint32.byteSize;
+      dest.addAll(Uint32(typeOffset).toBytes());
       typeOffset += type.getLength();
     }
 
-    typeOffset = Uint32.byteSize * (1 + _value.length);
     for (var type in _value) {
-      dest.insertAll(typeOffset, type.toBytes());
-      typeOffset += type.getLength();
+      dest.addAll(type.toBytes());
     }
 
     return Uint8List.fromList(dest);

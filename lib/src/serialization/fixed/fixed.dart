@@ -11,10 +11,11 @@ class Fixed<T extends FixedType> implements SerializeType<List<T>> {
 
   @override
   int getLength() {
-    return Uint32.byteSize +
-        _value
-            .map((type) => type.getLength())
-            .reduce((value, element) => value + element);
+    int length = Uint32.byteSize;
+    for (SerializeType type in _value) {
+      length += type.getLength();
+    }
+    return length;
   }
 
   @override
@@ -24,11 +25,9 @@ class Fixed<T extends FixedType> implements SerializeType<List<T>> {
 
   @override
   Uint8List toBytes() {
-    List<int> dest = <int>[]..addAll(Uint32(getLength()).toBytes());
-    int offset = Uint32.byteSize;
+    List<int> dest = <int>[]..addAll(Uint32(_value.length).toBytes());
     for (var type in _value) {
-      dest.insertAll(offset, type.toBytes());
-      offset += type.getLength();
+      dest.addAll(type.toBytes());
     }
     return Uint8List.fromList(dest);
   }

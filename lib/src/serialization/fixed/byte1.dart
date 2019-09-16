@@ -8,7 +8,9 @@ class Byte1 extends FixedType<Uint8List> {
 
   Byte1(this._value);
 
-  factory Byte1.fromHex(String hex) => Byte1(hexToList(hex));
+  factory Byte1.fromHex(String hex) {
+    return Byte1(hexToList(hex));
+  }
 
   @override
   int getLength() {
