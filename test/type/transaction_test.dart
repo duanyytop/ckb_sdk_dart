@@ -12,7 +12,7 @@ void main() {
       Transaction transaction = block.transactions[1];
       String txHash = await api.computeTransactionHash(transaction);
       expect(transaction.computeHash(), txHash);
-    });
+    }, skip: 'Skip rpc test');
 
     test('Transaction signature', () async {
       List<CellInput> cellInputs = [
@@ -78,4 +78,10 @@ void main() {
       expect(signedTx.witnesses[1].data, expectedData);
     });
   });
+
+  group('A group tests of Transaction', () {
+    setUp(() {});
+
+    
+  }
 }

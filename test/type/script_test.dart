@@ -4,6 +4,7 @@ import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 
+@Skip('Skip rpc test')
 void main() {
   group('A group tests of Script', () {
     setUp(() {});
