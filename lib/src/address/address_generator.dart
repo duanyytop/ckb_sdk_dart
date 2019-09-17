@@ -1,28 +1,38 @@
 import 'dart:typed_data';
 
 import 'package:bip_bech32/bip_bech32.dart';
+import 'package:ckb_sdk_dart/src/address/address_params.dart';
+import 'package:ckb_sdk_dart/src/crypto/ripemd160.dart';
+import 'package:ckb_sdk_dart/src/crypto/sha256.dart';
 
 import '../crypto/blake2b.dart';
 import '../utils/utils.dart';
 
-final String type = "01";
-final String codeHashIndex = "00";
-
 class AddressGenerator {
   Network network;
+  FormatType formatType;
+  CodeHashIndex codeHashIndex;
 
-  AddressGenerator({this.network = Network.Mainnet});
+  AddressGenerator(
+      {this.network = Network.mainnet,
+      this.formatType = FormatType.short,
+      this.codeHashIndex = CodeHashIndex.blake160});
 
   String addressFromPublicKey(String publicKey) {
+    if (codeHashIndex == CodeHashIndex.ripemd160) {
+      return address(Ripemd160.hash(Sha256.hash(publicKey)));
+    }
     return address(Blake2b.blake160(publicKey));
   }
 
   String address(String arg) {
     // Payload: type(01) | code hash index(00, P2PH) | arg (pubkey blake160)
-    String payload = type + codeHashIndex + cleanHexPrefix(arg);
+    String payload = AddressParams.formatType(formatType) +
+        AddressParams.codeHashIndex(codeHashIndex) +
+        cleanHexPrefix(arg);
     Uint8List data = hexToList(payload);
     Bech32Codec bech32codec = Bech32Codec();
-    String prefix = network == Network.Mainnet ? 'ckb' : 'ckt';
+    String prefix = AddressParams.network(network);
     return bech32codec.encode(Bech32(prefix, _convertBits(data, 8, 5, true)));
   }
 
@@ -36,8 +46,11 @@ class AddressGenerator {
   String blake160FromAddress(String address) {
     Bech32 bech32 = parse(address);
     String payload = listToWholeHex(bech32.data);
-    return payload.startsWith(type)
-        ? payload.replaceAll(type + codeHashIndex, "")
+    return payload.startsWith(AddressParams.formatType(formatType))
+        ? payload.replaceAll(
+            AddressParams.formatType(formatType) +
+                AddressParams.codeHashIndex(codeHashIndex),
+            "")
         : null;
   }
 
@@ -68,5 +81,3 @@ class AddressGenerator {
     return Uint8List.fromList(ret);
   }
 }
-
-enum Network { Mainnet, Testnet }
