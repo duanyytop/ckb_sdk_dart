@@ -15,8 +15,8 @@ class Sha256 {
     _sha256digest.update(input, 0, input.length);
   }
 
-  updateWithUtf8(String utf8String) {
-    update(utf8.encode(utf8String));
+  updateString(String utf8String) {
+    update(utf8.encode(cleanHexPrefix(utf8String)));
   }
 
   Uint8List doFinal() {
@@ -26,4 +26,10 @@ class Sha256 {
   }
 
   String doFinalString() => listToHex(doFinal());
+
+  static String hash(String input) {
+    Sha256 sha256 = Sha256();
+    sha256.updateString(input);
+    return sha256.doFinalString();
+  }
 }

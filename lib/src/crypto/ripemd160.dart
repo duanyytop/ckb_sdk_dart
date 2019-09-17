@@ -15,8 +15,8 @@ class Ripemd160 {
     _ripemd160digest.update(input, 0, input.length);
   }
 
-  updateWithUtf8(String utf8String) {
-    update(utf8.encode(utf8String));
+  updateString(String utf8String) {
+    update(utf8.encode(cleanHexPrefix(utf8String)));
   }
 
   Uint8List doFinal() {
@@ -26,4 +26,10 @@ class Ripemd160 {
   }
 
   String doFinalString() => listToHex(doFinal());
+
+  static String hash(String input) {
+    Ripemd160 ripemd160 = Ripemd160();
+    ripemd160.updateString(input);
+    return ripemd160.doFinalString();
+  }
 }

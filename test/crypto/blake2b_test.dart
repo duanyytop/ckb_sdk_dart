@@ -21,7 +21,7 @@ void main() {
 
     test('Blake160 hash', () {
       String hash = Blake2b.blake160(
-          '0x024a501efd328e062c8675f2365970728c859c592beeefd6be8ead3d901330bc01');
+          '024a501efd328e062c8675f2365970728c859c592beeefd6be8ead3d901330bc01');
       expect(hash, '36c329ed630d6ce750712a477543672adab57f4c');
     });
   });
