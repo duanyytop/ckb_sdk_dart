@@ -20,5 +20,5 @@ void main() {
       String scriptHash = await api.computeScriptHash(script);
       expect(script.computeHash(), scriptHash);
     });
-  });
+  }, skip: 'Skip rpc test');
 }
