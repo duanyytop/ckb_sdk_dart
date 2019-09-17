@@ -78,10 +78,4 @@ void main() {
       expect(signedTx.witnesses[1].data, expectedData);
     });
   });
-
-  group('A group tests of Transaction', () {
-    setUp(() {});
-
-    
-  }
 }
