@@ -63,7 +63,7 @@ class Api {
   }
 
   Future<List<CellOutputWithOutPoint>> getCellsByLockHash(
-      String lockHash, String fromNumber, String toNumber) async {
+      {String lockHash, String fromNumber, String toNumber}) async {
     return List.from(await _rpc.post("get_cells_by_lock_hash",
             [lockHash, toHexString(fromNumber), toHexString(toNumber)]))
         .map((cellOutput) => CellOutputWithOutPoint.fromJson(cellOutput))

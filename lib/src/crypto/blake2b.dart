@@ -35,4 +35,10 @@ class Blake2b {
   }
 
   String doFinalString() => listToHex(doFinal());
+
+  static String blake160(String value) {
+    Blake2b blake2b = Blake2b();
+    blake2b.updateWithHex(value);
+    return blake2b.doFinalString().substring(0, 40);
+  }
 }

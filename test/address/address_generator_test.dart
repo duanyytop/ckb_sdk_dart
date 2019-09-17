@@ -1,16 +1,10 @@
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
+import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('A group tests of address generator', () {
     setUp(() {});
-
-    test('Blake160 hash', () {
-      AddressGenerator generator = AddressGenerator(network: Network.Testnet);
-      String hash = generator.blake160(
-          '0x024a501efd328e062c8675f2365970728c859c592beeefd6be8ead3d901330bc01');
-      expect(hash, '36c329ed630d6ce750712a477543672adab57f4c');
-    });
 
     test('Generate testnet address with any arg', () {
       AddressGenerator generator = AddressGenerator(network: Network.Testnet);

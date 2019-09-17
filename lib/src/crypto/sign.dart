@@ -26,7 +26,7 @@ class Sign {
     }
 
     var publicKey = BigInt.parse(
-        publicKeyFromPrivate(privateKey, compress: false),
+        Key.publicKeyFromPrivate(privateKey, compress: false),
         radix: 16);
 
     var recId = -1;

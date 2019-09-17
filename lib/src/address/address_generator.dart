@@ -14,7 +14,7 @@ class AddressGenerator {
   AddressGenerator({this.network = Network.Mainnet});
 
   String addressFromPublicKey(String publicKey) {
-    return address(blake160(publicKey));
+    return address(Blake2b.blake160(publicKey));
   }
 
   String address(String arg) {
@@ -66,12 +66,6 @@ class AddressGenerator {
           "Strict mode was used but input couldn't be converted without padding");
     }
     return Uint8List.fromList(ret);
-  }
-
-  String blake160(String value) {
-    Blake2b blake2b = Blake2b();
-    blake2b.updateWithHex(value);
-    return blake2b.doFinalString().substring(0, 40);
   }
 }
 
