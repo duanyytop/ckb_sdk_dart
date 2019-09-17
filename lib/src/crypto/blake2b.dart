@@ -24,10 +24,6 @@ class Blake2b {
     update(utf8.encode(utf8String));
   }
 
-  updateWithHex(String hex) {
-    update(hexToList(hex));
-  }
-
   Uint8List doFinal() {
     var out = Uint8List(blake2bDigest.digestSize);
     var len = blake2bDigest.doFinal(out, 0);
@@ -38,7 +34,7 @@ class Blake2b {
 
   static String blake160(String value) {
     Blake2b blake2b = Blake2b();
-    blake2b.updateWithHex(value);
+    blake2b.updateWithUtf8(value);
     return blake2b.doFinalString().substring(0, 40);
   }
 }
