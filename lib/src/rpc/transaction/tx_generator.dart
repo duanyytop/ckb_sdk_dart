@@ -1,5 +1,6 @@
 import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
+import 'package:ckb_sdk_dart/src/address/address_params.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
@@ -42,7 +43,7 @@ class TxGenerator {
     }
 
     List<CellOutput> cellOutputs = [];
-    AddressGenerator generator = AddressGenerator(network: Network.Testnet);
+    AddressGenerator generator = AddressGenerator(network: Network.testnet);
     for (Receiver receiver in receivers) {
       String blake2b = generator.blake160FromAddress(receiver.address);
       cellOutputs.add(CellOutput(
