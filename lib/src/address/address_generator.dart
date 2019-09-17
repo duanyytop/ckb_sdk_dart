@@ -26,7 +26,7 @@ class AddressGenerator {
   }
 
   String address(String arg) {
-    // Payload: type(01) | code hash index(00, P2PH) | arg (pubkey blake160)
+    // Payload: type(01) | code hash index(00, P2PH) | arg (pubkey hash)
     String payload = AddressParams.formatType(formatType) +
         AddressParams.codeHashIndex(codeHashIndex) +
         cleanHexPrefix(arg);

@@ -10,7 +10,7 @@ class SystemContract {
     if (block == null) {
       throw ("Genesis block not found");
     }
-    if (block.transactions == null || block.transactions.length < 2) {
+    if (block.transactions.isEmpty || block.transactions.length < 2) {
       throw ("Genesis block transactions system script not found");
     }
     return SystemScriptCell(

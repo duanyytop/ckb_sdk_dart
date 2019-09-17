@@ -40,10 +40,14 @@ String appendHexPrefix(String hex) {
 String toHexString(String value) {
   if (value.startsWith('0x')) return value;
   try {
-    return BigInt.parse(value).toRadixString(16);
+    return appendHexPrefix(BigInt.parse(value).toRadixString(16));
   } catch (error) {
     throw ('Input value format error, please input integer or hex string');
   }
+}
+
+BigInt hexToBigInt(String hex) {
+  return BigInt.parse(cleanHexPrefix(hex), radix: 16);
 }
 
 List<int> toBytesPadded(BigInt value, int length) {

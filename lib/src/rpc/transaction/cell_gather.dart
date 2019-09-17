@@ -7,6 +7,7 @@ import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/rpc/transaction/cells.dart';
 import 'package:ckb_sdk_dart/src/rpc/transaction/tx_utils.dart';
 import 'package:ckb_sdk_dart/src/type/cell_output_with_out_point.dart';
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 class CellGatherer {
   Api api;
@@ -16,7 +17,7 @@ class CellGatherer {
   Future<Cells> getCellInputs(String lockHash, BigInt needCapacities) async {
     List<CellInput> cellInputs = [];
     BigInt inputsCapacities = BigInt.zero;
-    int toNumber = int.parse(await api.getTipBlockNumber(), radix: 16);
+    int toNumber = hexToBigInt(await api.getTipBlockNumber()).toInt();
     int fromNumber = 1;
 
     while (fromNumber <= toNumber &&
@@ -50,7 +51,7 @@ class CellGatherer {
 
   Future<BigInt> getCapacitiesWithLockHash(String lockHash) async {
     BigInt capacity = BigInt.zero;
-    int toNumber = int.parse(await api.getTipBlockNumber(), radix: 16);
+    int toNumber = hexToBigInt(await api.getTipBlockNumber()).toInt();
     int fromNumber = 1;
 
     while (fromNumber <= toNumber) {

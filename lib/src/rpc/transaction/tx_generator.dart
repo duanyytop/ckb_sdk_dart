@@ -12,22 +12,18 @@ import 'package:ckb_sdk_dart/src/rpc/transaction/tx_utils.dart';
 class TxGenerator {
   static final String minCapacity = "6000000000";
 
-  String _privateKey;
+  String privateKey;
+  Api api;
   Script _lockScript;
   SystemScriptCell _systemScriptCell;
-  Api _api;
 
-  TxGenerator(String privateKey, Api api) {
-    _privateKey = privateKey;
-    _api = api;
-
-    SystemContract.getSystemScriptCell(api)
-        .then((response) => _systemScriptCell = response);
-    _lockScript = TxUtils.generateLockScriptWithPrivateKey(
-        privateKey, _systemScriptCell.cellHash);
-  }
+  TxGenerator({this.privateKey, this.api});
 
   Future<Transaction> generateTx(List<Receiver> receivers) async {
+    _systemScriptCell = await SystemContract.getSystemScriptCell(api);
+    _lockScript = TxUtils.generateLockScriptWithPrivateKey(
+        privateKey, _systemScriptCell.cellHash);
+
     BigInt needCapacities = BigInt.zero;
     for (Receiver receiver in receivers) {
       needCapacities += receiver.capacity;
@@ -36,8 +32,9 @@ class TxGenerator {
       throw ("Less than min capacity");
     }
 
-    Cells cellInputs = await CellGatherer(api: _api)
+    Cells cellInputs = await CellGatherer(api: api)
         .getCellInputs(_lockScript.computeHash(), needCapacities);
+
     if (cellInputs.capacity.compareTo(needCapacities) < 0) {
       throw ("No enough Capacities");
     }
@@ -82,6 +79,6 @@ class TxGenerator {
         outputsData: cellOutputsData,
         witnesses: witnesses);
 
-    return transaction.sign(_privateKey);
+    return transaction.sign(privateKey);
   }
 }

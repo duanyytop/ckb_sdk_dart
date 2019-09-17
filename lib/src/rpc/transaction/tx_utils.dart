@@ -5,7 +5,6 @@ import 'package:ckb_sdk_dart/src/address/address_params.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
 
 class TxUtils {
-  static final String testnetPrefix = "ckt";
 
   static Script generateLockScriptWithPrivateKey(
       String privateKey, String codeHash) {
