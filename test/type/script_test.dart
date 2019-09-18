@@ -18,7 +18,7 @@ void main() {
       Api api = Api('http://localhost:8114');
       String scriptHash = await api.computeScriptHash(script);
       expect(script.computeHash(), scriptHash);
-    });
+    }, skip: 'Skip rpc test');
 
     test('Script hash', () async {
       Script script = Script(
