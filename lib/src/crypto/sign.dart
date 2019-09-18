@@ -25,9 +25,8 @@ class Sign {
       sig = ECSignature(sig.r, canonicalisedS);
     }
 
-    var publicKey = BigInt.parse(
-        Key.publicKeyFromPrivate(privateKey, compress: false),
-        radix: 16);
+    var publicKey =
+        hexToBigInt(Key.publicKeyFromPrivate(privateKey, compress: false));
 
     var recId = -1;
     for (var i = 0; i < 4; i++) {

@@ -14,7 +14,8 @@ class Rpc {
 
   Rpc(this.nodeUrl, {this.hasLogger = false}) {
     if (hasLogger) {
-      dio.interceptors.add(LogInterceptor(responseBody: false));
+      dio.interceptors
+          .add(LogInterceptor(requestBody: true, responseBody: true));
     }
   }
 

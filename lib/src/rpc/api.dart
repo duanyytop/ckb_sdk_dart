@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:ckb_sdk_dart/src/type/utils/convert.dart';
+
 import '../utils/utils.dart';
 import '../type/banned_address.dart';
 import '../type/blockchain_info.dart';
@@ -21,7 +23,6 @@ import '../type/header.dart';
 import '../type/transaction.dart';
 
 import './rpc.dart';
-import './convert.dart';
 
 class Api {
   Rpc _rpc;
@@ -134,8 +135,8 @@ class Api {
   }
 
   Future<String> sendTransaction(Transaction transaction) async {
-    return await _rpc
-        .post("send_transaction", [Convert.parseTransaction(transaction)]);
+    return await _rpc.post(
+        "send_transaction", [Convert.parseTransaction(transaction).toJson()]);
   }
 
   // Experiment RPC

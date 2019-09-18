@@ -39,6 +39,7 @@ class Blake2b {
   static String blake160(String value) {
     Blake2b blake2b = Blake2b();
     blake2b.updateWithHex(value);
-    return blake2b.doFinalString().substring(0, 40);
+    return appendHexPrefix(
+        listToHexNoPrefix(blake2b.doFinal()).substring(0, 40));
   }
 }

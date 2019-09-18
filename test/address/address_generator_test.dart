@@ -44,7 +44,7 @@ void main() {
       AddressGenerator generator = AddressGenerator(network: Network.mainnet);
       String blake160 = generator.blake160FromAddress(
           'ckb1qyqrdsefa43s6m882pcj53m4gdnj4k440axqdt9rtd');
-      expect(blake160, '36c329ed630d6ce750712a477543672adab57f4c');
+      expect(blake160, '0x36c329ed630d6ce750712a477543672adab57f4c');
     });
   });
 }

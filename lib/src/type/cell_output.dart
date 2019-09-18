@@ -15,6 +15,10 @@ class CellOutput {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{'capacity': capacity, 'lock': lock, 'type': type};
+    return <String, dynamic>{
+      'capacity': capacity,
+      'lock': lock?.toJson(),
+      'type': type?.toJson()
+    };
   }
 }

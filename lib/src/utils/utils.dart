@@ -1,6 +1,13 @@
 import 'dart:typed_data';
+import 'package:convert/convert.dart';
 
 import 'package:pointycastle/src/utils.dart' as utils;
+
+String toWholeHex(String hexString) {
+  String hex = cleanHexPrefix(hexString);
+  String wholeHex = hex.length % 2 == 0 ? hex : '0$hex';
+  return appendHexPrefix(wholeHex);
+}
 
 Uint8List bigIntToList(BigInt value) {
   return utils.encodeBigInt(value);
@@ -11,22 +18,20 @@ BigInt listToBigInt(Uint8List bytes) {
 }
 
 Uint8List hexToList(String hexString) {
-  try {
-    BigInt big = BigInt.parse(cleanHexPrefix(hexString), radix: 16);
-    if (big.toInt() == 0) return Uint8List.fromList([0]);
-    return bigIntToList(big);
-  } catch (error) {
-    return Uint8List.fromList([]);
-  }
+  return Uint8List.fromList(hex.decode(cleanHexPrefix(toWholeHex(hexString))));
 }
 
 String listToHex(Uint8List bytes) {
-  return listToBigInt(bytes).toRadixString(16);
+  return appendHexPrefix(listToHexNoPrefix(bytes));
+}
+
+String listToHexNoPrefix(Uint8List bytes) {
+  return hex.encode(bytes);
 }
 
 String listToWholeHex(Uint8List bytes) {
   String hex = listToBigInt(bytes).toRadixString(16);
-  return hex.length % 2 == 0 ? hex : '0${hex}';
+  return toWholeHex(hex);
 }
 
 String cleanHexPrefix(String hex) {
@@ -51,36 +56,14 @@ BigInt hexToBigInt(String hex) {
 }
 
 List<int> toBytesPadded(BigInt value, int length) {
-  List<int> result = [];
-  for (int i = 0; i < length; i++) {
-    result.add(0);
-  }
-
   List<int> bytes = bigIntToList(value);
-
-  int bytesLength;
-  int srcOffset;
-  if (bytes[0] == 0) {
-    bytesLength = bytes.length - 1;
-    srcOffset = 1;
-  } else {
-    bytesLength = bytes.length;
-    srcOffset = 0;
+  if (bytes.length > length) {
+    throw ('Input is too large to put in byte array of size ${length.toString()}');
   }
-
-  if (bytesLength > length) {
-    throw ("Input is too large to put in byte array of size " +
-        length.toString());
-  }
-
-  int destOffset = length - bytesLength;
-  result = arrayCopy(bytes, srcOffset, result, destOffset, bytesLength);
-  return result;
-}
-
-List<int> arrayCopy(bytes, srcOffset, result, destOffset, bytesLength) {
-  for (var i = srcOffset; i < bytesLength; i++) {
-    result[destOffset + i] = bytes[i];
+  List<int> result = List(length);
+  int offset = length - bytes.length;
+  for (int i = 0; i < length; i++) {
+    result[i] = i < offset ? 0 : bytes[i - offset];
   }
   return result;
 }

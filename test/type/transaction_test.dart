@@ -67,13 +67,13 @@ void main() {
       Transaction signedTx = tx.sign(privateKey);
 
       List<String> expectedData = [
-        "0x242558dc38addbb1ed04bd3832a212d3b0455d73d59d16946087e7fec1a353b749d156d2b7e8b87836fc38bf2ef24a4e4b861ab474567bc02835365938a4950001",
+        "0xc612efdce8af3526f20a3a39b623aa8d4fa9136c332d44690b928f2f566feb1f0f550399c9e59456c54c6328f4e77e7f82956c510da3788bba006dbda11ffb5800",
         "0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb"
       ];
       expect(signedTx.witnesses[0].data, expectedData);
 
       expectedData = [
-        "0xe1cb7bc4de42c397d6d53e203434af70b119958e231f05578d9ba97b37d41bd67d95ac63f53117b42b414e813909579c8faa4f1bb243ae4f2a955b4c0dd3c4c01"
+        "0xdd770d3c286573d49613ce2cbf2eeade7a603c157cff212ca10e16e8f88e1aa1358e0e245e55391da779aa6de987404eaafbe4f9c9cd73af963ca01f9499917001"
       ];
       expect(signedTx.witnesses[1].data, expectedData);
     });

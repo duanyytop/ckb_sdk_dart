@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/rpc/transaction/cells.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/tx_utils.dart';
 import 'package:ckb_sdk_dart/src/type/cell_output_with_out_point.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
@@ -30,7 +30,7 @@ class CellGatherer {
 
       if (cellOutputs.isNotEmpty) {
         for (var cellOutput in cellOutputs) {
-          inputsCapacities += BigInt.parse(cellOutput.capacity, radix: 16);
+          inputsCapacities += hexToBigInt(cellOutput.capacity);
           cellInputs
               .add(CellInput(previousOutput: cellOutput.outPoint, since: "0"));
           if (inputsCapacities.compareTo(needCapacities) > 0) break;
@@ -44,8 +44,8 @@ class CellGatherer {
   Future<BigInt> getCapacitiesWithAddress(String address) async {
     SystemScriptCell systemScriptCell =
         await SystemContract.getSystemScriptCell(api);
-    Script lockScript = TxUtils.generateLockScriptWithAddress(
-        address, systemScriptCell.cellHash);
+    Script lockScript =
+        Key.generateLockScriptWithAddress(address, systemScriptCell.cellHash);
     return getCapacitiesWithLockHash(lockScript.computeHash());
   }
 
@@ -63,7 +63,7 @@ class CellGatherer {
 
       if (cellOutputs.isNotEmpty) {
         for (var output in cellOutputs) {
-          capacity += BigInt.parse(output.capacity, radix: 16);
+          capacity += hexToBigInt(output.capacity);
         }
       }
       fromNumber = currentToNumber + 1;

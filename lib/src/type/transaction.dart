@@ -1,6 +1,6 @@
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
-import 'package:ckb_sdk_dart/src/type/serializer/serializer.dart';
+import 'package:ckb_sdk_dart/src/type/utils/serializer.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import 'cell_dep.dart';
@@ -52,12 +52,12 @@ class Transaction {
     return <String, dynamic>{
       'version': version,
       'hash': hash,
-      'cell_deps': cellDeps,
+      'cell_deps': cellDeps.map((cellDep) => cellDep?.toJson()).toList(),
       'header_deps': headerDeps,
-      'inputs': inputs,
-      'outputs': outputs,
+      'inputs': inputs.map((input) => input?.toJson()).toList(),
+      'outputs': outputs.map((output) => output?.toJson()).toList(),
       'outputs_data': outputsData,
-      'witnesses': witnesses
+      'witnesses': witnesses.map((witness) => witness?.toJson()).toList()
     };
   }
 
@@ -82,8 +82,8 @@ class Transaction {
       }
       String message = blake2b.doFinalString();
 
-      String signature = appendHexPrefix(listToHex(
-          Sign.signMessage(hexToList(message), privateKey).getSignature()));
+      String signature = listToHex(
+          Sign.signMessage(hexToList(message), privateKey).getSignature());
       witness.data = [signature];
       witness.data.addAll(oldData);
       signedWitnesses.add(witness);

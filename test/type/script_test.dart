@@ -19,5 +19,17 @@ void main() {
       String scriptHash = await api.computeScriptHash(script);
       expect(script.computeHash(), scriptHash);
     });
+
+    test('Script hash', () async {
+      Script script = Script(
+          codeHash:
+              '0x00000000000000000000000000000000000000000000000000545950455f4944',
+          args: [
+            '0x8536c9d5d908bd89fc70099e4284870708b6632356aad98734fcf43f6f71c304'
+          ],
+          hashType: Script.type);
+      expect(script.computeHash(),
+          '0x1892ea40d82b53c678ff88312450bbb17e164d7a3e0a90941aa58839f56f8df2');
+    });
   });
 }

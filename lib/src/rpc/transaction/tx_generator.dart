@@ -1,13 +1,13 @@
 import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
+import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/rpc/transaction/cell_gather.dart';
 import 'package:ckb_sdk_dart/src/rpc/transaction/cells.dart';
 import 'package:ckb_sdk_dart/src/rpc/transaction/receiver.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/tx_utils.dart';
 
 class TxGenerator {
   static final String minCapacity = "6000000000";
@@ -21,7 +21,7 @@ class TxGenerator {
 
   Future<Transaction> generateTx(List<Receiver> receivers) async {
     _systemScriptCell = await SystemContract.getSystemScriptCell(api);
-    _lockScript = TxUtils.generateLockScriptWithPrivateKey(
+    _lockScript = Key.generateLockScriptWithPrivateKey(
         privateKey, _systemScriptCell.cellHash);
 
     BigInt needCapacities = BigInt.zero;
@@ -59,7 +59,7 @@ class TxGenerator {
 
     List<Witness> witnesses = [];
     for (int i = 0; i < cellInputs.inputs.length; i++) {
-      witnesses.add(Witness());
+      witnesses.add(Witness(data: []));
     }
 
     List<String> cellOutputsData = [];

@@ -4,7 +4,6 @@ import 'package:ckb_sdk_dart/src/serialization/dynamic/dynamic.dart';
 import 'package:ckb_sdk_dart/src/serialization/dynamic/table.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/byte1.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/byte32.dart';
-import 'package:ckb_sdk_dart/src/serialization/fixed/struct.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 

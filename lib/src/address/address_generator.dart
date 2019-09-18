@@ -45,12 +45,12 @@ class AddressGenerator {
 
   String blake160FromAddress(String address) {
     Bech32 bech32 = parse(address);
-    String payload = listToWholeHex(bech32.data);
+    String payload = cleanHexPrefix(listToWholeHex(bech32.data));
     return payload.startsWith(AddressParams.formatType(formatType))
-        ? payload.replaceAll(
+        ? appendHexPrefix(payload.replaceAll(
             AddressParams.formatType(formatType) +
                 AddressParams.codeHashIndex(codeHashIndex),
-            "")
+            ""))
         : null;
   }
 

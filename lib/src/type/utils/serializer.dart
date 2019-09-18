@@ -1,8 +1,8 @@
 import 'dart:core';
 
 import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/src/type/utils/convert.dart';
 
-import '../../rpc/convert.dart';
 import '../../serialization/base/fixed_type.dart';
 import '../../serialization/base/serialize_type.dart';
 import '../../serialization/dynamic/bytes.dart';

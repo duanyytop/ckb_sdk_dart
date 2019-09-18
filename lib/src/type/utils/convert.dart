@@ -1,8 +1,6 @@
 import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
-import '../type/transaction.dart';
-
 class Convert {
   static OutPoint parseOutPoint(OutPoint outPoint) {
     return OutPoint(

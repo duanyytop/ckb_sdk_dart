@@ -14,7 +14,7 @@ class CellInput {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'previous_output': previousOutput,
+      'previous_output': previousOutput?.toJson(),
       'since': since,
     };
   }

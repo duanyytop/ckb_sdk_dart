@@ -17,7 +17,7 @@ class CellDep {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'out_point': outPoint,
+      'out_point': outPoint?.toJson(),
       'dep_type': depType,
     };
   }

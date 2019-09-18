@@ -12,14 +12,14 @@ void main() {
       Ripemd160 ripemd160 = Ripemd160();
       ripemd160.updateString('');
       expect(ripemd160.doFinalString(),
-          '9c1185a5c5e9fc54612808977ee8f548b2258d31');
+          '0x9c1185a5c5e9fc54612808977ee8f548b2258d31');
     });
 
     test('Ripemd160 hash with utf8 string', () {
       Ripemd160 ripemd160 = Ripemd160();
       ripemd160.updateString('The quick brown fox jumps over the lazy cog');
       expect(ripemd160.doFinalString(),
-          '132072df690933835eb8b6ad0b77e7b6f14acad7');
+          '0x132072df690933835eb8b6ad0b77e7b6f14acad7');
     });
 
     test('Ripemd160 hash with hex', () {
@@ -27,7 +27,7 @@ void main() {
       ripemd160.updateString(
           '4a32663e9933dbbc1bb54cd3655ba47acdbe26dadab2fd5144e6bdf94e28ee34');
       expect(ripemd160.doFinalString(),
-          'c8045f588e627a8381810923c61d0705d10b86d3');
+          '0xc8045f588e627a8381810923c61d0705d10b86d3');
     });
 
     test('Ripemd160 and Sha256 hash with hex ', () {
@@ -39,7 +39,7 @@ void main() {
       Ripemd160 ripemd160 = Ripemd160();
       ripemd160.updateString(hash);
       expect(ripemd160.doFinalString(),
-          'c8045f588e627a8381810923c61d0705d10b86d3');
+          '0xc8045f588e627a8381810923c61d0705d10b86d3');
     });
   });
 }
