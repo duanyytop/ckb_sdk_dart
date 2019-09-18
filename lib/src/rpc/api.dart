@@ -135,8 +135,8 @@ class Api {
   }
 
   Future<String> sendTransaction(Transaction transaction) async {
-    return await _rpc.post(
-        "send_transaction", [Convert.parseTransaction(transaction).toJson()]);
+    return await _rpc.post("send_transaction",
+        [Convert.parseTransaction(transaction).toRawJson()]);
   }
 
   // Experiment RPC

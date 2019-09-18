@@ -1,5 +1,6 @@
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
+import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -45,6 +46,15 @@ void main() {
       String blake160 = generator.blake160FromAddress(
           'ckb1qyqrdsefa43s6m882pcj53m4gdnj4k440axqdt9rtd');
       expect(blake160, '0x36c329ed630d6ce750712a477543672adab57f4c');
+    });
+
+    test('Generate testnet address from private key', () {
+      AddressGenerator generator = AddressGenerator(network: Network.testnet);
+      String privateKey =
+          'e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
+      String address =
+          generator.addressFromPublicKey(Key.publicKeyFromPrivate(privateKey));
+      expect(address, 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83');
     });
   });
 }

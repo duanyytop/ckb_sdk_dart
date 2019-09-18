@@ -61,6 +61,18 @@ class Transaction {
     };
   }
 
+  Map<String, dynamic> toRawJson() {
+    return <String, dynamic>{
+      'version': version,
+      'cell_deps': cellDeps.map((cellDep) => cellDep?.toJson()).toList(),
+      'header_deps': headerDeps,
+      'inputs': inputs.map((input) => input?.toJson()).toList(),
+      'outputs': outputs.map((output) => output?.toJson()).toList(),
+      'outputs_data': outputsData,
+      'witnesses': witnesses.map((witness) => witness?.toJson()).toList()
+    };
+  }
+
   String computeHash() {
     Blake2b blake2b = Blake2b();
     blake2b.update(Serializer.serializeTransaction(this).toBytes());

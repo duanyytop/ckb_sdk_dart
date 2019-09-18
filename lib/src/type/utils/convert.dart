@@ -29,7 +29,6 @@ class Convert {
 
     return Transaction(
         version: toHexString(transaction.version),
-        hash: transaction.hash,
         cellDeps: cellDeps,
         headerDeps: transaction.headerDeps,
         inputs: inputs,
