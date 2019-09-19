@@ -4,8 +4,6 @@
 
 Dart SDK for [Nervos CKB](https://github.com/nervosnetwork/ckb)
 
-Dart SDK 
-
 ## Prerequisites
 
 - Dart 2.5 or later
