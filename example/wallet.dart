@@ -33,6 +33,7 @@ main() async {
   Timer(Duration(seconds: 10), () async {
     String balance1 = (await getBalance(api, senderAddress)).toString();
     print('Receiver1:  $balance1');
+    print((await api.getTransaction(hash)).toJson());
   });
 }
 
