@@ -1,4 +1,6 @@
-CKB SDK with Dart language.
+# CKB SDK Dart
+
+Dart SDK for [Nervos CKB](https://github.com/nervosnetwork/ckb)
 
 ## Prerequisites
 
