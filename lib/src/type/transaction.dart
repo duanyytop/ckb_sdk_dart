@@ -57,24 +57,24 @@ class Transaction {
     return <String, dynamic>{
       'version': version,
       'hash': hash,
-      'cell_deps': cellDeps.map((cellDep) => cellDep?.toJson()).toList(),
+      'cell_deps': cellDeps?.map((cellDep) => cellDep?.toJson())?.toList(),
       'header_deps': headerDeps,
-      'inputs': inputs.map((input) => input?.toJson()).toList(),
-      'outputs': outputs.map((output) => output?.toJson()).toList(),
+      'inputs': inputs?.map((input) => input?.toJson())?.toList(),
+      'outputs': outputs?.map((output) => output?.toJson())?.toList(),
       'outputs_data': outputsData,
-      'witnesses': witnesses.map((witness) => witness?.toJson()).toList()
+      'witnesses': witnesses?.map((witness) => witness?.toJson())?.toList()
     };
   }
 
   Map<String, dynamic> toRawJson() {
     return <String, dynamic>{
       'version': version,
-      'cell_deps': cellDeps.map((cellDep) => cellDep?.toJson()).toList(),
+      'cell_deps': cellDeps?.map((cellDep) => cellDep?.toJson())?.toList(),
       'header_deps': headerDeps,
-      'inputs': inputs.map((input) => input?.toJson()).toList(),
-      'outputs': outputs.map((output) => output?.toJson()).toList(),
+      'inputs': inputs?.map((input) => input?.toJson())?.toList(),
+      'outputs': outputs?.map((output) => output?.toJson())?.toList(),
       'outputs_data': outputsData,
-      'witnesses': witnesses.map((witness) => witness?.toJson()).toList()
+      'witnesses': witnesses?.map((witness) => witness?.toJson())?.toList()
     };
   }
 

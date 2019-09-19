@@ -9,11 +9,15 @@ class TransactionWithStatus {
   factory TransactionWithStatus.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return TransactionWithStatus(
-        txStatus: json['tx_status'], transaction: json['transaction']);
+        txStatus: TxStatus.fromJson(json['tx_status']),
+        transaction: Transaction.fromJson(json['transaction']));
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{'tx_status': txStatus, 'transaction': transaction};
+    return <String, dynamic>{
+      'tx_status': txStatus.toJson(),
+      'transaction': transaction.toJson()
+    };
   }
 }
 
@@ -24,6 +28,7 @@ class TxStatus {
   TxStatus({this.status, this.blockHash});
 
   factory TxStatus.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return TxStatus(status: json['status'], blockHash: json['block_hash']);
   }
 

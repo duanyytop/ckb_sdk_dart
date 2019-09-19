@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/type/utils/convert.dart';
 
 import '../utils/utils.dart';
@@ -49,8 +50,9 @@ class Api {
         await _rpc.post("get_block_by_number", [toHexString(number)]));
   }
 
-  Future<Transaction> getTransaction(String hash) async {
-    return Transaction.fromJson(await _rpc.post("get_transaction", [hash]));
+  Future<TransactionWithStatus> getTransaction(String hash) async {
+    return TransactionWithStatus.fromJson(
+        await _rpc.post("get_transaction", [hash]));
   }
 
   Future<CellbaseOutputCapacity> getCellbaseOutputCapacityDetails(

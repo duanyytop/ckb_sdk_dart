@@ -26,10 +26,10 @@ class Block {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'header': header,
-      'uncles': uncles,
+      'header': header.toJson(),
+      'uncles': uncles.map((uncle) => uncle.toJson()),
       'proposals': proposals,
-      'transactions': transactions
+      'transactions': transactions.map((transaction) => transaction.toJson())
     };
   }
 }
@@ -42,5 +42,9 @@ class Uncle {
 
   factory Uncle.fromJson(Map<String, dynamic> json) {
     return Uncle(header: json['header'], proposals: json['proposals']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{'header': header.toJson(), 'proposals': proposals};
   }
 }
