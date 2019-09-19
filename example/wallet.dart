@@ -12,7 +12,7 @@ import 'package:ckb_sdk_dart/src/rpc/transaction/tx_generator.dart';
 main() async {
   Api api = Api("http://localhost:8114", hasLogger: false);
   String senderPrivateKey =
-      "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+      "e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3";
 
   AddressGenerator generator = AddressGenerator(network: Network.testnet);
   String publicKey = Key.publicKeyFromPrivate(senderPrivateKey);

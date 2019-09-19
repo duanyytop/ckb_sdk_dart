@@ -9,7 +9,7 @@ export 'src/type/cell_input.dart';
 export 'src/type/cell_output.dart';
 export 'src/type/cell_output_with_out_point.dart';
 export 'src/type/cell_transaction.dart';
-export 'src/type/cell.dart';
+export 'src/type/cell_with_status.dart';
 export 'src/type/cellbase_output_capacity.dart';
 export 'src/type/cycles.dart';
 export 'src/type/epoch.dart';

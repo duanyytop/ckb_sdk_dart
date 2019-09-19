@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/src/type/cell_with_status.dart';
 import 'package:ckb_sdk_dart/src/type/utils/convert.dart';
 
 import '../utils/utils.dart';
 import '../type/banned_address.dart';
 import '../type/blockchain_info.dart';
-import '../type/cell.dart';
+import '../type/cell_with_status.dart';
 import '../type/cell_transaction.dart';
 import '../type/cycles.dart';
 import '../type/epoch.dart';
@@ -73,9 +74,9 @@ class Api {
         .toList();
   }
 
-  Future<Cell> getLiveCell(OutPoint outPoint) async {
-    return Cell.fromJson(
-        await _rpc.post("get_live_cell", [Convert.parseOutPoint(outPoint)]));
+  Future<CellWithStatus> getLiveCell({OutPoint outPoint, bool withData}) async {
+    return CellWithStatus.fromJson(
+        await _rpc.post("get_live_cell", [Convert.parseOutPoint(outPoint)?.toJson(), withData]));
   }
 
   Future<Epoch> getCurrentEpoch() async {
