@@ -1,5 +1,5 @@
-import 'package:ckb_sdk_dart/src/type/header.dart';
-import 'package:ckb_sdk_dart/src/type/transaction.dart';
+import 'header.dart';
+import 'transaction.dart';
 
 class Block {
   Header header;

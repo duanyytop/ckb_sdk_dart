@@ -1,4 +1,4 @@
-import 'package:ckb_sdk_dart/ckb_type.dart';
+import '../../../ckb_type.dart';
 
 class SystemScriptCell {
   String cellHash;

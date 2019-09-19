@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:bip_bech32/bip_bech32.dart';
-import 'package:ckb_sdk_dart/src/address/address_params.dart';
-import 'package:ckb_sdk_dart/src/crypto/ripemd160.dart';
-import 'package:ckb_sdk_dart/src/crypto/sha256.dart';
 
 import '../crypto/blake2b.dart';
+import '../crypto/ripemd160.dart';
+import '../crypto/sha256.dart';
 import '../utils/utils.dart';
+import 'address_params.dart';
 
 class AddressGenerator {
   Network network;

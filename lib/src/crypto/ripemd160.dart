@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:pointycastle/export.dart';
+
+import '../utils/utils.dart';
 
 class Ripemd160 {
   RIPEMD160Digest _ripemd160digest;

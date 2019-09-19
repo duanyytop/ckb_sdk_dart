@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:ckb_sdk_dart/src/serialization/base/fixed_type.dart';
-
+import '../base/fixed_type.dart';
 import '../base/serialize_type.dart';
 
 class Struct extends FixedType<List<SerializeType>> {

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import '../../utils/utils.dart';
-
 import '../base/dyn_type.dart';
 import '../fixed/uint32.dart';
 

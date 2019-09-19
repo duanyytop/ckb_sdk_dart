@@ -1,7 +1,6 @@
-import 'package:ckb_sdk_dart/ckb_rpc.dart';
-import 'package:ckb_sdk_dart/ckb_type.dart';
-
 import './system_script_cell.dart';
+import '../../../ckb_rpc.dart';
+import '../../../ckb_type.dart';
 import '../../type/block.dart';
 
 class SystemContract {

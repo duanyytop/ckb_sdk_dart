@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import '../fixed/uint32.dart';
 import '../base/serialize_type.dart';
+import '../fixed/uint32.dart';
 
 class Table extends SerializeType<List<SerializeType>> {
   List<SerializeType> _value;

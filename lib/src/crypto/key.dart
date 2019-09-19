@@ -1,9 +1,9 @@
-import 'package:ckb_sdk_dart/ckb_crypto.dart';
-import 'package:ckb_sdk_dart/src/address/address_generator.dart';
-import 'package:ckb_sdk_dart/src/address/address_params.dart';
-import 'package:ckb_sdk_dart/src/type/script.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
 
+import '../../ckb_crypto.dart';
+import '../address/address_generator.dart';
+import '../address/address_params.dart';
+import '../type/script.dart';
 import '../utils/utils.dart';
 
 class Key {

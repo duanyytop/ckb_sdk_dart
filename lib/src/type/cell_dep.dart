@@ -1,4 +1,4 @@
-import 'package:ckb_sdk_dart/src/type/out_point.dart';
+import 'out_point.dart';
 
 class CellDep {
   static final String code = 'code';

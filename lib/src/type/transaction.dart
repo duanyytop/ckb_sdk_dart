@@ -1,11 +1,10 @@
-import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
-import 'package:ckb_sdk_dart/src/crypto/sign.dart';
-import 'package:ckb_sdk_dart/src/type/utils/serializer.dart';
-import 'package:ckb_sdk_dart/src/utils/utils.dart';
-
+import '../crypto/blake2b.dart';
+import '../crypto/sign.dart';
+import '../utils/utils.dart';
 import 'cell_dep.dart';
 import 'cell_input.dart';
 import 'cell_output.dart';
+import 'utils/serializer.dart';
 import 'witness.dart';
 
 class Transaction {

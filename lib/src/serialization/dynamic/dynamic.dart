@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import '../fixed/uint32.dart';
 import '../base/serialize_type.dart';
+import '../fixed/uint32.dart';
 
 class Dynamic<T extends SerializeType> implements SerializeType<List<T>> {
   List<T> _value;

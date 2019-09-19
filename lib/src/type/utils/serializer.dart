@@ -1,8 +1,6 @@
 import 'dart:core';
 
-import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/type/utils/convert.dart';
-
+import '../../../ckb_type.dart';
 import '../../serialization/base/fixed_type.dart';
 import '../../serialization/base/serialize_type.dart';
 import '../../serialization/dynamic/bytes.dart';
@@ -15,6 +13,7 @@ import '../../serialization/fixed/fixed.dart';
 import '../../serialization/fixed/struct.dart';
 import '../../serialization/fixed/uint32.dart';
 import '../../serialization/fixed/uint64.dart';
+import 'convert.dart';
 
 class Serializer {
   static Struct serializeOutPoint(OutPoint outPoint) {

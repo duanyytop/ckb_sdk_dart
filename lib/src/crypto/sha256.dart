@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:pointycastle/export.dart';
+
+import '../utils/utils.dart';
 
 class Sha256 {
   SHA256Digest _sha256digest;

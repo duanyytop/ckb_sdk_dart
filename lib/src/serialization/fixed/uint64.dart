@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:ckb_sdk_dart/src/utils/utils.dart';
-
+import '../../utils/utils.dart';
 import '../base/fixed_type.dart';
 
 class Uint64 extends FixedType<BigInt> {
