@@ -12,12 +12,9 @@ You should install dart first through [Dart](https://dart.dev/get-dart).
 
 ### JSONRPC
 
-A simple usage example of jsonrpc request:
+A simple usage example of jsonrpc request which in `example/rpc.dart`:
 
 ```dart
-import 'package:ckb_sdk_dart/ckb_rpc.dart';
-import 'package:ckb_sdk_dart/src/type/block.dart';
-
 main() async {
   Api api = Api("http://localhost:8114", hasLogger: false);
   String blockHash = await api.getBlockHash('0x2');
@@ -26,21 +23,11 @@ main() async {
 }
 ```
 
-### Simple Wallet
+### Simple Wallet example
 
-A simple usage example of transaction:
+A simple usage example of `sendTransaction` which is in `example/wallet.dart`:
 
 ```dart
-import 'dart:async';
-
-import 'package:ckb_sdk_dart/ckb_rpc.dart';
-import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/address/address_generator.dart';
-import 'package:ckb_sdk_dart/src/address/address_params.dart';
-import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/cell_gather.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/receiver.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/tx_generator.dart';
 
 main() async {
   Api api = Api("http://localhost:8114", hasLogger: false);
@@ -69,22 +56,23 @@ main() async {
   });
 }
 
-Future<BigInt> getBalance(Api api, String address) {
-  CellGatherer cellGatherer = CellGatherer(api: api);
-  return cellGatherer.getCapacitiesWithAddress(address);
-}
+```
 
-Future<String> sendCapacity(
-    Api api, String privateKey, List<Receiver> receivers) async {
-  TxGenerator txGenerator = TxGenerator(privateKey: privateKey, api: api);
-  Transaction transaction = await txGenerator.generateTx(receivers);
-  return await api.sendTransaction(transaction);
-}
+## Development
 
+If you want to develop by yourself, you can download this project to your local.
+
+```shell
+git clone https://github.com/duanyytop/ckb_sdk_dart.git
+cd ckb_sdk_dart
+
+pub get                       // download and install dependences
+pub run test                  // run sdk unit tests
+
+dart ./example/rpc.dart       // run rpc request example, you should run a ckb node in your local
+dart ./example/wallet.dart    // run simple wallet example, you should run a ckb node in your local
 ```
 
 ## Features and bugs
 
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
+Please create pull requests or issues in this GitHub repo if you want to contribute new features or find bugs. Welcome to join us. Thanks.
