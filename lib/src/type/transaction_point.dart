@@ -6,6 +6,7 @@ class TransactionPoint {
   TransactionPoint({this.blockNumber, this.txHash, this.index});
 
   factory TransactionPoint.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return TransactionPoint(
         blockNumber: json['block_number'],
         txHash: json['tx_hash'],

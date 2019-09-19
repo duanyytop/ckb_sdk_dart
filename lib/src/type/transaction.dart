@@ -29,23 +29,28 @@ class Transaction {
       this.witnesses});
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Transaction(
         version: json['version'],
         hash: json['hash'],
-        cellDeps: List.from(json['cell_deps'])
-            .map((cellDep) => CellDep.fromJson(cellDep))
-            .toList(),
-        headerDeps: List<String>.from(json['header_deps']),
-        inputs: List.from(json['inputs'])
-            .map((input) => CellInput.fromJson(input))
-            .toList(),
-        outputs: List.from(json['outputs'])
-            .map((output) => CellOutput.fromJson(output))
-            .toList(),
-        outputsData: List<String>.from(json['outputs_data']),
-        witnesses: List.from(json['witnesses'])
-            .map((witness) => Witness.fromJson(witness))
-            .toList());
+        cellDeps: (json['cell_deps'] as List)
+            ?.map((cellDep) => CellDep.fromJson(cellDep))
+            ?.toList(),
+        headerDeps: (json['header_deps'] as List)
+            ?.map((headerDep) => headerDep?.toString())
+            ?.toList(),
+        inputs: (json['inputs'] as List)
+            ?.map((input) => CellInput.fromJson(input))
+            ?.toList(),
+        outputs: (json['outputs'] as List)
+            ?.map((output) => CellOutput.fromJson(output))
+            ?.toList(),
+        outputsData: (json['outputs_data'] as List)
+            ?.map((outputData) => outputData.toString())
+            ?.toList(),
+        witnesses: (json['witnesses'] as List)
+            ?.map((witness) => Witness.fromJson(witness))
+            ?.toList());
   }
 
   Map<String, dynamic> toJson() {

@@ -8,6 +8,7 @@ class CellOutput {
   CellOutput({this.capacity, this.lock, this.type});
 
   factory CellOutput.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return CellOutput(
         capacity: json['capacity'],
         lock: Script.fromJson(json['lock']),

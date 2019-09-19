@@ -10,6 +10,7 @@ class CellDep {
   CellDep({this.outPoint, this.depType});
 
   factory CellDep.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return CellDep(
         outPoint: OutPoint.fromJson(json['out_point']),
         depType: json['dep_type']);

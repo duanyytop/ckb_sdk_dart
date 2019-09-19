@@ -7,6 +7,7 @@ class Cell {
   Cell({this.cell, this.status});
 
   factory Cell.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Cell(
         cell: CellOutput.fromJson(json['Cell']), status: json['status']);
   }

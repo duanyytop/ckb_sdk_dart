@@ -7,6 +7,7 @@ class AlertMessage {
   AlertMessage({this.id, this.priority, this.noticeUtil, this.message});
 
   factory AlertMessage.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return AlertMessage(
         id: json['id'],
         priority: json['priority'],

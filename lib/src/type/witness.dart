@@ -4,7 +4,9 @@ class Witness {
   Witness({this.data});
 
   factory Witness.fromJson(Map<String, dynamic> json) {
-    return Witness(data: List<String>.from(json['data']));
+    if (json == null) return null;
+    return Witness(
+        data: (json['data'] as List)?.map((d) => d?.toString())?.toList());
   }
 
   Map<String, dynamic> toJson() {

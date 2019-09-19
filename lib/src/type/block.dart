@@ -10,15 +10,18 @@ class Block {
   Block({this.header, this.transactions, this.proposals, this.uncles});
 
   factory Block.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Block(
         header: Header.fromJson(json['header']),
-        transactions: List.from(json['transactions'])
-            .map((transaction) => Transaction.fromJson(transaction))
-            .toList(),
-        proposals: List<String>.from(json['proposals']),
-        uncles: List.from(json['uncles'])
-            .map((uncle) => Uncle.fromJson(uncle))
-            .toList());
+        transactions: (json['transactions'] as List)
+            ?.map((transaction) => Transaction.fromJson(transaction))
+            ?.toList(),
+        proposals: (json['proposals'] as List)
+            ?.map((proposal) => proposal?.toString())
+            ?.toList(),
+        uncles: (json['uncles'] as List)
+            ?.map((uncle) => Uncle.fromJson(uncle))
+            ?.toList());
   }
 
   Map<String, dynamic> toJson() {

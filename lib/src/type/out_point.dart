@@ -5,6 +5,7 @@ class OutPoint {
   OutPoint({this.txHash, this.index});
 
   factory OutPoint.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return OutPoint(txHash: json['tx_hash'], index: json['index']);
   }
 

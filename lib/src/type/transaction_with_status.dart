@@ -7,6 +7,7 @@ class TransactionWithStatus {
   TransactionWithStatus({this.txStatus, this.transaction});
 
   factory TransactionWithStatus.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return TransactionWithStatus(
         txStatus: json['tx_status'], transaction: json['transaction']);
   }

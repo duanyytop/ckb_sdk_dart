@@ -7,6 +7,7 @@ class BannedAddress {
   BannedAddress({this.address, this.banReason, this.banUtil, this.createAt});
 
   factory BannedAddress.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return BannedAddress(
         address: json['address'],
         banReason: json['ban_reason'],

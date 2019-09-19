@@ -30,6 +30,7 @@ class Header {
       this.version});
 
   factory Header.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Header(
         difficulty: json['difficulty'],
         hash: json['hash'],

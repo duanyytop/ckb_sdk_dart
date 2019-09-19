@@ -17,15 +17,16 @@ class BlockchainInfo {
       this.alerts});
 
   factory BlockchainInfo.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return BlockchainInfo(
         isInitialBlockDownload: json['is_initial_block_download'],
         epoch: json['epoch'],
         difficulty: json['difficulty'],
         medianTime: json['median_time'],
         chain: json['chain'],
-        alerts: List.from(json['alerts'])
-            .map((alert) => AlertMessage.fromJson(alert))
-            .toList());
+        alerts: (json['alerts'] as List)
+            ?.map((alert) => AlertMessage.fromJson(alert))
+            ?.toList());
   }
 
   Map<String, dynamic> toJson() {

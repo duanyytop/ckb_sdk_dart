@@ -4,6 +4,7 @@ class Cycles {
   Cycles({this.cycles});
 
   factory Cycles.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Cycles(cycles: json['cycles']);
   }
 

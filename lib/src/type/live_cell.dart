@@ -8,6 +8,7 @@ class LiveCell {
   LiveCell({this.createdBy, this.cellOutput});
 
   factory LiveCell.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return LiveCell(
         createdBy: json['created_by'], cellOutput: json['cell_output']);
   }

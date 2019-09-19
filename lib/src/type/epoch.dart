@@ -7,6 +7,7 @@ class Epoch {
   Epoch({this.number, this.startNumber, this.length, this.difficulty});
 
   factory Epoch.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Epoch(
         number: json['number'],
         startNumber: json['start_number'],

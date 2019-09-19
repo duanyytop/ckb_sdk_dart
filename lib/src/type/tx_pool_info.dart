@@ -6,6 +6,7 @@ class TxPoolInfo {
   TxPoolInfo({this.pending, this.staging, this.orphan});
 
   factory TxPoolInfo.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return TxPoolInfo(
         pending: json['pending'],
         staging: json['staging'],

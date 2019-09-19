@@ -9,6 +9,7 @@ class CellOutputWithOutPoint {
   CellOutputWithOutPoint({this.capacity, this.lock, this.outPoint});
 
   factory CellOutputWithOutPoint.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return CellOutputWithOutPoint(
         capacity: json['capacity'],
         lock: Script.fromJson(json['lock']),

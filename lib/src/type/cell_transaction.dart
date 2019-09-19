@@ -7,6 +7,7 @@ class CellTransaction {
   CellTransaction({this.createBy, this.consumedBy});
 
   factory CellTransaction.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return CellTransaction(
         createBy: TransactionPoint.fromJson(json['create_by']),
         consumedBy: TransactionPoint.fromJson(json['consumed_by']));

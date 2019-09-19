@@ -13,6 +13,7 @@ class CellbaseOutputCapacity {
       this.txFee});
 
   factory CellbaseOutputCapacity.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return CellbaseOutputCapacity(
         primary: json['primary'],
         proposalReward: json['proposal_reward'],

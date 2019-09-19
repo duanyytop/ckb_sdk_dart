@@ -6,8 +6,9 @@ class NodeInfo {
   NodeInfo({this.addresses, this.nodeId, this.version});
 
   factory NodeInfo.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return NodeInfo(
-        addresses: List.from(json['addresses'])
+        addresses: (json['addresses'] as List)
             .map((address) => Address.fromJson(address))
             .toList(),
         nodeId: json['node_id'],
@@ -26,6 +27,7 @@ class Address {
   Address({this.address, this.score});
 
   factory Address.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return Address(address: json['address'], score: json['score']);
   }
 

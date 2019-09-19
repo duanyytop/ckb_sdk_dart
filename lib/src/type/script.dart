@@ -13,12 +13,11 @@ class Script {
   Script({this.codeHash, this.args, this.hashType = data});
 
   factory Script.fromJson(Map<String, dynamic> json) {
-    return json == null
-        ? null
-        : Script(
-            codeHash: json['code_hash'],
-            args: List<String>.from(json['args']),
-            hashType: json['hash_type']);
+    if (json == null) return null;
+    return Script(
+        codeHash: json['code_hash'],
+        args: (json['args'] as List).map((arg) => arg.toString())?.toList(),
+        hashType: json['hash_type']);
   }
 
   Map<String, dynamic> toJson() {

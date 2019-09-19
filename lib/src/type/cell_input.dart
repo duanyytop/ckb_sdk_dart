@@ -7,6 +7,7 @@ class CellInput {
   CellInput({this.previousOutput, this.since});
 
   factory CellInput.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
     return CellInput(
         previousOutput: OutPoint.fromJson(json['previous_output']),
         since: json['since']);
