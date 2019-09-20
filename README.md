@@ -1,5 +1,6 @@
 # CKB SDK Dart
 
+[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/nervosnetwork/ckb-sdk-java/blob/develop/LICENSE)
 [![Platform](https://img.shields.io/badge/Platforms-Flutter%20%7C%20Dart_VM-4e4e4e.svg?colorA=28a745)](#installation)
 
 Dart SDK for [Nervos CKB](https://github.com/nervosnetwork/ckb)
@@ -79,6 +80,6 @@ dart ./example/wallet.dart    // run simple wallet example, you should run a ckb
 
 ## Features and bugs
 
-Please create pull requests or issues in this GitHub repo if you want to contribute new features or find bugs. 
+Please create pull requests or issues in this GitHub repo if you want to contribute new features or find bugs.
 
 Welcome to join us. Thanks.
