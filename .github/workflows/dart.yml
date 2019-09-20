@@ -4,15 +4,17 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
+
     container:
-      image:  google/dart:latest
-    
+      image: google/dart:latest
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: pub get
-    - name: Run tests
-      run: pub run test
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: pub get
+      - name: Run tests
+        run: |
+          pub run test
+          pub global activate coverage
+          bash <(curl -s https://codecov.io/bash)
