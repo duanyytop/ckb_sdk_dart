@@ -10,7 +10,7 @@ Dart SDK for [Nervos CKB](https://github.com/nervosnetwork/ckb)
 
 ## Installation
 
-You should install dart first through [Dart](https://dart.dev/get-dart).
+You should install dart firstly through [Dart](https://dart.dev/get-dart).
 
 ## Usage
 
