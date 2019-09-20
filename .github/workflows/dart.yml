@@ -17,4 +17,4 @@ jobs:
         run: |
           pub run test
           pub global activate coverage
-          bash <(curl -s https://codecov.io/bash)
+          bash -c "bash <(curl -s https://codecov.io/bash) -t token"
