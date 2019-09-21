@@ -1,0 +1,16 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/dart:2.5.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependeces
+          command: pub get
+
+      - run:
+          name: Run the SDK tests
+          command: pub run test
