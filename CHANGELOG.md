@@ -1,3 +1,7 @@
-## 0.1.0
+## 0.21.0
 
-- Initial CKB SDK with Dart language
+- Implement ckb rpc request
+- Implement ckb address according to RFC
+- Implement ckb related crypto
+- Implement ckb serialization
+- Implement ckb simple wallet which includes `sendTransaction` and `getBalance`

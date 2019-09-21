@@ -1,3 +1,3 @@
-## 0.1.0
+## 0.21.0
 
-- Initial version, created by Stagehand
+- Initial simple ckb cli
