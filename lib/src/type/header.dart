@@ -15,7 +15,8 @@ class Header {
   String version;
 
   Header(
-      {this.difficulty,
+      {this.dao,
+      this.difficulty,
       this.hash,
       this.number,
       this.epoch,
@@ -32,6 +33,7 @@ class Header {
   factory Header.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return Header(
+        dao: json['dao'],
         difficulty: json['difficulty'],
         hash: json['hash'],
         number: json['number'],
@@ -49,6 +51,7 @@ class Header {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'dao': dao,
       'difficulty': difficulty,
       'hash': hash,
       'number': number,

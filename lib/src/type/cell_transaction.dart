@@ -1,22 +1,22 @@
 import 'transaction_point.dart';
 
 class CellTransaction {
-  TransactionPoint createBy;
+  TransactionPoint createdBy;
   TransactionPoint consumedBy;
 
-  CellTransaction({this.createBy, this.consumedBy});
+  CellTransaction({this.createdBy, this.consumedBy});
 
   factory CellTransaction.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return CellTransaction(
-        createBy: TransactionPoint.fromJson(json['create_by']),
+        createdBy: TransactionPoint.fromJson(json['created_by']),
         consumedBy: TransactionPoint.fromJson(json['consumed_by']));
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'create_by': createBy,
-      'consumed_by': consumedBy,
+      'created_by': createdBy?.toJson(),
+      'consumed_by': consumedBy?.toJson(),
     };
   }
 }

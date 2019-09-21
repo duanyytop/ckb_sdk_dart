@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
@@ -5,8 +7,16 @@ import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('A group tests of Script', () {
-    setUp(() {});
+  dynamic _json;
+  group('A group tests of script', () {
+    setUp(() {
+      String script = '''{
+        "args": [],
+        "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
+        "hash_type": "data"
+      }''';
+      _json = jsonDecode(script);
+    });
 
     test('Script hash', () async {
       Blake2b blake2b = Blake2b();
@@ -30,6 +40,18 @@ void main() {
           hashType: Script.type);
       expect(script.computeHash(),
           '0x1892ea40d82b53c678ff88312450bbb17e164d7a3e0a90941aa58839f56f8df2');
+    });
+
+    test('fromJson', () async {
+      Script script = Script.fromJson(_json);
+      expect(script.codeHash,
+          '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
+    });
+
+    test('toJson', () async {
+      Script script = Script.fromJson(_json);
+      var map = script.toJson();
+      expect(map['hash_type'], 'data');
     });
   });
 }
