@@ -1,4 +1,3 @@
-import 'package:ckb_sdk_dart/src/serialization/base/dyn_type.dart';
 import 'package:ckb_sdk_dart/src/serialization/base/serialize_type.dart';
 import 'package:ckb_sdk_dart/src/serialization/dynamic/bytes.dart';
 import 'package:ckb_sdk_dart/src/serialization/dynamic/dynamic.dart';

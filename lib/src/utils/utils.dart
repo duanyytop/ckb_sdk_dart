@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:convert/convert.dart';
 import 'package:pointycastle/src/utils.dart' as utils;
 
 String toWholeHex(String hexString) {

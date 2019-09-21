@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 void main() {
   dynamic _json;
-  group('A group tests of banned address', () {
+  group('A group tests of block', () {
     setUp(() {
       String block = '''{
         "header": {
@@ -84,8 +84,8 @@ void main() {
       print(map['transactions'].runtimeType);
       expect(map['header']['hash'],
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');
-      expect(map['transactions'].runtimeType.toString(),
-          'MappedListIterable<Transaction, Map<String, dynamic>>');
+      expect(map['transactions'][0]['outputs'][0]['lock']['code_hash'],
+          '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
     });
   });
 }

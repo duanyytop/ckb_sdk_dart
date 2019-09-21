@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:ckb_sdk_dart/src/crypto/ripemd160.dart';
 import 'package:ckb_sdk_dart/src/crypto/sha256.dart';
 import 'package:test/test.dart';
