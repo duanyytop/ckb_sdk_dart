@@ -1,18 +1,22 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
 
 final Map<String, dynamic> optHeader = {'Content-type': 'application/json'};
 
-var dio = Dio(BaseOptions(connectTimeout: 30000, headers: optHeader));
 var random = Random.secure();
 
 class Rpc {
   String nodeUrl;
   bool hasLogger;
+  var dio = Dio(BaseOptions(connectTimeout: 30000, headers: optHeader));
 
-  Rpc(this.nodeUrl, {this.hasLogger = false}) {
+  Rpc(
+    this.nodeUrl, {
+    this.hasLogger = false,
+  }) {
     if (hasLogger) {
       dio.interceptors
           .add(LogInterceptor(requestBody: true, responseBody: true));
@@ -27,8 +31,14 @@ class Rpc {
       "params": params
     };
     var response = await dio.post(nodeUrl, data: body);
+
     if (response.statusCode == 200) {
-      var res = RpcResponse.fromJson(response.data);
+      var res;
+      if (response.data.runtimeType.toString() == 'String') {
+        res = RpcResponse.fromJson(jsonDecode(response.data));
+      } else {
+        res = RpcResponse.fromJson(response.data);
+      }
       if (res.error != null) {
         throw ('Rpc ${url} response error: ${res.error.toJson()}');
       }

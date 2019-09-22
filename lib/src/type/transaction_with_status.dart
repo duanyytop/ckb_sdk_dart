@@ -15,8 +15,8 @@ class TransactionWithStatus {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'tx_status': txStatus.toJson(),
-      'transaction': transaction.toJson()
+      'tx_status': txStatus?.toJson(),
+      'transaction': transaction?.toJson()
     };
   }
 }
