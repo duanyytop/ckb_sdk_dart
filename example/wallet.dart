@@ -5,9 +5,10 @@ import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/cell_gather.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/receiver.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/tx_generator.dart';
+
+import 'transaction/cell_gather.dart';
+import 'transaction/receiver.dart';
+import 'transaction/tx_generator.dart';
 
 main() async {
   Api api = Api("http://localhost:8114", hasLogger: false);

@@ -5,9 +5,10 @@ import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
-import 'package:ckb_sdk_dart/src/rpc/transaction/cells.dart';
 import 'package:ckb_sdk_dart/src/type/cell_output_with_out_point.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
+
+import 'cells.dart';
 
 class CellGatherer {
   Api api;

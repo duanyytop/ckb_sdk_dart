@@ -1,4 +1,4 @@
-import '../../type/cell_input.dart';
+import 'package:ckb_sdk_dart/src/type/cell_input.dart';
 
 class Cells {
   List<CellInput> inputs;
