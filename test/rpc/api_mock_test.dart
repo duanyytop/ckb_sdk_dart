@@ -58,8 +58,9 @@ void main() {
     });
 
     test('getLiveCell', () async {
-      CellWithStatus cellWithStatus =
-          await _api.getLiveCell(outPoint: OutPoint(), withData: true);
+      CellWithStatus cellWithStatus = await _api.getLiveCell(
+          outPoint: OutPoint(txHash: '0x11111111111111111111111', index: '0x0'),
+          withData: true);
       expect(cellWithStatus.runtimeType.toString(), 'CellWithStatus');
     });
 
@@ -119,17 +120,50 @@ void main() {
     });
 
     test('dryRunTransaction', () async {
-      Cycles cycles = await _api.dryRunTransaction(Transaction());
+      Cycles cycles =
+          await _api.dryRunTransaction(Transaction(version: '0x0', cellDeps: [
+        CellDep(
+            outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
+      ], headerDeps: [], inputs: [
+        CellInput(
+            previousOutput: OutPoint(txHash: '0x00000', index: '0x0'),
+            since: '0x0')
+      ], outputs: [
+        CellOutput(
+            capacity: '0x233',
+            lock: Script(
+                codeHash: '0x0000', args: ['0x000222'], hashType: 'data'),
+            type: null)
+      ], outputsData: [], witnesses: [
+        Witness(data: ['0x00000'])
+      ]));
       expect(cycles.toJson().isNotEmpty, true);
     });
 
     test('computeTransactionHash', () async {
-      String hash = await _api.computeTransactionHash(Transaction());
+      String hash = await _api
+          .computeTransactionHash(Transaction(version: '0x0', cellDeps: [
+        CellDep(
+            outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
+      ], headerDeps: [], inputs: [
+        CellInput(
+            previousOutput: OutPoint(txHash: '0x00000', index: '0x0'),
+            since: '0x0')
+      ], outputs: [
+        CellOutput(
+            capacity: '0x233',
+            lock: Script(
+                codeHash: '0x0000', args: ['0x000222'], hashType: 'data'),
+            type: null)
+      ], outputsData: [], witnesses: [
+        Witness(data: ['0x00000'])
+      ]));
       expect(hash.isNotEmpty, true);
     });
 
     test('computeScriptHash', () async {
-      String hash = await _api.computeScriptHash(Script());
+      String hash = await _api.computeScriptHash(Script(
+          codeHash: '0x000022222', args: ['0x2222222'], hashType: 'data'));
       expect(hash.isNotEmpty, true);
     });
 

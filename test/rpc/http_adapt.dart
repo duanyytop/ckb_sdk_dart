@@ -46,9 +46,9 @@ class MockAdapter extends HttpClientAdapter {
         return ResponseBody.fromString(txPoolInfo, 200);
       case 'dry_run_transaction':
         return ResponseBody.fromString(dryRunTransaction, 200);
-      case 'compute_transaction_hash':
+      case '_compute_transaction_hash':
         return ResponseBody.fromString(computeTransactionHash, 200);
-      case 'compute_script_hash':
+      case '_compute_script_hash':
         return ResponseBody.fromString(computeScriptHash, 200);
       case 'get_transactions_by_lock_hash':
         return ResponseBody.fromString(getTransactionsByLockHash, 200);
@@ -252,7 +252,7 @@ const getCellsByLockHash = '''{
         }''';
 
 const getLiveCell = '''{
-             "id": 2,
+            "id": 2,
             "jsonrpc": "2.0",
             "result": {
                 "cell": {
