@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:ckb_sdk_dart/ckb_rpc.dart';
 import 'package:test/test.dart';
@@ -52,5 +53,22 @@ void main() {
       expect(map['code'], 2);
       expect(map['message'], 'rpc error');
     });
+
+    test('rpc post', () async {
+      Rpc rpc = Rpc('http://localhost:8114');
+      var response = await rpc.post('get_tip_block_number', []);
+      expect(response.runtimeType.toString(), 'String');
+      expect((response as String).isNotEmpty, true);
+    }, skip: 'Skip rpc test');
+
+    test('rpc post error', () async {
+      Rpc rpc = Rpc('http://localhost:8114');
+      try {
+        await rpc.post('get_tip_block', []);
+      } catch (error) {
+        expect(error,
+            'Rpc get_tip_block response error: {code: -32601, message: Method not found}');
+      }
+    }, skip: 'Skip rpc test');
   });
 }
