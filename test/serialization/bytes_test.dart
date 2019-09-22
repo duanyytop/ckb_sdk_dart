@@ -16,5 +16,10 @@ void main() {
       Bytes bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
       expect(bytes.getLength(), 24);
     });
+
+    test('Bytes getValue', () {
+      Bytes bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
+      expect(bytes.getValue().runtimeType.toString(), 'Uint8List');
+    });
   });
 }

@@ -24,5 +24,10 @@ void main() {
     test('Struct length', () {
       expect(_struct.getLength(), 33);
     });
+
+    test('Struct getValue', () {
+      expect(_struct.getValue().runtimeType.toString(),
+          'List<SerializeType<dynamic>>');
+    });
   });
 }

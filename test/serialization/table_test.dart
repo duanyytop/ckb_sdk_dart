@@ -28,8 +28,13 @@ void main() {
               '5100000010000000300000003100000068d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88012000000008000000140000003954acece65096bfa81258983ddb83915fc56bd8'));
     });
 
-    test('Struct length', () {
+    test('Table length', () {
       expect(_table.getLength(), 81);
+    });
+
+    test('Table getValue', () {
+      expect(_table.getValue().runtimeType.toString(),
+          'List<SerializeType<dynamic>>');
     });
   });
 }

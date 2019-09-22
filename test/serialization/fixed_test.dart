@@ -34,5 +34,10 @@ void main() {
     test('Fixed length', () {
       expect(_fixed.getLength(), 48);
     });
+
+    test('Fixed getValue', () {
+      expect(
+          _fixed.getValue().runtimeType.toString(), 'List<FixedType<dynamic>>');
+    });
   });
 }

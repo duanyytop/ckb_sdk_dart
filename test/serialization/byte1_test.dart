@@ -14,5 +14,15 @@ void main() {
       Byte1 byte1 = Byte1.fromHex('01');
       expect(byte1.toBytes(), [0x01]);
     });
+
+    test('Byte1 length', () {
+      Byte1 byte1 = Byte1.fromHex('01');
+      expect(byte1.getLength(), 1);
+    });
+
+    test('Byte1 getValue', () {
+      Byte1 byte1 = Byte1.fromHex('01');
+      expect(byte1.getValue().runtimeType.toString(), 'Uint8List');
+    });
   });
 }

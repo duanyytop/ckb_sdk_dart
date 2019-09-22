@@ -13,5 +13,10 @@ void main() {
     test('Uint64 length', () {
       expect(Uint64(BigInt.from(25689834934789)).getLength(), 8);
     });
+
+    test('Uint64 getValue', () {
+      expect(Uint64(BigInt.from(25689834934789)).getValue(),
+          BigInt.from(25689834934789));
+    });
   });
 }

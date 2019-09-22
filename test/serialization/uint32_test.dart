@@ -12,5 +12,9 @@ void main() {
     test('Uint32 length', () {
       expect(Uint32(256).getLength(), 4);
     });
+
+    test('Uint32 getValue', () {
+      expect(Uint32(256).getValue(), 256);
+    });
   });
 }

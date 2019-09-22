@@ -67,5 +67,11 @@ void main() {
           '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88');
       expect(byte32.getLength(), 32);
     });
+
+    test('Byte32 getValue', () {
+      Byte32 byte32 = Byte32.fromHex(
+          '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88');
+      expect(byte32.getValue().runtimeType.toString(), 'Uint8List');
+    });
   });
 }

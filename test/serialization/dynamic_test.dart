@@ -38,5 +38,10 @@ void main() {
     test('Dynamic length', () {
       expect(_dynamic.getLength(), 113);
     });
+
+    test('Dynamic getValue', () {
+      expect(_dynamic.getValue().runtimeType.toString(),
+          'List<SerializeType<dynamic>>');
+    });
   });
 }
