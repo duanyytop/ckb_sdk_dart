@@ -26,8 +26,7 @@ void main() {
     });
 
     test('getBlock', () async {
-      String hash = await _api.getBlockHash("2");
-      Block block = await _api.getBlock(hash);
+      Block block = await _api.getBlock('hash');
       expect(block.toJson().isNotEmpty, true);
     });
 
@@ -42,9 +41,8 @@ void main() {
     });
 
     test('getCellbaseOutputCapacityDetails', () async {
-      Block block = await _api.getBlockByNumber("2");
       CellbaseOutputCapacity cellbaseOutputCapacity =
-          await _api.getCellbaseOutputCapacityDetails(block.header.hash);
+          await _api.getCellbaseOutputCapacityDetails('hash');
       expect(cellbaseOutputCapacity.toJson().isNotEmpty, true);
     });
 
@@ -60,10 +58,8 @@ void main() {
     });
 
     test('getLiveCell', () async {
-      Block block = await _api.getBlockByNumber("2");
-      CellWithStatus cellWithStatus = await _api.getLiveCell(
-          outPoint: block.transactions[0].inputs[0].previousOutput,
-          withData: true);
+      CellWithStatus cellWithStatus =
+          await _api.getLiveCell(outPoint: OutPoint(), withData: true);
       expect(cellWithStatus.runtimeType.toString(), 'CellWithStatus');
     });
 
@@ -78,8 +74,7 @@ void main() {
     });
 
     test('getHeader', () async {
-      String hash = await _api.getBlockHash('2');
-      Header header = await _api.getHeader(hash);
+      Header header = await _api.getHeader('hash');
       expect(header.toJson().isNotEmpty, true);
     });
 
@@ -124,21 +119,17 @@ void main() {
     });
 
     test('dryRunTransaction', () async {
-      Block block = await _api.getBlockByNumber('2');
-      Cycles cycles = await _api.dryRunTransaction(block.transactions[0]);
+      Cycles cycles = await _api.dryRunTransaction(Transaction());
       expect(cycles.toJson().isNotEmpty, true);
     });
 
     test('computeTransactionHash', () async {
-      Block block = await _api.getBlockByNumber('2');
-      String hash = await _api.computeTransactionHash(block.transactions[0]);
+      String hash = await _api.computeTransactionHash(Transaction());
       expect(hash.isNotEmpty, true);
     });
 
     test('computeScriptHash', () async {
-      Block block = await _api.getBlockByNumber('2');
-      String hash =
-          await _api.computeScriptHash(block.transactions[0].outputs[0].lock);
+      String hash = await _api.computeScriptHash(Script());
       expect(hash.isNotEmpty, true);
     });
 
