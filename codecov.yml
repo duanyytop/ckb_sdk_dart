@@ -3,8 +3,10 @@ coverage:
     project:
       default:
         target: 100
-        threshold: 20
+        threshold: 10
+        paths: "lib/"
     patch:
       default:
         target: 100
-        threshold: 20
+        threshold: 10
+        paths: "lib/"
