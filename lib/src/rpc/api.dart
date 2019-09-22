@@ -72,8 +72,8 @@ class Api {
   }
 
   Future<CellWithStatus> getLiveCell({OutPoint outPoint, bool withData}) async {
-    return CellWithStatus.fromJson(
-        await _rpc.post("get_live_cell", [Convert.parseOutPoint(outPoint)?.toJson(), withData]));
+    return CellWithStatus.fromJson(await _rpc.post("get_live_cell",
+        [Convert.parseOutPoint(outPoint)?.toJson(), withData]));
   }
 
   Future<Epoch> getCurrentEpoch() async {
@@ -141,13 +141,13 @@ class Api {
 
   // Experiment RPC
   Future<Cycles> dryRunTransaction(Transaction transaction) async {
-    return Cycles.fromJson(await _rpc
-        .post("dry_run_transaction", [Convert.parseTransaction(transaction)]));
+    return Cycles.fromJson(await _rpc.post("dry_run_transaction",
+        [Convert.parseTransaction(transaction).toRawJson()]));
   }
 
   Future<String> computeTransactionHash(Transaction transaction) async {
-    return await _rpc.post(
-        "_compute_transaction_hash", [Convert.parseTransaction(transaction)]);
+    return await _rpc.post("_compute_transaction_hash",
+        [Convert.parseTransaction(transaction).toRawJson()]);
   }
 
   Future<String> computeScriptHash(Script script) async {
