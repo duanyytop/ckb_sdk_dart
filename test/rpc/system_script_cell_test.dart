@@ -15,6 +15,6 @@ void main() {
           await SystemContract.getSystemScriptCell(_api);
       expect(_systemScriptCell.cellHash.isNotEmpty, true);
       expect(_systemScriptCell.outPoint.toJson().isNotEmpty, true);
-    });
+    }, skip: 'Skip rpc test');
   });
 }
