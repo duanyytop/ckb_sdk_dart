@@ -1,23 +1,22 @@
 import 'package:ckb_sdk_dart/ckb_rpc.dart';
 import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/type/block.dart';
 import 'package:ckb_sdk_dart/src/type/cellbase_output_capacity.dart';
 import 'package:ckb_sdk_dart/src/type/transaction_with_status.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 
+import 'http_adapt.dart';
+
 void main() {
   Api _api;
-  group('A group tests of api', () {
+  group('A group tests of api mock', () {
     setUp(() {
-      _api = Api('http://localhost:8114');
+      _api = Api('http://localhost:8114', adapter: MockAdapter());
     });
 
     test('getTipBlockNumber', () async {
-      String number = await _api.getTipBlockNumber();
+      var number = await _api.getTipBlockNumber();
       expect(hexToBigInt(number).compareTo(BigInt.zero) > 0, true);
     });
 
@@ -27,8 +26,7 @@ void main() {
     });
 
     test('getBlock', () async {
-      String hash = await _api.getBlockHash("2");
-      Block block = await _api.getBlock(hash);
+      Block block = await _api.getBlock('hash');
       expect(block.toJson().isNotEmpty, true);
     });
 
@@ -38,16 +36,13 @@ void main() {
     });
 
     test('getTransaction', () async {
-      Block block = await _api.getBlockByNumber("2");
-      TransactionWithStatus transaction =
-          await _api.getTransaction(block.transactions[0].hash);
+      TransactionWithStatus transaction = await _api.getTransaction('hash');
       expect(transaction.toJson().isNotEmpty, true);
     });
 
     test('getCellbaseOutputCapacityDetails', () async {
-      Block block = await _api.getBlockByNumber("2");
       CellbaseOutputCapacity cellbaseOutputCapacity =
-          await _api.getCellbaseOutputCapacityDetails(block.header.hash);
+          await _api.getCellbaseOutputCapacityDetails('hash');
       expect(cellbaseOutputCapacity.toJson().isNotEmpty, true);
     });
 
@@ -57,21 +52,14 @@ void main() {
     });
 
     test('getCellsByLockHash', () async {
-      SystemScriptCell _systemScriptCell =
-          await SystemContract.getSystemScriptCell(_api);
-      String lockHash = Key.generateLockScriptWithAddress(
-              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
-              _systemScriptCell.cellHash)
-          .computeHash();
       List<CellOutputWithOutPoint> list = await _api.getCellsByLockHash(
-          lockHash: lockHash, fromNumber: '0', toNumber: '100');
+          lockHash: 'lockHash', fromNumber: '0', toNumber: '100');
       expect(list.isNotEmpty, true);
     });
 
     test('getLiveCell', () async {
-      Block block = await _api.getBlockByNumber("2");
       CellWithStatus cellWithStatus = await _api.getLiveCell(
-          outPoint: block.transactions[0].inputs[0].previousOutput,
+          outPoint: OutPoint(txHash: '0x11111111111111111111111', index: '0x0'),
           withData: true);
       expect(cellWithStatus.runtimeType.toString(), 'CellWithStatus');
     });
@@ -87,8 +75,7 @@ void main() {
     });
 
     test('getHeader', () async {
-      String hash = await _api.getBlockHash('2');
-      Header header = await _api.getHeader(hash);
+      Header header = await _api.getHeader('hash');
       expect(header.toJson().isNotEmpty, true);
     });
 
@@ -107,6 +94,11 @@ void main() {
       expect(list.isNotEmpty, true);
     });
 
+    test('getEpochByNumber', () async {
+      Epoch epoch = await _api.getEpochByNumber("0");
+      expect(epoch.toJson().isNotEmpty, true);
+    });
+
     test('localNodeInfo', () async {
       NodeInfo nodeInfo = await _api.localNodeInfo();
       expect(nodeInfo.toJson().isNotEmpty, true);
@@ -117,40 +109,68 @@ void main() {
       expect(list.isNotEmpty, true);
     });
 
+    test('localNodeInfo', () async {
+      NodeInfo nodeInfo = await _api.localNodeInfo();
+      expect(nodeInfo.toJson().isNotEmpty, true);
+    });
+
     test('txPoolInfo', () async {
       TxPoolInfo txPoolInfo = await _api.txPoolInfo();
       expect(txPoolInfo.toJson().isNotEmpty, true);
     });
 
     test('dryRunTransaction', () async {
-      Block block = await _api.getBlockByNumber('2');
-      Cycles cycles = await _api.dryRunTransaction(block.transactions[0]);
+      Cycles cycles =
+          await _api.dryRunTransaction(Transaction(version: '0x0', cellDeps: [
+        CellDep(
+            outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
+      ], headerDeps: [], inputs: [
+        CellInput(
+            previousOutput: OutPoint(txHash: '0x00000', index: '0x0'),
+            since: '0x0')
+      ], outputs: [
+        CellOutput(
+            capacity: '0x233',
+            lock: Script(
+                codeHash: '0x0000', args: ['0x000222'], hashType: 'data'),
+            type: null)
+      ], outputsData: [], witnesses: [
+        Witness(data: ['0x00000'])
+      ]));
       expect(cycles.toJson().isNotEmpty, true);
     });
 
     test('computeTransactionHash', () async {
-      Block block = await _api.getBlockByNumber('2');
-      String hash = await _api.computeTransactionHash(block.transactions[0]);
+      String hash = await _api
+          .computeTransactionHash(Transaction(version: '0x0', cellDeps: [
+        CellDep(
+            outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
+      ], headerDeps: [], inputs: [
+        CellInput(
+            previousOutput: OutPoint(txHash: '0x00000', index: '0x0'),
+            since: '0x0')
+      ], outputs: [
+        CellOutput(
+            capacity: '0x233',
+            lock: Script(
+                codeHash: '0x0000', args: ['0x000222'], hashType: 'data'),
+            type: null)
+      ], outputsData: [], witnesses: [
+        Witness(data: ['0x00000'])
+      ]));
       expect(hash.isNotEmpty, true);
     });
 
     test('computeScriptHash', () async {
-      Block block = await _api.getBlockByNumber('2');
-      String hash =
-          await _api.computeScriptHash(block.transactions[0].outputs[0].lock);
+      String hash = await _api.computeScriptHash(Script(
+          codeHash: '0x000022222', args: ['0x2222222'], hashType: 'data'));
       expect(hash.isNotEmpty, true);
     });
 
     test('getTransactionsByLockHash', () async {
-      SystemScriptCell _systemScriptCell =
-          await SystemContract.getSystemScriptCell(_api);
-      String lockHash = Key.generateLockScriptWithAddress(
-              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
-              _systemScriptCell.cellHash)
-          .computeHash();
       List<CellTransaction> list =
-          await _api.getTransactionsByLockHash(lockHash, "0", "100", true);
+          await _api.getTransactionsByLockHash('lockHash', "0", "100", true);
       expect(list.isNotEmpty, true);
     });
-  }, skip: 'Skip rpc test');
+  });
 }
