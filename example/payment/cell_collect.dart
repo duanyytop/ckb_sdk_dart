@@ -1,55 +1,20 @@
 import 'dart:math';
 
 import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 const step = 100;
 
 class CellCollect {
-  static Future<Cells> getCellInputs(
-      {Api api, String lockHash, BigInt capacity}) async {
-    List<CellInput> cellInputs = [];
-    BigInt collectCapacity = BigInt.zero;
-    int to = hexToBigInt(await api.getTipBlockNumber()).toInt();
-    int from = 1;
+  Api api;
+  String lockHash;
 
-    while (from <= to && collectCapacity.compareTo(capacity) < 0) {
-      int current = min(from + step, to);
-      List<CellOutputWithOutPoint> cellOutputs = await api.getCellsByLockHash(
-          lockHash: lockHash,
-          fromNumber: from.toString(),
-          toNumber: to.toString());
+  CellCollect({this.api, this.lockHash});
 
-      if (cellOutputs.isNotEmpty) {
-        for (var cellOutput in cellOutputs) {
-          collectCapacity += hexToBigInt(cellOutput.capacity);
-          cellInputs
-              .add(CellInput(previousOutput: cellOutput.outPoint, since: "0"));
-          if (collectCapacity.compareTo(capacity) > 0) break;
-        }
-      }
-      from = current + 1;
-    }
-    return Cells(inputs: cellInputs, capacity: collectCapacity);
-  }
-
-  static Future<BigInt> getCapacityWithAddress(
-      {Api api, String address}) async {
-    SystemScriptCell systemScriptCell =
-        await SystemContract.getSystemScriptCell(api);
-    Script lockScript =
-        Key.generateLockScriptWithAddress(address, systemScriptCell.cellHash);
-    return getCapacityWithLockHash(
-        api: api, lockHash: lockScript.computeHash());
-  }
-
-  static Future<BigInt> getCapacityWithLockHash(
-      {Api api, String lockHash}) async {
-    BigInt capacity = BigInt.zero;
+  Future<List<CellOutputWithOutPoint>> getUnspentCells(
+      {bool skipDataType = true}) async {
+    List<CellOutputWithOutPoint> results = [];
     int to = hexToBigInt(await api.getTipBlockNumber()).toInt();
     int from = 1;
 
@@ -61,18 +26,73 @@ class CellCollect {
           toNumber: current.toString());
 
       if (cellOutputs.isNotEmpty) {
-        capacity += cellOutputs.fold(capacity,
-            (previous, element) => previous + hexToBigInt(element.capacity));
+        if (skipDataType) {
+          for (var cellOutput in cellOutputs) {
+            CellWithStatus cell = await api.getLiveCell(
+                outPoint: cellOutput.outPoint, withData: true);
+            CellOutput output = cell.cell.output;
+            String outputData = cell.cell.data.content;
+            if ((outputData.isEmpty ||
+                    (outputData.isNotEmpty && outputData == '0x')) &&
+                output.type == null) {
+              results.add(cellOutput);
+            }
+          }
+        } else {
+          results.addAll(cellOutputs);
+        }
       }
       from = current + 1;
     }
-    return capacity;
+    return results;
+  }
+
+  Future<CellCollectContainer> gatherInputs(
+      {BigInt capacity,
+      BigInt minCapacity,
+      BigInt minChangeCapacity,
+      BigInt fee}) async {
+    if (capacity < minCapacity) {
+      throw ('capacity cannot be less than $minCapacity');
+    }
+    if (minChangeCapacity == null) {
+      minChangeCapacity = BigInt.zero;
+    }
+    BigInt totalCapacity = capacity + fee;
+    BigInt collectCapacity = BigInt.zero;
+
+    List<CellInput> cellInputs = [];
+    List<Witness> witnesses = [];
+
+    List<CellOutputWithOutPoint> cellOutputs = await getUnspentCells();
+    for (var cellOuput in cellOutputs) {
+      cellInputs.add(CellInput(previousOutput: cellOuput.outPoint, since: '0'));
+      witnesses.add(Witness(data: []));
+      collectCapacity += hexToBigInt(cellOuput.capacity);
+      BigInt diff = collectCapacity - totalCapacity;
+      if (diff >= minChangeCapacity || diff == BigInt.zero) {
+        break;
+      }
+    }
+    if (collectCapacity < totalCapacity) {
+      throw ('Capacity not enough!');
+    }
+    return CellCollectContainer(
+        inputs: cellInputs, capacity: collectCapacity, witnesses: witnesses);
+  }
+
+  Future<BigInt> getBalance() async {
+    List<CellOutputWithOutPoint> cellInputs = await getUnspentCells();
+    BigInt balance = cellInputs.fold(BigInt.zero,
+        (previous, element) => previous + hexToBigInt(element.capacity));
+    return balance;
   }
 }
 
-class Cells {
+class CellCollectContainer {
   List<CellInput> inputs;
   BigInt capacity;
+  List<Witness> witnesses;
 
-  Cells({this.inputs, this.capacity});
+  CellCollectContainer({this.inputs, this.capacity, this.witnesses});
 }

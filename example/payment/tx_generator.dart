@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ckb_sdk_dart/ckb_addrss.dart';
 import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
@@ -7,10 +5,11 @@ import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import 'cell_collect.dart';
 
-const minCapacity = "6000000000";
+final minCapacity = BigInt.parse("6000000000");
 
 class TxGenerator {
   String privateKey;
@@ -18,28 +17,26 @@ class TxGenerator {
 
   TxGenerator({this.privateKey, this.api});
 
-  Future<Transaction> generateTx(List<Receiver> receivers) async {
+  Future<Transaction> generateTx(
+      {List<Receiver> receivers, String fee = '0'}) async {
+    BigInt feeBigInt = numberToBigInt(fee);
     SystemScriptCell _systemScriptCell =
         await SystemContract.getSystemScriptCell(api);
     Script _lockScript = Key.generateLockScriptWithPrivateKey(
         privateKey, _systemScriptCell.cellHash);
 
-    BigInt needCapacities = BigInt.zero;
-    for (Receiver receiver in receivers) {
-      needCapacities += receiver.capacity;
-    }
-    if (needCapacities.compareTo(BigInt.parse(minCapacity)) < 0) {
+    BigInt needCapacity = receivers.fold(
+        BigInt.zero, (previous, element) => previous + element.capacity);
+
+    if (needCapacity < minCapacity) {
       throw ("Less than min capacity");
     }
 
-    Cells cellInputs = await CellCollect.getCellInputs(
-        api: api,
-        lockHash: _lockScript.computeHash(),
-        capacity: needCapacities);
+    CellCollect cellCollect =
+        CellCollect(api: api, lockHash: _lockScript.computeHash());
 
-    if (cellInputs.capacity.compareTo(needCapacities) < 0) {
-      throw ("No enough Capacities");
-    }
+    CellCollectContainer collectContainer = await cellCollect.gatherInputs(
+        capacity: needCapacity, minCapacity: minCapacity, fee: feeBigInt);
 
     List<CellOutput> cellOutputs = [];
     AddressGenerator generator = AddressGenerator(network: Network.testnet);
@@ -53,20 +50,15 @@ class TxGenerator {
               hashType: Script.type)));
     }
 
-    if (cellInputs.capacity.compareTo(needCapacities) > 0) {
+    List<String> outputsData =
+        receivers.map((receiver) => receiver.data).toList();
+
+    if (collectContainer.capacity > (needCapacity + feeBigInt)) {
       cellOutputs.add(CellOutput(
-          capacity: (cellInputs.capacity - needCapacities).toString(),
+          capacity:
+              (collectContainer.capacity - needCapacity - feeBigInt).toString(),
           lock: _lockScript));
-    }
-
-    List<Witness> witnesses = [];
-    for (int i = 0; i < cellInputs.inputs.length; i++) {
-      witnesses.add(Witness(data: []));
-    }
-
-    List<String> cellOutputsData = [];
-    for (int i = 0; i < cellOutputs.length; i++) {
-      cellOutputsData.add("0x");
+      outputsData.add('0x');
     }
 
     Transaction transaction = Transaction(
@@ -76,10 +68,10 @@ class TxGenerator {
               outPoint: _systemScriptCell.outPoint, depType: CellDep.depGroup)
         ],
         headerDeps: [],
-        inputs: cellInputs.inputs,
+        inputs: collectContainer.inputs,
         outputs: cellOutputs,
-        outputsData: cellOutputsData,
-        witnesses: witnesses);
+        outputsData: outputsData,
+        witnesses: collectContainer.witnesses);
 
     return transaction.sign(privateKey);
   }
@@ -88,6 +80,7 @@ class TxGenerator {
 class Receiver {
   String address;
   BigInt capacity;
+  String data;
 
-  Receiver(this.address, this.capacity);
+  Receiver({this.address, this.capacity, this.data = '0x'});
 }
