@@ -58,10 +58,10 @@ void main() {
 
     test('getCellsByLockHash', () async {
       SystemScriptCell _systemScriptCell =
-          await SystemContract.getSystemScriptCell(_api);
-      String lockHash = Key.generateLockScriptWithAddress(
-              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
-              _systemScriptCell.cellHash)
+          await SystemContract.getSystemScriptCell(api: _api);
+      String lockHash = (await Key.generateLockScriptWithAddress(
+              address: 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
+              codeHash: _systemScriptCell.cellHash))
           .computeHash();
       List<CellOutputWithOutPoint> list = await _api.getCellsByLockHash(
           lockHash: lockHash, fromNumber: '0', toNumber: '100');
@@ -142,11 +142,11 @@ void main() {
     });
 
     test('getTransactionsByLockHash', () async {
-      SystemScriptCell _systemScriptCell =
-          await SystemContract.getSystemScriptCell(_api);
-      String lockHash = Key.generateLockScriptWithAddress(
-              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
-              _systemScriptCell.cellHash)
+      SystemScriptCell systemScriptCell =
+          await SystemContract.getSystemScriptCell(api: _api);
+      String lockHash = (await Key.generateLockScriptWithAddress(
+              address: 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
+              codeHash: systemScriptCell.cellHash))
           .computeHash();
       List<CellTransaction> list =
           await _api.getTransactionsByLockHash(lockHash, "0", "100", true);

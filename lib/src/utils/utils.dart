@@ -50,6 +50,17 @@ String toHexString(String value) {
   }
 }
 
+BigInt numberToBigInt(String value) {
+  try {
+    if (value.startsWith('0x')) {
+      return BigInt.parse(cleanHexPrefix(value), radix: 16);
+    }
+    return BigInt.parse(value);
+  } catch (error) {
+    throw ('Input value format error, please input integer or hex string');
+  }
+}
+
 BigInt hexToBigInt(String hex) {
   return BigInt.parse(cleanHexPrefix(hex), radix: 16);
 }

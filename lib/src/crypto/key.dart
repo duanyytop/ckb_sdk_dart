@@ -1,3 +1,5 @@
+import 'package:ckb_sdk_dart/src/rpc/api.dart';
+import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
 
 import '../../ckb_crypto.dart';
@@ -15,20 +17,33 @@ class Key {
         .sublist(compress ? 0 : 1));
   }
 
-  static Script generateLockScriptWithPrivateKey(
-      String privateKey, String codeHash) {
+  static Future<Script> generateLockScriptWithPrivateKey(
+      {String privateKey, String codeHash, Api api}) async {
+    if (codeHash == null && api == null) {
+      throw ('Code hash or api must be not null at same time');
+    }
     String publicKey = Key.publicKeyFromPrivate(privateKey);
     String blake160 = Blake2b.blake160(publicKey);
+    if (codeHash == null) {
+      codeHash = await SystemContract.getCodeHash(api: api);
+    }
     return Script(
         codeHash: codeHash,
         args: [appendHexPrefix(blake160)],
         hashType: Script.type);
   }
 
-  static Script generateLockScriptWithAddress(String address, String codeHash) {
+  static Future<Script> generateLockScriptWithAddress(
+      {String address, String codeHash, Api api}) async {
+    if (codeHash == null && api == null) {
+      throw ('Code hash or api must be not null at same time');
+    }
     AddressGenerator generator =
         AddressGenerator(network: AddressParams.parseNetwork(address));
     String publicKeyBlake160 = generator.blake160FromAddress(address);
+    if (codeHash == null) {
+      codeHash = await SystemContract.getCodeHash(api: api);
+    }
     return Script(
         codeHash: codeHash, args: [publicKeyBlake160], hashType: Script.type);
   }

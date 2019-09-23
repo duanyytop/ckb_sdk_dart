@@ -24,6 +24,11 @@ void main() {
           listToBigInt(Uint8List.fromList([0xea])), equals(BigInt.from(234)));
     });
 
+    test('numberToBigInt', () async {
+      expect(numberToBigInt('120'), equals(BigInt.from(120)));
+      expect(numberToBigInt('0xea'), equals(BigInt.from(234)));
+    });
+
     test('hexToList', () async {
       expect(hexToList('1ab23cd4'), [0x1a, 0xb2, 0x3c, 0xd4]);
       expect(hexToList('0001feff'), [0x00, 0x01, 0xfe, 0xff]);

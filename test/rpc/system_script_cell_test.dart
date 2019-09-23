@@ -13,7 +13,7 @@ void main() {
 
     test('getSystemScriptCell', () async {
       SystemScriptCell _systemScriptCell =
-          await SystemContract.getSystemScriptCell(_api);
+          await SystemContract.getSystemScriptCell(api: _api);
       expect(_systemScriptCell.cellHash.isNotEmpty, true);
       expect(_systemScriptCell.outPoint.toJson().isNotEmpty, true);
     }, skip: 'Skip rpc test');
