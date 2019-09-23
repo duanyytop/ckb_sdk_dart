@@ -47,7 +47,7 @@ class CellCollect {
     return results;
   }
 
-  Future<CellCollectContainer> gatherInputs(
+  Future<CellCollectResult> gatherInputs(
       {BigInt capacity,
       BigInt minCapacity,
       BigInt minChangeCapacity,
@@ -77,7 +77,7 @@ class CellCollect {
     if (collectCapacity < totalCapacity) {
       throw ('Capacity not enough!');
     }
-    return CellCollectContainer(
+    return CellCollectResult(
         inputs: cellInputs, capacity: collectCapacity, witnesses: witnesses);
   }
 
@@ -89,10 +89,10 @@ class CellCollect {
   }
 }
 
-class CellCollectContainer {
+class CellCollectResult {
   List<CellInput> inputs;
   BigInt capacity;
   List<Witness> witnesses;
 
-  CellCollectContainer({this.inputs, this.capacity, this.witnesses});
+  CellCollectResult({this.inputs, this.capacity, this.witnesses});
 }
