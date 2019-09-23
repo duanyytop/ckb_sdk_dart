@@ -6,9 +6,8 @@ import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
 
-import 'transaction/cell_gather.dart';
-import 'transaction/receiver.dart';
-import 'transaction/tx_generator.dart';
+import 'payment/cell_collect.dart';
+import 'payment/tx_generator.dart';
 
 main() async {
   Api api = Api("http://localhost:8114", hasLogger: false);
@@ -34,13 +33,11 @@ main() async {
   Timer(Duration(seconds: 10), () async {
     String balance1 = (await getBalance(api, senderAddress)).toString();
     print('Receiver1:  $balance1');
-    print((await api.getTransaction(hash)).toJson());
   });
 }
 
 Future<BigInt> getBalance(Api api, String address) {
-  CellGatherer cellGatherer = CellGatherer(api: api);
-  return cellGatherer.getCapacitiesWithAddress(address);
+  return CellCollect.getCapacityWithAddress(api: api, address: address);
 }
 
 Future<String> sendCapacity(

@@ -25,7 +25,7 @@ void main() {
           'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
           _systemScriptCell.cellHash);
       expect(script.toJson().isNotEmpty, true);
-    }, skip: 'Skip rpc test');
+    });
 
     test('generateLockScriptWithPrivateKey', () async {
       Api _api = Api('http://localhost:8114');
@@ -36,6 +36,6 @@ void main() {
       Script script = Key.generateLockScriptWithPrivateKey(
           privateKey, _systemScriptCell.cellHash);
       expect(script.toJson().isNotEmpty, true);
-    }, skip: 'Skip rpc test');
+    });
   });
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ckb_sdk_dart/ckb_addrss.dart';
 import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
@@ -6,23 +8,20 @@ import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 
-import 'cell_gather.dart';
-import 'cells.dart';
-import 'receiver.dart';
+import 'cell_collect.dart';
+
+const minCapacity = "6000000000";
 
 class TxGenerator {
-  static final String minCapacity = "6000000000";
-
   String privateKey;
   Api api;
-  Script _lockScript;
-  SystemScriptCell _systemScriptCell;
 
   TxGenerator({this.privateKey, this.api});
 
   Future<Transaction> generateTx(List<Receiver> receivers) async {
-    _systemScriptCell = await SystemContract.getSystemScriptCell(api);
-    _lockScript = Key.generateLockScriptWithPrivateKey(
+    SystemScriptCell _systemScriptCell =
+        await SystemContract.getSystemScriptCell(api);
+    Script _lockScript = Key.generateLockScriptWithPrivateKey(
         privateKey, _systemScriptCell.cellHash);
 
     BigInt needCapacities = BigInt.zero;
@@ -33,8 +32,10 @@ class TxGenerator {
       throw ("Less than min capacity");
     }
 
-    Cells cellInputs = await CellGatherer(api: api)
-        .getCellInputs(_lockScript.computeHash(), needCapacities);
+    Cells cellInputs = await CellCollect.getCellInputs(
+        api: api,
+        lockHash: _lockScript.computeHash(),
+        capacity: needCapacities);
 
     if (cellInputs.capacity.compareTo(needCapacities) < 0) {
       throw ("No enough Capacities");
@@ -82,4 +83,11 @@ class TxGenerator {
 
     return transaction.sign(privateKey);
   }
+}
+
+class Receiver {
+  String address;
+  BigInt capacity;
+
+  Receiver(this.address, this.capacity);
 }
