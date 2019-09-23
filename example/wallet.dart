@@ -5,8 +5,6 @@ import 'package:ckb_sdk_dart/ckb_type.dart';
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 
 import 'payment/cell_collect.dart';
 import 'payment/tx_generator.dart';
@@ -42,10 +40,8 @@ main() async {
 }
 
 Future<BigInt> getBalance(Api api, String address) async {
-  SystemScriptCell systemScriptCell =
-      await SystemContract.getSystemScriptCell(api);
   Script lockScript =
-      Key.generateLockScriptWithAddress(address, systemScriptCell.cellHash);
+      await Key.generateLockScriptWithAddress(address: address, api: api);
   CellCollect cellCollect =
       CellCollect(api: api, lockHash: lockScript.computeHash());
   return cellCollect.getBalance();
