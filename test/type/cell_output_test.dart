@@ -33,5 +33,15 @@ void main() {
       expect(map['lock']['code_hash'],
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
     });
+
+    test('calculateByteSize', () async {
+      CellOutput cellOutput = CellOutput.fromJson(_json);
+      expect(cellOutput.calculateByteSize('0x'), 41);
+    });
+
+    test('calculateByteSizeWithBigInt', () async {
+      CellOutput cellOutput = CellOutput.fromJson(_json);
+      expect(cellOutput.calculateByteSizeWithBigInt('0x'), BigInt.from(41));
+    });
   });
 }

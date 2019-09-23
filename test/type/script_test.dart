@@ -53,5 +53,16 @@ void main() {
       var map = script.toJson();
       expect(map['hash_type'], 'data');
     });
+
+    test('Script byte size', () async {
+      Script script = Script(
+          codeHash:
+              '0x00000000000000000000000000000000000000000000000000545950455f4944',
+          args: [
+            '0x8536c9d5d908bd89fc70099e4284870708b6632356aad98734fcf43f6f71c304'
+          ],
+          hashType: Script.type);
+      expect(script.calculateByteSize(), 65);
+    });
   });
 }

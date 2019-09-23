@@ -1,3 +1,5 @@
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
+
 import 'script.dart';
 
 class CellOutput {
@@ -21,5 +23,18 @@ class CellOutput {
       'lock': lock?.toJson(),
       'type': type?.toJson()
     };
+  }
+
+  int calculateByteSize(String data) {
+    if (data == null) {
+      throw ('Please provide a valid data');
+    }
+    int byteSize = 8 + hexToList(data).length + lock.calculateByteSize();
+    byteSize += type == null ? 0 : type.calculateByteSize();
+    return byteSize;
+  }
+
+  BigInt calculateByteSizeWithBigInt(String data) {
+    return BigInt.from(calculateByteSize(data));
   }
 }

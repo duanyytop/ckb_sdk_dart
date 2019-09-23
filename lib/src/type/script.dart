@@ -28,6 +28,14 @@ class Script {
     };
   }
 
+  int calculateByteSize() {
+    int byteSzie = 1;
+    byteSzie += codeHash == null ? 0 : hexToList(codeHash).length;
+    byteSzie += args.fold(
+        0, (previous, element) => previous + hexToList(element).length);
+    return byteSzie;
+  }
+
   String computeHash() {
     Blake2b blake2b = Blake2b();
     blake2b.update(Serializer.serializeScript(this).toBytes());
