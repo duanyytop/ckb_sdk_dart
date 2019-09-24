@@ -42,4 +42,10 @@ class Blake2b {
     return appendHexPrefix(
         listToHexNoPrefix(blake2b.doFinal()).substring(0, 40));
   }
+
+  static String hash(String value) {
+    Blake2b blake2b = Blake2b();
+    blake2b.updateWithHex(value);
+    return blake2b.doFinalString();
+  }
 }

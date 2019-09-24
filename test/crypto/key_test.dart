@@ -20,7 +20,7 @@ void main() {
     test('generateLockScriptWithAddress', () async {
       Api api = Api('http://localhost:8114');
       SystemScriptCell systemScriptCell =
-          await SystemContract.getSystemScriptCell(api: api);
+          await SystemContract.getSystemSecpCell(api: api);
       Script script = await Key.generateLockScriptWithAddress(
           address: 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
           codeHash: systemScriptCell.cellHash);
@@ -38,7 +38,7 @@ void main() {
     test('generateLockScriptWithPrivateKey', () async {
       Api api = Api('http://localhost:8114');
       SystemScriptCell systemScriptCell =
-          await SystemContract.getSystemScriptCell(api: api);
+          await SystemContract.getSystemSecpCell(api: api);
       String privateKey =
           'e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
       Script script = await Key.generateLockScriptWithPrivateKey(
