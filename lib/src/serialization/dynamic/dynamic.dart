@@ -10,9 +10,9 @@ class Dynamic<T extends SerializeType> implements SerializeType<List<T>> {
 
   @override
   int getLength() {
-    int length = (1 + _value.length) * Uint32.byteSize;
+    int length = (1 + _value?.length) * Uint32.byteSize;
     for (SerializeType type in _value) {
-      length += type.getLength();
+      length += type?.getLength();
     }
     return length;
   }

@@ -39,7 +39,6 @@ void main() {
           CellOutputWithOutPoint.fromJson(_json);
       var map = cellOutput.toJson();
       expect(map['capacity'], '0x1d1a94a200');
-      print(map['lock'].runtimeType.toString());
       expect(map['lock']['code_hash'],
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
       expect(map['out_point']['tx_hash'],

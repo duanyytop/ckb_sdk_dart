@@ -79,7 +79,7 @@ class Transaction {
 
   String computeHash() {
     Blake2b blake2b = Blake2b();
-    blake2b.update(Serializer.serializeTransaction(this).toBytes());
+    blake2b.update(Serializer.serializeTransaction(this)?.toBytes());
     return appendHexPrefix(blake2b.doFinalString());
   }
 

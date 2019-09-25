@@ -26,7 +26,9 @@ class Serializer {
     return Table([
       Byte32.fromHex(script.codeHash),
       Byte1.fromHex(Script.data == script.hashType ? "00" : "01"),
-      Dynamic(script.args.map((arg) => Bytes.fromHex(arg)).toList())
+      script.args != null
+          ? Dynamic(script.args?.map((arg) => Bytes.fromHex(arg))?.toList())
+          : Empty()
     ]);
   }
 
@@ -63,8 +65,8 @@ class Serializer {
 
   static Dynamic<Table> serializeCellOutputs(List<CellOutput> cellOutputs) {
     return Dynamic(cellOutputs
-        .map((cellOutput) => serializeCellOutput(cellOutput))
-        .toList());
+        ?.map((cellOutput) => serializeCellOutput(cellOutput))
+        ?.toList());
   }
 
   static Dynamic<Bytes> serializeBytes(List<String> bytes) {
@@ -77,13 +79,14 @@ class Serializer {
 
   static Table serializeTransaction(Transaction transaction) {
     Transaction tx = Convert.parseTransaction(transaction);
+
     return Table([
-      Uint32.fromHex(tx.version),
-      Serializer.serializeCellDeps(tx.cellDeps),
-      Serializer.serializeByte32(tx.headerDeps),
-      Serializer.serializeCellInputs(tx.inputs),
-      Serializer.serializeCellOutputs(tx.outputs),
-      Serializer.serializeBytes(tx.outputsData)
+      Uint32.fromHex(tx?.version),
+      Serializer.serializeCellDeps(tx?.cellDeps),
+      Serializer.serializeByte32(tx?.headerDeps),
+      Serializer.serializeCellInputs(tx?.inputs),
+      Serializer.serializeCellOutputs(tx?.outputs),
+      Serializer.serializeBytes(tx?.outputsData)
     ]);
   }
 }

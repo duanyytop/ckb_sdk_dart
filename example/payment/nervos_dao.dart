@@ -35,9 +35,9 @@ class NervosDao {
     await _initParams();
 
     CellOutput cellOutput = CellOutput(
-        capacity: capacity.toRadixString(16),
+        capacity: capacity.toString(),
         lock: _lock,
-        type: Script(codeHash: _daoCell.cellHash));
+        type: Script(codeHash: _daoCell.cellHash, args: []));
     String outputData = '0x';
 
     CellOutput changeOutput = CellOutput(capacity: '0', lock: _lock);
@@ -47,11 +47,13 @@ class NervosDao {
     CellCollectResult collectResult = await cellCollect.gatherInputs(
         capacity: capacity,
         minCapacity: cellOutput.calculateByteSizeWithBigInt(outputData),
-        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt('0x'));
+        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt('0x'),
+        fee: BigInt.zero);
 
     List<CellOutput> cellOutputs = [cellOutput];
     List<String> outputsData = [outputData];
     if (collectResult.capacity > capacity) {
+      changeOutput.capacity = (collectResult.capacity - capacity).toString();
       cellOutputs.add(changeOutput);
       outputsData.add('0x');
     }
@@ -75,7 +77,7 @@ class NervosDao {
   }
 
   Future<Transaction> generateWithdrawFromDaoTransaction(
-      OutPoint outPoint, String privateKey) async {
+      OutPoint outPoint) async {
     await _initParams();
 
     CellWithStatus cellWithStatus = await api.getLiveCell(outPoint: outPoint);
@@ -83,7 +85,7 @@ class NervosDao {
       throw ('Cell is not yet live!');
     }
     TransactionWithStatus tx = await api.getTransaction(outPoint.txHash);
-    if (tx.txStatus.status == 'committed') {
+    if (tx.txStatus.status != 'committed') {
       throw ('Transaction is not commtted yet!');
     }
 
@@ -121,7 +123,7 @@ class NervosDao {
         ],
         headerDeps: [currentBlockHeader.hash, depositBlockHeader.hash],
         inputs: [
-          CellInput(previousOutput: newOutPoint, since: since.toRadixString(16))
+          CellInput(previousOutput: newOutPoint, since: intToHex(since))
         ],
         outputs: cellOutputs,
         outputsData: outputsData,

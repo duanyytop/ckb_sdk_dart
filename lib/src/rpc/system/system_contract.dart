@@ -18,7 +18,7 @@ class SystemContract {
   }
 
   static Future<SystemScriptCell> getSystemSecpCell({Api api}) async {
-    Block block = await getGenesisBlock();
+    Block block = await getGenesisBlock(api: api);
     return SystemScriptCell(
         cellHash: block.transactions[0].outputs[1].type.computeHash(),
         outPoint: OutPoint(txHash: block.transactions[1].hash, index: "0x0"));
@@ -29,7 +29,7 @@ class SystemContract {
   }
 
   static Future<SystemScriptCell> getSystemDaoCell({Api api}) async {
-    Block block = await getGenesisBlock();
+    Block block = await getGenesisBlock(api: api);
     return SystemScriptCell(
         cellHash: Blake2b.hash(block.transactions[0].outputsData[2]),
         outPoint: OutPoint(txHash: block.transactions[0].hash, index: "0x2"));

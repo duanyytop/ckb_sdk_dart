@@ -29,6 +29,14 @@ void main() {
       expect(numberToBigInt('0xea'), equals(BigInt.from(234)));
     });
 
+    test('intToHex', () async {
+      expect(intToHex(120), equals('0x78'));
+    });
+
+    test('bigIntToHex', () async {
+      expect(bigIntToHex(BigInt.from(120)), equals('0x78'));
+    });
+
     test('hexToList', () async {
       expect(hexToList('1ab23cd4'), [0x1a, 0xb2, 0x3c, 0xd4]);
       expect(hexToList('0001feff'), [0x00, 0x01, 0xfe, 0xff]);
