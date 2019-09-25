@@ -58,6 +58,9 @@ class CellCollect {
     if (minChangeCapacity == null) {
       minChangeCapacity = BigInt.zero;
     }
+    if (fee == null) {
+      fee = BigInt.zero;
+    }
     BigInt totalCapacity = capacity + fee;
     BigInt collectCapacity = BigInt.zero;
 

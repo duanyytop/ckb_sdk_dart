@@ -58,7 +58,7 @@ void main() {
 
     test('getCellsByLockHash', () async {
       SystemScriptCell _systemScriptCell =
-          await SystemContract.getSystemScriptCell(api: _api);
+          await SystemContract.getSystemSecpCell(api: _api);
       String lockHash = (await Key.generateLockScriptWithAddress(
               address: 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
               codeHash: _systemScriptCell.cellHash))
@@ -143,7 +143,7 @@ void main() {
 
     test('getTransactionsByLockHash', () async {
       SystemScriptCell systemScriptCell =
-          await SystemContract.getSystemScriptCell(api: _api);
+          await SystemContract.getSystemSecpCell(api: _api);
       String lockHash = (await Key.generateLockScriptWithAddress(
               address: 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83',
               codeHash: systemScriptCell.cellHash))

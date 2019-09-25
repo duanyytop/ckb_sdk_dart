@@ -65,6 +65,14 @@ BigInt hexToBigInt(String hex) {
   return BigInt.parse(cleanHexPrefix(hex), radix: 16);
 }
 
+String bigIntToHex(BigInt value) {
+  return appendHexPrefix(value.toRadixString(16));
+}
+
+String intToHex(int value) {
+  return appendHexPrefix(value.toRadixString(16));
+}
+
 List<int> toBytesPadded(BigInt value, int length) {
   List<int> bytes = bigIntToList(value);
   if (bytes.length > length) {

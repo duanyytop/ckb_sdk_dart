@@ -25,7 +25,7 @@ class Key {
     String publicKey = Key.publicKeyFromPrivate(privateKey);
     String blake160 = Blake2b.blake160(publicKey);
     if (codeHash == null) {
-      codeHash = await SystemContract.getCodeHash(api: api);
+      codeHash = await SystemContract.getSecpCodeHash(api: api);
     }
     return Script(
         codeHash: codeHash,
@@ -42,7 +42,7 @@ class Key {
         AddressGenerator(network: AddressParams.parseNetwork(address));
     String publicKeyBlake160 = generator.blake160FromAddress(address);
     if (codeHash == null) {
-      codeHash = await SystemContract.getCodeHash(api: api);
+      codeHash = await SystemContract.getSecpCodeHash(api: api);
     }
     return Script(
         codeHash: codeHash, args: [publicKeyBlake160], hashType: Script.type);

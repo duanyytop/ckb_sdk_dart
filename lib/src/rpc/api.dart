@@ -77,7 +77,8 @@ class Api {
         .toList();
   }
 
-  Future<CellWithStatus> getLiveCell({OutPoint outPoint, bool withData}) async {
+  Future<CellWithStatus> getLiveCell(
+      {OutPoint outPoint, bool withData = false}) async {
     return CellWithStatus.fromJson(await _rpc.post("get_live_cell",
         [Convert.parseOutPoint(outPoint)?.toJson(), withData]));
   }

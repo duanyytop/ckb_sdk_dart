@@ -1,13 +1,13 @@
 import 'out_point.dart';
 
 class CellDep {
-  static final String code = 'code';
-  static final String depGroup = 'dep_group';
+  static const String code = 'code';
+  static const String depGroup = 'dep_group';
 
   OutPoint outPoint;
   String depType;
 
-  CellDep({this.outPoint, this.depType});
+  CellDep({this.outPoint, this.depType = code});
 
   factory CellDep.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;

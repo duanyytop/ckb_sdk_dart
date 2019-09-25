@@ -81,7 +81,6 @@ void main() {
     test('toJson', () async {
       Block block = Block.fromJson(_json);
       var map = block.toJson();
-      print(map['transactions'].runtimeType);
       expect(map['header']['hash'],
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');
       expect(map['transactions'][0]['outputs'][0]['lock']['code_hash'],

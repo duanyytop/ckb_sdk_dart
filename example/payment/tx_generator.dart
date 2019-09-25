@@ -20,7 +20,7 @@ class TxGenerator {
     BigInt feeBigInt = numberToBigInt(fee);
 
     SystemScriptCell systemScriptCell =
-        await SystemContract.getSystemScriptCell(api: api);
+        await SystemContract.getSystemSecpCell(api: api);
     Script lockScript = await Key.generateLockScriptWithPrivateKey(
         privateKey: privateKey, codeHash: systemScriptCell.cellHash);
 

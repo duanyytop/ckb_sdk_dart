@@ -29,11 +29,14 @@ class Script {
   }
 
   int calculateByteSize() {
-    int byteSzie = 1;
-    byteSzie += codeHash == null ? 0 : hexToList(codeHash).length;
-    byteSzie += args.fold(
+    int byteSize = 1;
+    byteSize += codeHash == null ? 0 : hexToList(codeHash).length;
+    if (args == null || args.isEmpty) {
+      return byteSize;
+    }
+    byteSize += args?.fold(
         0, (previous, element) => previous + hexToList(element).length);
-    return byteSzie;
+    return byteSize;
   }
 
   String computeHash() {
