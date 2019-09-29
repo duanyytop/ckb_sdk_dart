@@ -30,7 +30,7 @@ class Header {
     if (json == null) return null;
     return Header(
         dao: json['dao'],
-        compactTarget: json['compact_target'],
+        compactTarget: json['compact_target'].toString(),
         hash: json['hash'],
         number: json['number'],
         epoch: json['epoch'],

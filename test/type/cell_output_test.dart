@@ -10,7 +10,7 @@ void main() {
       String cellOuput = '''{
          "capacity": "0x174876e800",
           "lock": {
-              "args": [],
+              "args": "0x",
               "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
               "hash_type": "data"
           },
@@ -36,12 +36,12 @@ void main() {
 
     test('calculateByteSize', () async {
       CellOutput cellOutput = CellOutput.fromJson(_json);
-      expect(cellOutput.calculateByteSize('0x'), 41);
+      expect(cellOutput.calculateByteSize("0x"), 41);
     });
 
     test('calculateByteSizeWithBigInt', () async {
       CellOutput cellOutput = CellOutput.fromJson(_json);
-      expect(cellOutput.calculateByteSizeWithBigInt('0x'), BigInt.from(41));
+      expect(cellOutput.calculateByteSizeWithBigInt("0x"), BigInt.from(41));
     });
   });
 }

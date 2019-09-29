@@ -7,7 +7,7 @@ class Script {
   static const String type = 'type';
 
   String codeHash;
-  List<String> args;
+  String args;
   String hashType;
 
   Script({this.codeHash, this.args, this.hashType = data});
@@ -16,7 +16,7 @@ class Script {
     if (json == null) return null;
     return Script(
         codeHash: json['code_hash'],
-        args: (json['args'] as List).map((arg) => arg.toString())?.toList(),
+        args: json['args'],
         hashType: json['hash_type']);
   }
 
@@ -34,8 +34,7 @@ class Script {
     if (args == null || args.isEmpty) {
       return byteSize;
     }
-    byteSize += args?.fold(
-        0, (previous, element) => previous + hexToList(element).length);
+    byteSize += hexToList(args).length;
     return byteSize;
   }
 

@@ -34,15 +34,15 @@ String listToWholeHex(Uint8List bytes) {
 }
 
 String cleanHexPrefix(String hex) {
-  return hex.startsWith('0x') ? hex.substring(2) : hex;
+  return hex.startsWith("0x") ? hex.substring(2) : hex;
 }
 
 String appendHexPrefix(String hex) {
-  return hex.startsWith('0x') ? hex : '0x$hex';
+  return hex.startsWith("0x") ? hex : '0x$hex';
 }
 
 String toHexString(String value) {
-  if (value.startsWith('0x')) return value;
+  if (value.startsWith("0x")) return value;
   try {
     return appendHexPrefix(BigInt.parse(value).toRadixString(16));
   } catch (error) {
@@ -52,7 +52,7 @@ String toHexString(String value) {
 
 BigInt numberToBigInt(String value) {
   try {
-    if (value.startsWith('0x')) {
+    if (value.startsWith("0x")) {
       return BigInt.parse(cleanHexPrefix(value), radix: 16);
     }
     return BigInt.parse(value);

@@ -24,4 +24,3 @@ export 'src/type/transaction_point.dart';
 export 'src/type/transaction_with_status.dart';
 export 'src/type/transaction.dart';
 export 'src/type/tx_pool_info.dart';
-export 'src/type/witness.dart';

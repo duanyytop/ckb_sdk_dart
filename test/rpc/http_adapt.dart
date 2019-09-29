@@ -77,7 +77,7 @@ const getBlock = '''{
             "result": {
                 "header": {
                     "dao": "0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000",
-                    "difficulty": "0x7a1200",
+                    "compact_target": "0x7a1200",
                     "epoch": "0x7080018000001",
                     "hash": "0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da",
                     "nonce": "0x0",
@@ -86,10 +86,8 @@ const getBlock = '''{
                     "proposals_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
                     "timestamp": "0x5cd2b117",
                     "transactions_root": "0x8ad0468383d0085e26d9c3b9b648623e4194efc53a03b7cd1a79e92700687f1e",
-                    "uncles_count": "0x0",
                     "uncles_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                    "version": "0x0",
-                    "witnesses_root": "0x90445a0795a2d7d4af033ec0282a8a1f68f11ffb1cd091b95c2c5515a8336e9c"
+                    "version": "0x0"
                 },
                 "proposals": [],
                 "transactions": [
@@ -110,7 +108,7 @@ const getBlock = '''{
                             {
                                 "capacity": "0x1057d731c2",
                                 "lock": {
-                                    "args": [],
+                                    "args": "0x",
                                     "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                                     "hash_type": "data"
                                 },
@@ -122,11 +120,7 @@ const getBlock = '''{
                         ],
                         "version": "0x0",
                         "witnesses": [
-                            {
-                                "data": [
-                                    "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a500"
-                                ]
-                            }
+                            "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a500"
                         ]
                     }
                 ],
@@ -165,7 +159,7 @@ const getTransaction = '''{
                         {
                             "capacity": "0x174876e800",
                             "lock": {
-                                "args": [],
+                                "args": "0x",
                                 "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                                 "hash_type": "data"
                             },
@@ -202,7 +196,7 @@ const getTipHeader = '''{
             "jsonrpc": "2.0",
             "result": {
                 "dao": "0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000",
-                "difficulty": "0x7a1200",
+                "compact_target": "0x7a1200",
                 "epoch": "0x7080018000001",
                 "hash": "0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da",
                 "nonce": "0x0",
@@ -211,10 +205,8 @@ const getTipHeader = '''{
                 "proposals_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
                 "timestamp": "0x5cd2b117",
                 "transactions_root": "0x8ad0468383d0085e26d9c3b9b648623e4194efc53a03b7cd1a79e92700687f1e",
-                "uncles_count": "0x0",
                 "uncles_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                "version": "0x0",
-                "witnesses_root": "0x90445a0795a2d7d4af033ec0282a8a1f68f11ffb1cd091b95c2c5515a8336e9c"
+                "version": "0x0"
             }
         }''';
 
@@ -226,7 +218,7 @@ const getCellsByLockHash = '''{
                       "block_hash": "0x03935a4b5e3c03a9c1deb93a39183a9a116c16cff3dc9ab129e847487da0e2b8",
                       "capacity": "0x1d1a94a200",
                       "lock": {
-                          "args": [],
+                          "args": "0x",
                           "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                           "hash_type": "data"
                       },
@@ -239,7 +231,7 @@ const getCellsByLockHash = '''{
                       "block_hash": "0x813edf971bf6d191335a99c52d90dcea1d2d5195386ce4898d9dfe53e81e4fcb",
                       "capacity": "0x1d1a94a200",
                       "lock": {
-                          "args": [],
+                          "args": "0x",
                           "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                           "hash_type": "data"
                       },
@@ -263,7 +255,7 @@ const getLiveCell = '''{
                     "output": {
                         "capacity": "0x802665800",
                         "lock": {
-                            "args": [],
+                            "args": "0x",
                             "code_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
                             "hash_type": "data"
                         },
@@ -278,7 +270,7 @@ const getCurrentEpoch = '''{
             "id": 2,
             "jsonrpc": "2.0",
             "result": {
-                "difficulty": "0x3e8",
+                "compact_target": "0x3e8",
                 "length": "0x3e8",
                 "number": "0x0",
                 "start_number": "0x0"
@@ -289,7 +281,7 @@ const getEpochByNumber = '''{
              "id": 2,
             "jsonrpc": "2.0",
             "result": {
-                "difficulty": "0x3e8",
+                "compact_target": "0x3e8",
                 "length": "0x3e8",
                 "number": "0x0",
                 "start_number": "0x0"
@@ -301,7 +293,7 @@ const getHeader = '''{
             "jsonrpc": "2.0",
             "result": {
                 "dao": "0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000",
-                "difficulty": "0x7a1200",
+                "compact_target": "0x7a1200",
                 "epoch": "0x7080018000001",
                 "hash": "0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da",
                 "nonce": "0x0",
@@ -310,10 +302,8 @@ const getHeader = '''{
                 "proposals_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
                 "timestamp": "0x5cd2b117",
                 "transactions_root": "0x8ad0468383d0085e26d9c3b9b648623e4194efc53a03b7cd1a79e92700687f1e",
-                "uncles_count": "0x0",
                 "uncles_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                "version": "0x0",
-                "witnesses_root": "0x90445a0795a2d7d4af033ec0282a8a1f68f11ffb1cd091b95c2c5515a8336e9c"
+                "version": "0x0"
             }
         }''';
 
@@ -322,7 +312,7 @@ const getHeaderByNumber = '''{
             "jsonrpc": "2.0",
             "result": {
                 "dao": "0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000",
-                "difficulty": "0x7a1200",
+                "compact_target": "0x7a1200",
                 "epoch": "0x7080018000001",
                 "hash": "0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da",
                 "nonce": "0x0",
@@ -331,10 +321,8 @@ const getHeaderByNumber = '''{
                 "proposals_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
                 "timestamp": "0x5cd2b117",
                 "transactions_root": "0x8ad0468383d0085e26d9c3b9b648623e4194efc53a03b7cd1a79e92700687f1e",
-                "uncles_count": "0x0",
                 "uncles_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                "version": "0x0",
-                "witnesses_root": "0x90445a0795a2d7d4af033ec0282a8a1f68f11ffb1cd091b95c2c5515a8336e9c"
+                "version": "0x0"
             }
         }''';
 

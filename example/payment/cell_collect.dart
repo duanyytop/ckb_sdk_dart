@@ -33,7 +33,7 @@ class CellCollect {
             CellOutput output = cell.cell.output;
             String outputData = cell.cell.data.content;
             if ((outputData.isEmpty ||
-                    (outputData.isNotEmpty && outputData == '0x')) &&
+                    (outputData.isNotEmpty && outputData == "0x")) &&
                 output.type == null) {
               results.add(cellOutput);
             }
@@ -65,12 +65,12 @@ class CellCollect {
     BigInt collectCapacity = BigInt.zero;
 
     List<CellInput> cellInputs = [];
-    List<Witness> witnesses = [];
+    List<String> witnesses = [];
 
     List<CellOutputWithOutPoint> cellOutputs = await getUnspentCells();
     for (var cellOuput in cellOutputs) {
       cellInputs.add(CellInput(previousOutput: cellOuput.outPoint, since: '0'));
-      witnesses.add(Witness(data: []));
+      witnesses.add("0x");
       collectCapacity += hexToBigInt(cellOuput.capacity);
       BigInt diff = collectCapacity - totalCapacity;
       if (diff >= minChangeCapacity || diff == BigInt.zero) {
@@ -95,7 +95,7 @@ class CellCollect {
 class CellCollectResult {
   List<CellInput> inputs;
   BigInt capacity;
-  List<Witness> witnesses;
+  List<String> witnesses;
 
   CellCollectResult({this.inputs, this.capacity, this.witnesses});
 }

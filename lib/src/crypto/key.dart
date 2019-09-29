@@ -29,7 +29,7 @@ class Key {
     }
     return Script(
         codeHash: codeHash,
-        args: [appendHexPrefix(blake160)],
+        args: appendHexPrefix(blake160),
         hashType: Script.type);
   }
 
@@ -45,6 +45,6 @@ class Key {
       codeHash = await SystemContract.getSecpCodeHash(api: api);
     }
     return Script(
-        codeHash: codeHash, args: [publicKeyBlake160], hashType: Script.type);
+        codeHash: codeHash, args: publicKeyBlake160, hashType: Script.type);
   }
 }

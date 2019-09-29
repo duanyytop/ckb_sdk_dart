@@ -26,9 +26,7 @@ class Serializer {
     return Table([
       Byte32.fromHex(script.codeHash),
       Byte1.fromHex(Script.data == script.hashType ? "00" : "01"),
-      script.args != null
-          ? Dynamic(script.args?.map((arg) => Bytes.fromHex(arg))?.toList())
-          : Empty()
+      script.args != null ? Bytes.fromHex(script.args) : Empty()
     ]);
   }
 

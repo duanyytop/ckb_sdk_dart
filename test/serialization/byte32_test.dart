@@ -7,7 +7,7 @@ void main() {
     setUp(() {});
 
     test('Byte32', () {
-      Byte32 byte32 = Byte32.fromHex('0x');
+      Byte32 byte32 = Byte32.fromHex("0x");
       expect(byte32.toBytes(), [
         0,
         0,

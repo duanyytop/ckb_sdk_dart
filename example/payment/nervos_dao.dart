@@ -28,7 +28,7 @@ class NervosDao {
     _secpCell = await SystemContract.getSystemSecpCell(api: api);
     _daoCell = await SystemContract.getSystemDaoCell(api: api);
     _lock = Script(
-        codeHash: _secpCell.cellHash, args: [_blake160], hashType: Script.type);
+        codeHash: _secpCell.cellHash, args: _blake160, hashType: Script.type);
   }
 
   Future<OutPoint> depositToDao(BigInt capacity) async {
@@ -37,8 +37,8 @@ class NervosDao {
     CellOutput cellOutput = CellOutput(
         capacity: capacity.toString(),
         lock: _lock,
-        type: Script(codeHash: _daoCell.cellHash, args: []));
-    String outputData = '0x';
+        type: Script(codeHash: _daoCell.cellHash, args: "0x"));
+    String outputData = "0x";
 
     CellOutput changeOutput = CellOutput(capacity: '0', lock: _lock);
 
@@ -47,7 +47,7 @@ class NervosDao {
     CellCollectResult collectResult = await cellCollect.gatherInputs(
         capacity: capacity,
         minCapacity: cellOutput.calculateByteSizeWithBigInt(outputData),
-        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt('0x'),
+        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt("0x"),
         fee: BigInt.zero);
 
     List<CellOutput> cellOutputs = [cellOutput];
@@ -55,7 +55,7 @@ class NervosDao {
     if (collectResult.capacity > capacity) {
       changeOutput.capacity = (collectResult.capacity - capacity).toString();
       cellOutputs.add(changeOutput);
-      outputsData.add('0x');
+      outputsData.add("0x");
     }
 
     Transaction transaction = Transaction(
@@ -114,7 +114,7 @@ class NervosDao {
     List<CellOutput> cellOutputs = [
       CellOutput(capacity: outputCapacity, lock: _lock)
     ];
-    List<String> outputsData = ['0x'];
+    List<String> outputsData = ["0x"];
     Transaction transaction = Transaction(
         version: '0',
         cellDeps: [
@@ -127,9 +127,7 @@ class NervosDao {
         ],
         outputs: cellOutputs,
         outputsData: outputsData,
-        witnesses: [
-          Witness(data: ['0x0000000000000000'])
-        ]);
+        witnesses: ['0x0000000000000000']);
     return transaction.sign(privateKey);
   }
 }

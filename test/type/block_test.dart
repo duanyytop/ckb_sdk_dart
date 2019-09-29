@@ -43,7 +43,7 @@ void main() {
                     {
                         "capacity": "0x1057d731c2",
                         "lock": {
-                            "args": [],
+                            "args": "0x",
                             "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                             "hash_type": "data"
                         },
@@ -55,11 +55,7 @@ void main() {
                 ],
                 "version": "0x0",
                 "witnesses": [
-                    {
-                        "data": [
-                            "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a500"
-                        ]
-                    }
+                    "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a500"
                 ]
             }
         ],
@@ -74,7 +70,7 @@ void main() {
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');
       expect(block.transactions[0].outputs[0].lock.codeHash,
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
-      expect(block.transactions[0].witnesses[0].data[0],
+      expect(block.transactions[0].witnesses[0],
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a500');
     });
 

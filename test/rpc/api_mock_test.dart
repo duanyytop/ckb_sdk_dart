@@ -131,11 +131,11 @@ void main() {
       ], outputs: [
         CellOutput(
             capacity: '0x233',
-            lock: Script(
-                codeHash: '0x0000', args: ['0x000222'], hashType: 'data'),
+            lock:
+                Script(codeHash: '0x0000', args: '0x000222', hashType: 'data'),
             type: null)
       ], outputsData: [], witnesses: [
-        Witness(data: ['0x00000'])
+        '0x00000'
       ]));
       expect(cycles.toJson().isNotEmpty, true);
     });
@@ -152,18 +152,18 @@ void main() {
       ], outputs: [
         CellOutput(
             capacity: '0x233',
-            lock: Script(
-                codeHash: '0x0000', args: ['0x000222'], hashType: 'data'),
+            lock:
+                Script(codeHash: '0x0000', args: '0x000222', hashType: 'data'),
             type: null)
       ], outputsData: [], witnesses: [
-        Witness(data: ['0x00000'])
+        '0x00000'
       ]));
       expect(hash.isNotEmpty, true);
     });
 
     test('computeScriptHash', () async {
-      String hash = await _api.computeScriptHash(Script(
-          codeHash: '0x000022222', args: ['0x2222222'], hashType: 'data'));
+      String hash = await _api.computeScriptHash(
+          Script(codeHash: '0x000022222', args: '0x2222222', hashType: 'data'));
       expect(hash.isNotEmpty, true);
     });
 

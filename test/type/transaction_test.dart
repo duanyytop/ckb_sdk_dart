@@ -35,7 +35,7 @@ void main() {
             {
                 "capacity": "0x174876e800",
                 "lock": {
-                    "args": [],
+                    "args": "0x",
                     "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                     "hash_type": "data"
                 },
@@ -81,14 +81,12 @@ void main() {
             lock: Script(
                 codeHash:
                     "0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd",
-                args: ["0x36c329ed630d6ce750712a477543672adab57f4c"]))
+                args: "0x36c329ed630d6ce750712a477543672adab57f4c"))
       ];
 
-      List<Witness> witnesses = [
-        Witness(data: [
-          "0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb"
-        ]),
-        Witness(data: [])
+      List<String> witnesses = [
+        "0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb",
+        "0x"
       ];
 
       Transaction tx = Transaction(
@@ -112,15 +110,10 @@ void main() {
       Transaction signedTx = tx.sign(privateKey);
 
       List<String> expectedData = [
-        "0xc612efdce8af3526f20a3a39b623aa8d4fa9136c332d44690b928f2f566feb1f0f550399c9e59456c54c6328f4e77e7f82956c510da3788bba006dbda11ffb5800",
-        "0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb"
+        "0x8dbb53f6326240110e67c8f331140a615b37a67de5e6479fbdf4f9fb5789eaf946226a47a9c92c502b5f45b43717611a31f913f49b164846f510c92eeef69c76004107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb",
+        "0x833210c0282ec82ce1064399547d536acaea28df17b691886c80701cb18230cf1d536aaaab6cc5e3faa5d949383cfd5c082fef37499e3d120d6144a9d5ad84d900"
       ];
-      expect(signedTx.witnesses[0].data, expectedData);
-
-      expectedData = [
-        "0xdd770d3c286573d49613ce2cbf2eeade7a603c157cff212ca10e16e8f88e1aa1358e0e245e55391da779aa6de987404eaafbe4f9c9cd73af963ca01f9499917001"
-      ];
-      expect(signedTx.witnesses[1].data, expectedData);
+      expect(signedTx.witnesses, expectedData);
     });
 
     test('fromJson', () async {

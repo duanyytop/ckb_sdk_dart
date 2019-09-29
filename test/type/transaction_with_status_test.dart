@@ -35,7 +35,7 @@ void main() {
                 {
                     "capacity": "0x174876e800",
                     "lock": {
-                        "args": [],
+                        "args": "0x",
                         "code_hash": "0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5",
                         "hash_type": "data"
                     },

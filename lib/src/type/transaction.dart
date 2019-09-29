@@ -5,7 +5,6 @@ import 'cell_dep.dart';
 import 'cell_input.dart';
 import 'cell_output.dart';
 import 'utils/serializer.dart';
-import 'witness.dart';
 
 class Transaction {
   String version;
@@ -15,7 +14,7 @@ class Transaction {
   List<CellInput> inputs;
   List<CellOutput> outputs;
   List<String> outputsData;
-  List<Witness> witnesses;
+  List<String> witnesses;
 
   Transaction(
       {this.version,
@@ -48,7 +47,7 @@ class Transaction {
             ?.map((outputData) => outputData.toString())
             ?.toList(),
         witnesses: (json['witnesses'] as List)
-            ?.map((witness) => Witness.fromJson(witness))
+            ?.map((witness) => witness?.toString())
             ?.toList());
   }
 
@@ -61,7 +60,7 @@ class Transaction {
       'inputs': inputs?.map((input) => input?.toJson())?.toList(),
       'outputs': outputs?.map((output) => output?.toJson())?.toList(),
       'outputs_data': outputsData,
-      'witnesses': witnesses?.map((witness) => witness?.toJson())?.toList()
+      'witnesses': witnesses
     };
   }
 
@@ -73,7 +72,7 @@ class Transaction {
       'inputs': inputs?.map((input) => input?.toJson())?.toList(),
       'outputs': outputs?.map((output) => output?.toJson())?.toList(),
       'outputs_data': outputsData,
-      'witnesses': witnesses?.map((witness) => witness?.toJson())?.toList()
+      'witnesses': witnesses
     };
   }
 
@@ -88,21 +87,16 @@ class Transaction {
       throw ("Invalid number of witnesses");
     }
     String txHash = computeHash();
-    List<Witness> signedWitnesses = [];
-    for (Witness witness in witnesses) {
-      List<String> oldData = witness.data;
+    List<String> signedWitnesses = [];
+    for (String witness in witnesses) {
       Blake2b blake2b = Blake2b();
       blake2b.update(hexToList(txHash));
-      for (String datum in witness.data) {
-        blake2b.update(hexToList(datum));
-      }
+      blake2b.update(hexToList(witness));
       String message = blake2b.doFinalString();
 
       String signature = listToHex(
           Sign.signMessage(hexToList(message), privateKey).getSignature());
-      witness.data = [signature];
-      witness.data.addAll(oldData);
-      signedWitnesses.add(witness);
+      signedWitnesses.add('$signature${cleanHexPrefix(witness)}');
     }
 
     return Transaction(

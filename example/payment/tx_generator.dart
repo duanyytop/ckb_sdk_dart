@@ -35,7 +35,7 @@ class TxGenerator {
           capacity: receiver.capacity.toString(),
           lock: Script(
               codeHash: systemScriptCell.cellHash,
-              args: [blake2b],
+              args: blake2b,
               hashType: Script.type)));
     }
 
@@ -48,7 +48,7 @@ class TxGenerator {
         capacity: needCapacity,
         minCapacity:
             cellOutputs[0].calculateByteSizeWithBigInt(receivers[0].data),
-        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt('0x'),
+        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt("0x"),
         fee: feeBigInt);
 
     List<String> outputsData =
@@ -59,7 +59,7 @@ class TxGenerator {
           capacity:
               (collectResult.capacity - needCapacity - feeBigInt).toString(),
           lock: lockScript));
-      outputsData.add('0x');
+      outputsData.add("0x");
     }
 
     Transaction transaction = Transaction(
@@ -83,5 +83,5 @@ class Receiver {
   BigInt capacity;
   String data;
 
-  Receiver({this.address, this.capacity, this.data = '0x'});
+  Receiver({this.address, this.capacity, this.data = "0x"});
 }
