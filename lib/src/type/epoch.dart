@@ -2,9 +2,9 @@ class Epoch {
   String number;
   String startNumber;
   String length;
-  String difficulty;
+  String compactTarget;
 
-  Epoch({this.number, this.startNumber, this.length, this.difficulty});
+  Epoch({this.number, this.startNumber, this.length, this.compactTarget});
 
   factory Epoch.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -12,7 +12,7 @@ class Epoch {
         number: json['number'],
         startNumber: json['start_number'],
         length: json['length'],
-        difficulty: json['difficulty']);
+        compactTarget: json['compact_target']);
   }
 
   Map<String, dynamic> toJson() {
@@ -20,7 +20,7 @@ class Epoch {
       'number': number,
       'start_number': startNumber,
       'length': length,
-      'difficulty': difficulty,
+      'compact_target': compactTarget,
     };
   }
 }

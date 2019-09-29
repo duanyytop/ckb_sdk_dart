@@ -1,6 +1,6 @@
 class Header {
   String dao;
-  String difficulty;
+  String compactTarget;
   String hash;
   String number;
   String epoch;
@@ -9,14 +9,12 @@ class Header {
   String timestamp;
   String transactionsRoot;
   String proposalsHash;
-  String witnessesRoot;
-  String unclesCount;
   String unclesHash;
   String version;
 
   Header(
       {this.dao,
-      this.difficulty,
+      this.compactTarget,
       this.hash,
       this.number,
       this.epoch,
@@ -25,8 +23,6 @@ class Header {
       this.timestamp,
       this.transactionsRoot,
       this.proposalsHash,
-      this.witnessesRoot,
-      this.unclesCount,
       this.unclesHash,
       this.version});
 
@@ -34,7 +30,7 @@ class Header {
     if (json == null) return null;
     return Header(
         dao: json['dao'],
-        difficulty: json['difficulty'],
+        compactTarget: json['compact_target'],
         hash: json['hash'],
         number: json['number'],
         epoch: json['epoch'],
@@ -43,8 +39,6 @@ class Header {
         timestamp: json['timestamp'],
         transactionsRoot: json['transactions_root'],
         proposalsHash: json['proposals_hash'],
-        witnessesRoot: json['witnesses_root'],
-        unclesCount: json['uncles_count'],
         unclesHash: json['uncles_hash'],
         version: json['version']);
   }
@@ -52,7 +46,7 @@ class Header {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'dao': dao,
-      'difficulty': difficulty,
+      'compact_target': compactTarget,
       'hash': hash,
       'number': number,
       'epoch': epoch,
@@ -61,8 +55,6 @@ class Header {
       'timestamp': timestamp,
       'transactions_root': transactionsRoot,
       'proposals_hash': proposalsHash,
-      'witnesses_root': witnessesRoot,
-      'uncles_count': unclesCount,
       'uncles_hash': unclesHash,
       'version': version
     };
