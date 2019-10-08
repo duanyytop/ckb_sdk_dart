@@ -1,4 +1,4 @@
-## 0.21.0
+## 0.22.0
 
 - Implement ckb rpc request
 - Implement ckb address according to RFC
