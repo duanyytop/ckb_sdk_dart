@@ -4,19 +4,19 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 
-final Map<String, dynamic> optHeader = {'Content-type': 'application/json'};
-
 var random = Random.secure();
 
 class Rpc {
   String nodeUrl;
-  bool hasLogger;
-  var dio = Dio(BaseOptions(connectTimeout: 30000, headers: optHeader));
+  var dio;
 
-  Rpc(
-    this.nodeUrl, {
-    this.hasLogger = false,
-  }) {
+  Rpc(this.nodeUrl, {hasLogger = false, HttpClientAdapter adapter}) {
+    if (adapter != null) {
+      dio = Dio();
+      dio.httpClientAdapter = adapter;
+    } else {
+      dio = Dio(BaseOptions(connectTimeout: 30000, headers: {'Content-type': 'application/json'}));
+    }
     if (hasLogger) {
       dio.interceptors
           .add(LogInterceptor(requestBody: true, responseBody: true));

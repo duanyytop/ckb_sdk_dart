@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart';
 
 import './rpc.dart';
@@ -27,13 +26,9 @@ import '../utils/utils.dart';
 
 class Api {
   Rpc _rpc;
-  HttpClientAdapter adapter;
 
-  Api(String nodeUrl, {hasLogger = false, this.adapter}) {
-    _rpc = Rpc(nodeUrl, hasLogger: hasLogger);
-    if (adapter != null) {
-      _rpc.dio.httpClientAdapter = adapter;
-    }
+  Api(String nodeUrl, {hasLogger = false, HttpClientAdapter adapter}) {
+    _rpc = Rpc(nodeUrl, hasLogger: hasLogger, adapter: adapter);
   }
 
   // Chain RPC
