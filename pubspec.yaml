@@ -3,7 +3,7 @@ version: 0.22.1
 homepage: https://nervos.org
 authors:
   - duanyytop <duanyytop@gmail.com>
-description:  A Dart SDK for Nervos CKB which is a public/permissionless blockchain, the layer 1 of Nervos network. The SDK supports CKB rpc, address, hash, signature, serialiaztion and transaction related module and developers can visit Nervos CKB through the SDK.
+description:  A Dart SDK for Nervos CKB which is a public/permissionless blockchain, the layer 1 of Nervos network. The SDK supports rpc, address, signature, serialiaztion modules.
 
 environment:
   sdk: ">=2.4.0 <3.0.0"
