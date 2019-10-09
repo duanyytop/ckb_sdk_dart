@@ -1,3 +1,7 @@
+## 0.22.2
+
+- Update description
+
 ## 0.22.1
 
 - Fix pub dev config
