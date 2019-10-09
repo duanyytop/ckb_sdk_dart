@@ -1,3 +1,7 @@
+## 0.22.1
+
+- Fix pub dev config
+
 ## 0.22.0
 
 - Implement ckb rpc request
