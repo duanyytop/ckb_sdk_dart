@@ -59,7 +59,7 @@ main() async {
 
   String balance = (await getBalance(api, senderAddress)).toString();
   print('Receiver1:  $balance');
-  String hash = await sendCapacity(api, senderPrivateKey, receivers);
+  String hash = await sendCapacity(api, senderPrivateKey, receivers, fee: BigInt.from(10000));
   print('Transaction hash: $hash');
   Timer(Duration(seconds: 10), () async {
     String balance1 = (await getBalance(api, senderAddress)).toString();

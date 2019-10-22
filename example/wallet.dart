@@ -31,7 +31,7 @@ main() async {
 
   String balance = (await getBalance(api, senderAddress)).toString();
   print('Receiver1:  $balance');
-  String hash = await sendCapacity(api, senderPrivateKey, receivers, BigInt.from(10000));
+  String hash = await sendCapacity(api, senderPrivateKey, receivers, fee: BigInt.from(10000));
   print('Transaction hash: $hash');
   Timer(Duration(seconds: 10), () async {
     String balance1 = (await getBalance(api, senderAddress)).toString();
@@ -48,7 +48,7 @@ Future<BigInt> getBalance(Api api, String address) async {
 }
 
 Future<String> sendCapacity(
-    Api api, String privateKey, List<Receiver> receivers, BigInt fee) async {
+    Api api, String privateKey, List<Receiver> receivers, {BigInt fee}) async {
   TxGenerator txGenerator = TxGenerator(privateKey: privateKey, api: api);
   Transaction transaction = await txGenerator.generateTx(receivers: receivers, fee: fee);
   return await api.sendTransaction(transaction);
