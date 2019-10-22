@@ -1,3 +1,7 @@
+## 0.23.0
+
+- Add transaction fee to wallet example
+
 ## 0.22.2
 
 - Update description

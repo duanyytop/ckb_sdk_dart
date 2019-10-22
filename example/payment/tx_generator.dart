@@ -5,7 +5,6 @@ import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
-import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import 'cell_collect.dart';
 
@@ -15,10 +14,8 @@ class TxGenerator {
 
   TxGenerator({this.privateKey, this.api});
 
-  Future<Transaction> generateTx(
-      {List<Receiver> receivers, String fee = '0'}) async {
-    BigInt feeBigInt = numberToBigInt(fee);
-
+  Future<Transaction> generateTx({List<Receiver> receivers, BigInt fee}) async {
+    if (fee == null) throw ('Transaction fee should not be null');
     SystemScriptCell systemScriptCell =
         await SystemContract.getSystemSecpCell(api: api);
     Script lockScript = await Key.generateLockScriptWithPrivateKey(
@@ -49,15 +46,14 @@ class TxGenerator {
         minCapacity:
             cellOutputs[0].calculateByteSizeWithBigInt(receivers[0].data),
         minChangeCapacity: changeOutput.calculateByteSizeWithBigInt("0x"),
-        fee: feeBigInt);
+        fee: fee);
 
     List<String> outputsData =
         receivers.map((receiver) => receiver.data).toList();
 
-    if (collectResult.capacity > (needCapacity + feeBigInt)) {
+    if (collectResult.capacity > (needCapacity + fee)) {
       cellOutputs.add(CellOutput(
-          capacity:
-              (collectResult.capacity - needCapacity - feeBigInt).toString(),
+          capacity: (collectResult.capacity - needCapacity - fee).toString(),
           lock: lockScript));
       outputsData.add("0x");
     }

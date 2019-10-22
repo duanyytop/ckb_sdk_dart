@@ -13,7 +13,7 @@ main() async {
   OutPoint outPoint = await depositToDao();
   print(outPoint.toJson());
 
-  // you should wait 7200 blocks to withdraw capacity from dao.
+  // you should wait 7200 blocks(180 epoch) to withdraw capacity from dao.
 
   String hash = await withdrawFromDao(OutPoint(
       txHash:
