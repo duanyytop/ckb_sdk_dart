@@ -75,7 +75,7 @@ class Serializer {
     return Fixed(bytes.map((byte) => Byte32.fromHex(byte)).toList());
   }
 
-  static Table serializeTransaction(Transaction transaction) {
+  static Table serializeRawTransaction(Transaction transaction) {
     Transaction tx = Convert.parseTransaction(transaction);
 
     return Table([
@@ -87,4 +87,9 @@ class Serializer {
       Serializer.serializeBytes(tx?.outputsData)
     ]);
   }
+
+  static Table serializeTransaction(Transaction transaction) {
+    return Table([serializeRawTransaction(transaction), serializeBytes(transaction.witnesses)]);
+  }
+
 }
