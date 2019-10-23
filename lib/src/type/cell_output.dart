@@ -34,7 +34,4 @@ class CellOutput {
     return byteSize;
   }
 
-  BigInt calculateByteSizeWithBigInt(String data) {
-    return BigInt.from(calculateByteSize(data));
-  }
 }

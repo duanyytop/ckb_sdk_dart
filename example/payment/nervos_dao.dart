@@ -13,31 +13,24 @@ const daoLockPeriodBlocks = 10;
 const daoMaturityBlocks = 5;
 
 class NervosDao {
-  String privateKey;
   Api api;
 
-  SystemScriptCell _secpCell;
-  SystemScriptCell _daoCell;
-  Script _lock;
-  String _blake160;
+  NervosDao({this.api});
 
-  NervosDao({this.api, this.privateKey});
+  Future<OutPoint> depositToDao(String privateKey, BigInt capacity, {BigInt fee}) async {
+    fee ??= BigInt.zero;
 
-  void _initParams() async {
-    _blake160 = Blake2b.blake160(Key.publicKeyFromPrivate(privateKey));
-    _secpCell = await SystemContract.getSystemSecpCell(api: api);
-    _daoCell = await SystemContract.getSystemDaoCell(api: api);
-    _lock = Script(
+    String _blake160 = Blake2b.blake160(Key.publicKeyFromPrivate(privateKey));
+    SystemScriptCell _daoCell = await SystemContract.getSystemDaoCell(api: api);
+    SystemScriptCell _secpCell = await SystemContract.getSystemSecpCell(api: api);
+    Script _lock = Script(
         codeHash: _secpCell.cellHash, args: _blake160, hashType: Script.type);
-  }
-
-  Future<OutPoint> depositToDao(BigInt capacity) async {
-    await _initParams();
 
     CellOutput cellOutput = CellOutput(
         capacity: capacity.toString(),
         lock: _lock,
-        type: Script(codeHash: _daoCell.cellHash, args: "0x"));
+        type: Script(
+            codeHash: _daoCell.cellHash, args: "0x", hashType: Script.type));
     String outputData = "0x";
 
     CellOutput changeOutput = CellOutput(capacity: '0', lock: _lock);
@@ -46,14 +39,14 @@ class NervosDao {
         CellCollect(api: api, lockHash: _lock.computeHash());
     CellCollectResult collectResult = await cellCollect.gatherInputs(
         capacity: capacity,
-        minCapacity: cellOutput.calculateByteSizeWithBigInt(outputData),
-        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt("0x"),
-        fee: BigInt.zero);
+        minCapacity: BigInt.from(cellOutput.calculateByteSize(outputData)),
+        minChangeCapacity: BigInt.from(changeOutput.calculateByteSize("0x")),
+        fee: fee);
 
     List<CellOutput> cellOutputs = [cellOutput];
     List<String> outputsData = [outputData];
-    if (collectResult.capacity > capacity) {
-      changeOutput.capacity = (collectResult.capacity - capacity).toString();
+    if (collectResult.capacity > (capacity + fee)) {
+      changeOutput.capacity = (collectResult.capacity - capacity - fee).toString();
       cellOutputs.add(changeOutput);
       outputsData.add("0x");
     }
@@ -76,9 +69,14 @@ class NervosDao {
     return OutPoint(txHash: txHash, index: '0');
   }
 
-  Future<Transaction> generateWithdrawFromDaoTransaction(
+  Future<Transaction> generateWithdrawFromDaoTx(String privateKey,
       OutPoint outPoint) async {
-    await _initParams();
+
+    String _blake160 = Blake2b.blake160(Key.publicKeyFromPrivate(privateKey));
+    SystemScriptCell _daoCell = await SystemContract.getSystemDaoCell(api: api);
+    SystemScriptCell _secpCell = await SystemContract.getSystemSecpCell(api: api);
+    Script _lock = Script(
+        codeHash: _secpCell.cellHash, args: _blake160, hashType: Script.type);
 
     CellWithStatus cellWithStatus = await api.getLiveCell(outPoint: outPoint);
     if (cellWithStatus.status != 'live') {

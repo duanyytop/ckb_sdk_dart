@@ -23,14 +23,13 @@ main() async {
 }
 
 Future<OutPoint> depositToDao() async {
-  NervosDao nervosDao = NervosDao(api: api, privateKey: privateKey);
-  return await nervosDao.depositToDao(BigInt.parse('100000000000'));
+  NervosDao nervosDao = NervosDao(api: api);
+  return await nervosDao.depositToDao(privateKey, BigInt.parse('100000000000'));
 }
 
 Future<String> withdrawFromDao(OutPoint outPoint) async {
-  NervosDao nervosDao = NervosDao(api: api, privateKey: privateKey);
-  Transaction tx = await nervosDao.generateWithdrawFromDaoTransaction(outPoint);
-  print(tx.toJson());
+  NervosDao nervosDao = NervosDao(api: api);
+  Transaction tx = await nervosDao.generateWithdrawFromDaoTx(privateKey, outPoint);
   String hash = await api.sendTransaction(tx);
   return hash;
 }

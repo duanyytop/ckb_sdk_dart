@@ -44,8 +44,8 @@ class TxGenerator {
     CellCollectResult collectResult = await cellCollect.gatherInputs(
         capacity: needCapacity,
         minCapacity:
-            cellOutputs[0].calculateByteSizeWithBigInt(receivers[0].data),
-        minChangeCapacity: changeOutput.calculateByteSizeWithBigInt("0x"),
+            BigInt.from(cellOutputs[0].calculateByteSize(receivers[0].data)),
+        minChangeCapacity: BigInt.from(changeOutput.calculateByteSize("0x")),
         fee: fee);
 
     List<String> outputsData =

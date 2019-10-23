@@ -38,10 +38,5 @@ void main() {
       CellOutput cellOutput = CellOutput.fromJson(_json);
       expect(cellOutput.calculateByteSize("0x"), 41);
     });
-
-    test('calculateByteSizeWithBigInt', () async {
-      CellOutput cellOutput = CellOutput.fromJson(_json);
-      expect(cellOutput.calculateByteSizeWithBigInt("0x"), BigInt.from(41));
-    });
   });
 }
