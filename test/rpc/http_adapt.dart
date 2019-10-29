@@ -1,7 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:dio/adapter.dart';
 
 class MockAdapter extends HttpClientAdapter {
   DefaultHttpClientAdapter _adapter = DefaultHttpClientAdapter();
+
+  @override
+  void close({bool force = false}) {
+    _adapter.close(force: force);
+  }
 
   @override
   Future<ResponseBody> fetch(RequestOptions options,

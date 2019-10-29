@@ -1,3 +1,7 @@
+## 0.23.3
+
+- Upgrade dio to v3.0.4
+
 ## 0.23.2
 
 - Update wallet example code of readme
