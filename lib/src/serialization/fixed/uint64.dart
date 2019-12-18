@@ -8,6 +8,10 @@ class Uint64 extends FixedType<BigInt> {
 
   Uint64(this._value);
 
+  factory Uint64.fromInt(int value) {
+    return Uint64(BigInt.from(value));
+  }
+
   factory Uint64.fromHex(String hex) {
     try {
       return Uint64(BigInt.parse(cleanHexPrefix(hex), radix: 16));

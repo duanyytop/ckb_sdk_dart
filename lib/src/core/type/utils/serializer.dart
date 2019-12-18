@@ -50,7 +50,7 @@ class Serializer {
 
   static Struct serializeCellDep(CellDep cellDep) {
     Struct outPointStruct = serializeOutPoint(cellDep.outPoint);
-    Byte1 depTypeBytes = CellDep.code == cellDep.depType
+    Byte1 depTypeBytes = CellDep.Code == cellDep.depType
         ? Byte1.fromHex("0")
         : Byte1.fromHex("1");
     return Struct([outPointStruct, depTypeBytes]);

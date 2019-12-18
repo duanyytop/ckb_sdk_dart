@@ -61,7 +61,7 @@ class TxGenerator {
         version: "0",
         cellDeps: [
           CellDep(
-              outPoint: systemScriptCell.outPoint, depType: CellDep.depGroup)
+              outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup)
         ],
         headerDeps: [],
         inputs: collectResult.inputs,

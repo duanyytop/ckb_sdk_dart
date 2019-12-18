@@ -52,7 +52,7 @@ class NervosDao {
     Transaction transaction = Transaction(
         version: "0",
         cellDeps: [
-          CellDep(outPoint: _secpCell.outPoint, depType: CellDep.depGroup),
+          CellDep(outPoint: _secpCell.outPoint, depType: CellDep.DepGroup),
           CellDep(outPoint: _daoCell.outPoint)
         ],
         headerDeps: [],
@@ -115,7 +115,7 @@ class NervosDao {
         version: '0',
         cellDeps: [
           CellDep(outPoint: _daoCell.outPoint),
-          CellDep(outPoint: _secpCell.outPoint, depType: CellDep.depGroup)
+          CellDep(outPoint: _secpCell.outPoint, depType: CellDep.DepGroup)
         ],
         headerDeps: [currentBlockHeader.hash, depositBlockHeader.hash],
         inputs: [
