@@ -1,10 +1,9 @@
 import 'package:ckb_sdk_dart/ckb_addrss.dart';
-import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/api.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
 
 import 'cell_collect.dart';
 

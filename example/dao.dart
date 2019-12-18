@@ -1,6 +1,4 @@
-import 'package:ckb_sdk_dart/src/rpc/api.dart';
-import 'package:ckb_sdk_dart/src/type/out_point.dart';
-import 'package:ckb_sdk_dart/src/type/transaction.dart';
+import 'package:ckb_sdk_dart/ckb_core.dart';
 
 import 'payment/nervos_dao.dart';
 

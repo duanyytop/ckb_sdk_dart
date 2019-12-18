@@ -1,11 +1,11 @@
-import 'package:ckb_sdk_dart/src/rpc/api.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
+import 'package:ckb_sdk_dart/src/core/rpc/api.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
+import 'package:ckb_sdk_dart/src/core/type/script.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
 
 import '../../ckb_crypto.dart';
 import '../address/address_generator.dart';
 import '../address/address_params.dart';
-import '../type/script.dart';
 import '../utils/utils.dart';
 
 class Key {

@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:ckb_sdk_dart/ckb_rpc.dart';
-import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/address/address_generator.dart';
 import 'package:ckb_sdk_dart/src/address/address_params.dart';
+import 'package:ckb_sdk_dart/src/core/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
 
 import 'payment/cell_collect.dart';

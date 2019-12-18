@@ -1,8 +1,7 @@
+import 'package:ckb_sdk_dart/ckb_core.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/api.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
-import 'package:ckb_sdk_dart/src/type/script.dart';
 import 'package:test/test.dart';
 
 void main() {

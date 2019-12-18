@@ -1,7 +1,6 @@
 import 'dart:math';
 
-import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/rpc/api.dart';
+import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 const step = 100;

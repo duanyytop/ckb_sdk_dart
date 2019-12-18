@@ -1,6 +1,5 @@
-import 'package:ckb_sdk_dart/ckb_rpc.dart';
-import 'package:ckb_sdk_dart/ckb_type.dart';
-import 'package:ckb_sdk_dart/src/type/block.dart';
+
+import 'package:ckb_sdk_dart/ckb_core.dart';
 
 main() async {
   Api api = Api("http://localhost:8114", hasLogger: true);

@@ -1,10 +1,8 @@
-import 'package:ckb_sdk_dart/ckb_rpc.dart';
-import 'package:ckb_sdk_dart/ckb_type.dart';
+import 'package:ckb_sdk_dart/ckb_core.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
+import 'package:ckb_sdk_dart/src/core/system/system_script_cell.dart';
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_contract.dart';
-import 'package:ckb_sdk_dart/src/rpc/system/system_script_cell.dart';
-import 'package:ckb_sdk_dart/src/type/out_point.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import 'cell_collect.dart';
