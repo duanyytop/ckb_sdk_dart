@@ -87,7 +87,6 @@ void main() {
 
       var witnesses = [
         Witness(lock: '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb'),
-        '0x'
       ];
 
       var tx = Transaction(
@@ -111,8 +110,7 @@ void main() {
       var signedTx = tx.sign(privateKey);
 
       var expectedData = [
-        '0x8dbb53f6326240110e67c8f331140a615b37a67de5e6479fbdf4f9fb5789eaf946226a47a9c92c502b5f45b43717611a31f913f49b164846f510c92eeef69c76004107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb',
-        '0x833210c0282ec82ce1064399547d536acaea28df17b691886c80701cb18230cf1d536aaaab6cc5e3faa5d949383cfd5c082fef37499e3d120d6144a9d5ad84d900'
+        '0x55000000100000005500000055000000410000008fa85765b9cc4233f4103f6fcc59204f6d90f5caea770e5d75d3ce15446b6b164001f73c86420ee22f8d0d8c5020f53330add722894464b5ba5a2b708d18633d00',
       ];
       expect(signedTx.witnesses, expectedData);
     });
