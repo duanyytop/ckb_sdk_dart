@@ -3,15 +3,15 @@ import 'dart:typed_data';
 import '../../utils/utils.dart';
 import '../base/fixed_type.dart';
 
-class Uint32 extends FixedType<int> {
+class UInt32 extends FixedType<int> {
   static final int byteSize = 4;
 
   int _value;
 
-  Uint32(this._value);
+  UInt32(this._value);
 
-  factory Uint32.fromHex(String hex) =>
-      Uint32(BigInt.parse(cleanHexPrefix(hex), radix: 16).toInt());
+  factory UInt32.fromHex(String hex) =>
+      UInt32(BigInt.parse(cleanHexPrefix(hex), radix: 16).toInt());
 
   @override
   int getLength() {

@@ -10,15 +10,15 @@ class Byte32 extends FixedType<Uint8List> {
     if (value.length != 32) {
       throw ('Byte32 length error');
     }
-    this._value = value;
+    _value = value;
   }
 
   factory Byte32.fromHex(String hex) {
-    Uint8List list = hexToList(hex);
+    var list = hexToList(hex);
     if (list.length > 32) {
       throw ('Byte32 length error');
     } else if (list.length < 32) {
-      Uint8List bytes = Uint8List(32);
+      var bytes = Uint8List(32);
       for (var i = 0; i < list.length; i++) {
         bytes[i] = list[i];
       }

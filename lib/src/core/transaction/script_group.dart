@@ -3,5 +3,5 @@
 class ScriptGroup {
   List<int> inputIndexes;
 
-  ScriptGroup({this.inputIndexes});
+  ScriptGroup(this.inputIndexes);
 }

@@ -6,25 +6,25 @@ import 'package:pointycastle/digests/blake2b.dart';
 import '../utils/utils.dart';
 
 class Blake2b {
-  final String ckbHashPersonalization = "ckb-default-hash";
+  final String CkbHashPersonalization = 'ckb-default-hash';
 
   Blake2bDigest blake2bDigest;
 
   Blake2b({int digestSize = 32}) {
     blake2bDigest = Blake2bDigest(
         digestSize: digestSize,
-        personalization: utf8.encode(ckbHashPersonalization));
+        personalization: utf8.encode(CkbHashPersonalization));
   }
 
-  update(Uint8List input) {
+  void update(Uint8List input) {
     blake2bDigest.update(input, 0, input.length);
   }
 
-  updateWithUtf8(String utf8String) {
+  void updateWithUtf8(String utf8String) {
     update(utf8.encode(utf8String));
   }
 
-  updateWithHex(String hex) {
+  void updateWithHex(String hex) {
     update(hexToList(hex));
   }
 
@@ -37,14 +37,14 @@ class Blake2b {
   String doFinalString() => listToHex(doFinal());
 
   static String blake160(String value) {
-    Blake2b blake2b = Blake2b();
+    var blake2b = Blake2b();
     blake2b.updateWithHex(value);
     return appendHexPrefix(
         listToHexNoPrefix(blake2b.doFinal()).substring(0, 40));
   }
 
   static String hash(String value) {
-    Blake2b blake2b = Blake2b();
+    var blake2b = Blake2b();
     blake2b.updateWithHex(value);
     return blake2b.doFinalString();
   }

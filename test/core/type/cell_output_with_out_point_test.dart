@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of cell output with out point', () {
     setUp(() {
-      String cellOuput = '''{
+      var cellOuput = '''{
         "block_hash": "0x03935a4b5e3c03a9c1deb93a39183a9a116c16cff3dc9ab129e847487da0e2b8",
         "capacity": "0x1d1a94a200",
         "lock": {
@@ -24,7 +24,7 @@ void main() {
     });
 
     test('fromJson', () async {
-      CellOutputWithOutPoint cellOutput =
+      var cellOutput =
           CellOutputWithOutPoint.fromJson(_json);
       expect(cellOutput.lock.codeHash,
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
@@ -35,7 +35,7 @@ void main() {
     });
 
     test('toJson', () async {
-      CellOutputWithOutPoint cellOutput =
+      var cellOutput =
           CellOutputWithOutPoint.fromJson(_json);
       var map = cellOutput.toJson();
       expect(map['capacity'], '0x1d1a94a200');

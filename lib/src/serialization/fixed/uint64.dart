@@ -3,20 +3,20 @@ import 'dart:typed_data';
 import '../../utils/utils.dart';
 import '../base/fixed_type.dart';
 
-class Uint64 extends FixedType<BigInt> {
+class UInt64 extends FixedType<BigInt> {
   BigInt _value;
 
-  Uint64(this._value);
+  UInt64(this._value);
 
-  factory Uint64.fromInt(int value) {
-    return Uint64(BigInt.from(value));
+  factory UInt64.fromInt(int value) {
+    return UInt64(BigInt.from(value));
   }
 
-  factory Uint64.fromHex(String hex) {
+  factory UInt64.fromHex(String hex) {
     try {
-      return Uint64(BigInt.parse(cleanHexPrefix(hex), radix: 16));
+      return UInt64(BigInt.parse(cleanHexPrefix(hex), radix: 16));
     } catch (error) {
-      return Uint64(BigInt.from(0));
+      return UInt64(BigInt.from(0));
     }
   }
 

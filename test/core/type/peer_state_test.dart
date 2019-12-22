@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of peer state', () {
     setUp(() {
-      String peerState = '''{
+      var peerState = '''{
         "blocks_in_flight": "0x56",
         "last_updated": "0x16a95af332d",
         "peer": "0x1"
@@ -16,13 +16,13 @@ void main() {
     });
 
     test('fromJson', () async {
-      PeerState peerState = PeerState.fromJson(_json);
+      var peerState = PeerState.fromJson(_json);
       expect(peerState.blocksInFlight, '0x56');
       expect(peerState.lastUpdate, '0x16a95af332d');
     });
 
     test('toJson', () async {
-      PeerState peerState = PeerState.fromJson(_json);
+      var peerState = PeerState.fromJson(_json);
       var map = peerState.toJson();
       expect(map['blocks_in_flight'], '0x56');
       expect(map['last_updated'], '0x16a95af332d');

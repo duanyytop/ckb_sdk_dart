@@ -19,5 +19,5 @@ pub global activate --source path /{your ckb_sdk_dart absolute path}/ckb_sdk_dar
 3. Use `pub global list` to check cli command whether install successful. If result contains `ckb_cli {version}`, you have installed sucessfully.
 
 ```shell
-ckb_cli {version} at path "/{your path}/ckb_sdk_dart/cli"
+ckb_cli {version} at path '/{your path}/ckb_sdk_dart/cli'
 ```

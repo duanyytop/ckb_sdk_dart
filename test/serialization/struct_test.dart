@@ -8,9 +8,9 @@ void main() {
   group('A group tests of Struct serialization', () {
     Struct _struct;
     setUp(() {
-      Byte1 byte1 = Byte1.fromHex("ab");
-      Byte32 byte32 = Byte32.fromHex(
-          "0102030405060708090001020304050607080900010203040506070809000102");
+      var byte1 = Byte1.fromHex('ab');
+      var byte32 = Byte32.fromHex(
+          '0102030405060708090001020304050607080900010203040506070809000102');
       _struct = Struct([]..add(byte1)..add(byte32));
     });
 

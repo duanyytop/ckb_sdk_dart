@@ -4,9 +4,9 @@ coverage:
       default:
         target: 100
         threshold: 10
-        paths: "lib/"
+        paths: 'lib/'
     patch:
       default:
         target: 100
         threshold: 10
-        paths: "lib/"
+        paths: 'lib/'

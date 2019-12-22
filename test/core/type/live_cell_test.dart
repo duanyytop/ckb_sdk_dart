@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of live cell', () {
     setUp(() {
-      String liveCell = '''{
+      var liveCell = '''{
         "cell_output": {
             "capacity": "0x1d1a94a200",
             "lock": {
@@ -27,7 +27,7 @@ void main() {
     });
 
     test('fromJson', () async {
-      LiveCell liveCell = LiveCell.fromJson(_json);
+      var liveCell = LiveCell.fromJson(_json);
       expect(liveCell.cellOutput.lock.codeHash,
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
       expect(liveCell.createdBy.txHash,
@@ -35,7 +35,7 @@ void main() {
     });
 
     test('toJson', () async {
-      LiveCell liveCell = LiveCell.fromJson(_json);
+      var liveCell = LiveCell.fromJson(_json);
       var map = liveCell.toJson();
       expect(map['cell_output']['lock']['code_hash'],
           '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');

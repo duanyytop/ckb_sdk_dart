@@ -21,38 +21,38 @@ import 'convert.dart';
 
 class Serializer {
   static Struct serializeOutPoint(OutPoint outPoint) {
-    Byte32 txHash = Byte32.fromHex(outPoint.txHash);
-    Uint32 index = Uint32.fromHex(outPoint.index);
+    var txHash = Byte32.fromHex(outPoint.txHash);
+    var index = UInt32.fromHex(outPoint.index);
     return Struct(<FixedType>[txHash, index]);
   }
 
   static Table serializeScript(Script script) {
     return Table([
       Byte32.fromHex(script.codeHash),
-      Byte1.fromHex(Script.data == script.hashType ? "00" : "01"),
+      Byte1.fromHex(Script.Data == script.hashType ? '00' : '01'),
       script.args != null ? Bytes.fromHex(script.args) : Empty()
     ]);
   }
 
   static Struct serializeCellInput(CellInput cellInput) {
-    Uint64 sinceUInt64 = Uint64.fromHex(cellInput.since);
-    Struct outPointStruct = serializeOutPoint(cellInput.previousOutput);
+    var sinceUInt64 = UInt64.fromHex(cellInput.since);
+    var outPointStruct = serializeOutPoint(cellInput.previousOutput);
     return Struct(<SerializeType>[sinceUInt64, outPointStruct]);
   }
 
   static Table serializeCellOutput(CellOutput cellOutput) {
     return Table([
-      Uint64.fromHex(cellOutput.capacity),
+      UInt64.fromHex(cellOutput.capacity),
       serializeScript(cellOutput.lock),
       cellOutput.type != null ? serializeScript(cellOutput.type) : Empty()
     ]);
   }
 
   static Struct serializeCellDep(CellDep cellDep) {
-    Struct outPointStruct = serializeOutPoint(cellDep.outPoint);
-    Byte1 depTypeBytes = CellDep.Code == cellDep.depType
-        ? Byte1.fromHex("0")
-        : Byte1.fromHex("1");
+    var outPointStruct = serializeOutPoint(cellDep.outPoint);
+    var depTypeBytes = CellDep.Code == cellDep.depType
+        ? Byte1.fromHex('0')
+        : Byte1.fromHex('1');
     return Struct([outPointStruct, depTypeBytes]);
   }
 
@@ -80,18 +80,31 @@ class Serializer {
   }
 
   static Table serializeWitnessArgs(Witness witness) {
-    List list = [];
+    var list = <Option>[];
     list.add(Option(witness.lock == null? Empty() : Bytes.fromHex(witness.lock)));
     list.add(Option(witness.inputType == null? Empty() : Bytes.fromHex(witness.inputType)));
     list.add(Option(witness.outputType == null? Empty() : Bytes.fromHex(witness.outputType)));
     return Table(list);
   }
 
+  static Dynamic<SerializeType> serializeWitnesses(List<dynamic> witnesses) {
+    var witnessList = [];
+    for (var witness in witnesses) {
+      if (witness is Witness) {
+        witnessList.add(serializeWitnessArgs(witness));
+      } else {
+        witnessList.add(Bytes.fromHex(witness));
+      }
+    }
+    witnessList = witnessList.map((witness) => witness as SerializeType).toList();
+    return Dynamic<SerializeType>(witnessList);
+  }
+
   static Table serializeRawTransaction(Transaction transaction) {
-    Transaction tx = Convert.parseTransaction(transaction);
+    var tx = Convert.parseTransaction(transaction);
 
     return Table([
-      Uint32.fromHex(tx?.version),
+      UInt32.fromHex(tx?.version),
       Serializer.serializeCellDeps(tx?.cellDeps),
       Serializer.serializeByte32(tx?.headerDeps),
       Serializer.serializeCellInputs(tx?.inputs),
@@ -101,7 +114,7 @@ class Serializer {
   }
 
   static Table serializeTransaction(Transaction transaction) {
-    return Table([serializeRawTransaction(transaction), serializeBytes(transaction.witnesses)]);
+    return Table([serializeRawTransaction(transaction), serializeWitnesses(transaction.witnesses)]);
   }
 
 }

@@ -13,15 +13,15 @@ void main() {
   group('A group tests of Struct serialization', () {
     Dynamic _dynamic;
     setUp(() {
-      List<SerializeType> types = <SerializeType>[]
+      var types = <SerializeType>[]
         ..add(Byte32.fromHex(
             '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88'))
         ..add(Byte1.fromHex('01'))
         ..add(Dynamic(<Bytes>[]
           ..add(Bytes.fromHex('0xb2e61ff569acf041b3c2c17724e2379c581eeac3'))));
 
-      Table table = Table(<SerializeType>[]
-        ..add(Uint64(BigInt.from(125000000000)))
+      var table = Table(<SerializeType>[]
+        ..add(UInt64(BigInt.from(125000000000)))
         ..add(Table(types))
         ..add(Empty()));
 

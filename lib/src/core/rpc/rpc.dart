@@ -8,7 +8,7 @@ var random = Random.secure();
 
 class Rpc {
   String nodeUrl;
-  var dio;
+  Dio dio;
 
   Rpc(this.nodeUrl, {hasLogger = false, HttpClientAdapter adapter}) {
     if (adapter != null) {
@@ -24,11 +24,11 @@ class Rpc {
   }
 
   Future post(String url, List params) async {
-    Map<String, dynamic> body = {
-      "jsonrpc": "2.0",
-      "id": random.nextInt(pow(10, 6)),
-      "method": url,
-      "params": params
+    var body = {
+      'jsonrpc': '2.0',
+      'id': random.nextInt(pow(10, 6)),
+      'method': url,
+      'params': params
     };
     var response = await dio.post(nodeUrl, data: body);
 
@@ -44,7 +44,7 @@ class Rpc {
       }
       return res.result;
     } else {
-      throw ("Rpc ${url} response error");
+      throw ('Rpc $url response error');
     }
   }
 }

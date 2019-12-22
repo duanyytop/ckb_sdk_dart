@@ -16,54 +16,51 @@ class Secp256k1SighashAllBuilder {
   Transaction _transaction;
 
   Secp256k1SighashAllBuilder(Transaction transaction) {
-    this._transaction = transaction;
+    _transaction = transaction;
   }
 
   void sign(ScriptGroup scriptGroup, String privateKey) {
-    List groupWitnesses = [];
+    var groupWitnesses = [];
     if (_transaction.witnesses.length< _transaction.inputs.length) {
       
-      throw Exception("Transaction witnesses count must not be smaller than inputs count");
+      throw Exception('Transaction witnesses count must not be smaller than inputs count');
     }
     if (scriptGroup.inputIndexes.isEmpty) {
-      throw Exception("Need at least one witness!");
+      throw Exception('Need at least one witness!');
     }
-    for (int i in scriptGroup.inputIndexes) {
+    for (var i in scriptGroup.inputIndexes) {
       groupWitnesses.add(_transaction.witnesses[i]);
     }
-    for (int i = _transaction.inputs.length; i < _transaction.witnesses.length; i++) {
+    for (var i = _transaction.inputs.length; i < _transaction.witnesses.length; i++) {
       groupWitnesses.add(_transaction.witnesses[i]);
     }
-    if (groupWitnesses[0].runtimeType != Witness) {
-      throw Exception("First witness must be of Witness type!");
+    if (groupWitnesses[0] is! Witness) {
+      throw Exception('First witness must be of Witness type!');
     }
-    String txHash = _transaction.computeHash();
+    var txHash = _transaction.computeHash();
     Witness emptiedWitness = groupWitnesses[0];
     emptiedWitness.lock = Witness.SIGNATURE_PLACEHOLDER;
-    Table witnessTable = Serializer.serializeWitnessArgs(emptiedWitness);
-    Blake2b blake2b = Blake2b();
+    var witnessTable = Serializer.serializeWitnessArgs(emptiedWitness);
+    var blake2b = Blake2b();
     blake2b.update(hexToList(txHash));
-    blake2b.update(Uint64.fromInt(witnessTable.getLength()).toBytes());
+    blake2b.update(UInt64.fromInt(witnessTable.getLength()).toBytes());
     blake2b.update(witnessTable.toBytes());
-    for (int i = 1; i < groupWitnesses.length; i++) {
+    for (var i = 1; i < groupWitnesses.length; i++) {
       Uint8List bytes;
-      if (groupWitnesses[i].runtimeType == Witness) {
+      if (groupWitnesses[i] is Witness) {
         bytes = Serializer.serializeWitnessArgs(groupWitnesses[i]).toBytes();
       } else {
         bytes = hexToList(groupWitnesses[i]);
       }
-      blake2b.update(Uint64.fromInt(bytes.length).toBytes());
+      blake2b.update(UInt64.fromInt(bytes.length).toBytes());
       blake2b.update(bytes);
     }
-    String message = blake2b.doFinalString();
+    var message = blake2b.doFinalString();
 
     Witness signedWitness = groupWitnesses[0];
-    signedWitness.lock =
-        listToHex(
-            Sign.signMessage(hexToList(message), privateKey).getSignature());
+    signedWitness.lock = listToHex(Sign.signMessage(hexToList(message), privateKey).getSignature());
 
-    _transaction.witnesses[scriptGroup.inputIndexes[0]] = 
-        listToHex(Serializer.serializeWitnessArgs(signedWitness).toBytes());
+    _transaction.witnesses[scriptGroup.inputIndexes[0]] = listToHex(Serializer.serializeWitnessArgs(signedWitness).toBytes());
   }
 
   Transaction buildTx() {

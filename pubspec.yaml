@@ -6,11 +6,11 @@ authors:
 description:  A Dart SDK for Nervos CKB which is a public/permissionless blockchain, the layer 1 of Nervos network. 
 
 environment:
-  sdk: ">=2.4.0 <3.0.0"
+  sdk: '>=2.4.0 <3.0.0'
 
 dependencies:
   dio: ^3.0.4
-  pointycastle: ^1.0.1
+  pointycastle: ^1.0.2
   bip_bech32: ^0.1.3
   test_coverage: ^0.3.0
   http: ^0.12.0+2

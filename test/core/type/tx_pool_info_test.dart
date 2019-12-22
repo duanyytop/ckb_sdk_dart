@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of tx pool info', () {
     setUp(() {
-      String txPoolInfo = '''{
+      var txPoolInfo = '''{
         "last_txs_updated_at": "0x0",
         "orphan": "0x0",
         "pending": "0x1",
@@ -19,13 +19,13 @@ void main() {
     });
 
     test('fromJson', () async {
-      TxPoolInfo txPoolInfo = TxPoolInfo.fromJson(_json);
+      var txPoolInfo = TxPoolInfo.fromJson(_json);
       expect(txPoolInfo.lastTxsUpdatedAt, '0x0');
       expect(txPoolInfo.totalTxCycles, '0xc');
     });
 
     test('toJson', () async {
-      TxPoolInfo txPoolInfo = TxPoolInfo.fromJson(_json);
+      var txPoolInfo = TxPoolInfo.fromJson(_json);
       var map = txPoolInfo.toJson();
       expect(map['last_txs_updated_at'], '0x0');
       expect(map['total_tx_cycles'], '0xc');

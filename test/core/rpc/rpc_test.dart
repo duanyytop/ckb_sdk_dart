@@ -8,7 +8,7 @@ void main() {
   dynamic _jsonResponse, _jsonError;
   group('A group tests of rpc', () {
     setUp(() {
-      String response = '''{
+      var response = '''{
         "id": 2,
         "jsonrpc": "2.0",
         "result": [
@@ -21,7 +21,7 @@ void main() {
       }''';
       _jsonResponse = jsonDecode(response);
 
-      String error = '''{
+      var error = '''{
         "code": 2,
         "message": "rpc error"
       }''';
@@ -29,40 +29,40 @@ void main() {
     });
 
     test('respone fromJson', () async {
-      RpcResponse response = RpcResponse.fromJson(_jsonResponse);
+      var response = RpcResponse.fromJson(_jsonResponse);
       expect(response.id, 2);
       expect(response.jsonrpc, '2.0');
     });
 
     test('respone toJson', () async {
-      RpcResponse response = RpcResponse.fromJson(_jsonResponse);
+      var response = RpcResponse.fromJson(_jsonResponse);
       var map = response.toJson();
       expect(map['id'], 2);
       expect(map['jsonrpc'], '2.0');
     });
 
     test('error fromJson', () async {
-      Error error = Error.fromJson(_jsonError);
+      var error = Error.fromJson(_jsonError);
       expect(error.code, 2);
       expect(error.message, 'rpc error');
     });
 
     test('error toJson', () async {
-      Error error = Error.fromJson(_jsonError);
+      var error = Error.fromJson(_jsonError);
       var map = error.toJson();
       expect(map['code'], 2);
       expect(map['message'], 'rpc error');
     });
 
     test('rpc post', () async {
-      Rpc rpc = Rpc('http://localhost:8114');
+      var rpc = Rpc('http://localhost:8114');
       var response = await rpc.post('get_tip_block_number', []);
       expect(response.runtimeType.toString(), 'String');
       expect((response as String).isNotEmpty, true);
     }, skip: 'Skip rpc test');
 
     test('rpc post error', () async {
-      Rpc rpc = Rpc('http://localhost:8114');
+      var rpc = Rpc('http://localhost:8114');
       try {
         await rpc.post('get_tip_block', []);
       } catch (error) {

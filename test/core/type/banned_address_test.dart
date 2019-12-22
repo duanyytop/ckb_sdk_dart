@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of banned address', () {
     setUp(() {
-      String bannedAddress = '''{
+      var bannedAddress = '''{
         "address": "192.168.0.2/32",
         "ban_reason": "",
         "ban_until": "0x1ac89236180",
@@ -17,13 +17,13 @@ void main() {
     });
 
     test('fromJson', () async {
-      BannedAddress bannedAddress = BannedAddress.fromJson(_json);
+      var bannedAddress = BannedAddress.fromJson(_json);
       expect(bannedAddress.address, '192.168.0.2/32');
       expect(bannedAddress.banUntil, '0x1ac89236180');
     });
 
     test('toJson', () async {
-      BannedAddress bannedAddress = BannedAddress.fromJson(_json);
+      var bannedAddress = BannedAddress.fromJson(_json);
       var map = bannedAddress.toJson();
       expect(map['address'], '192.168.0.2/32');
       expect(map['ban_until'], '0x1ac89236180');

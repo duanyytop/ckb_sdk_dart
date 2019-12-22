@@ -11,7 +11,7 @@ void main() {
   group('A group tests of Struct serialization', () {
     Table _table;
     setUp(() {
-      List<SerializeType> types = <SerializeType>[]
+      var types = <SerializeType>[]
         ..add(Byte32.fromHex(
             '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88'))
         ..add(Byte1.fromHex('01'))

@@ -1,83 +1,45 @@
 import 'dart:typed_data';
 
 import 'package:bip_bech32/bip_bech32.dart';
-
-import '../crypto/blake2b.dart';
-import '../crypto/ripemd160.dart';
-import '../crypto/sha256.dart';
-import '../utils/utils.dart';
-import 'address_params.dart';
+import 'package:ckb_sdk_dart/ckb_core.dart';
+import 'package:ckb_sdk_dart/src/address/address_type.dart';
+import 'package:ckb_sdk_dart/src/address/address_utils.dart';
+import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 class AddressGenerator {
-  Network network;
-  FormatType formatType;
-  CodeHashIndex codeHashIndex;
 
-  AddressGenerator(
-      {this.network = Network.mainnet,
-      this.formatType = FormatType.short,
-      this.codeHashIndex = CodeHashIndex.blake160});
-
-  String addressFromPublicKey(String publicKey) {
-    if (codeHashIndex == CodeHashIndex.ripemd160) {
-      return address(Ripemd160.hash(Sha256.hash(publicKey)));
+  static String generate(Network network, Script script) {
+    if (Script.Type == script.hashType && cleanHexPrefix(script.args).length == 40) {
+      if (SECP_BLAKE160_CODE_HASH == cleanHexPrefix(script.codeHash)) {
+        // Payload: type(01) | code hash index(00, P2PH) | args
+        String payload = TYPE_SHORT + CODE_HASH_IDX_BLAKE160 + cleanHexPrefix(script.args);
+        Uint8List data = hexToList(payload);
+        Bech32Codec bech32codec = Bech32Codec();
+        return bech32codec.encode(Bech32(prefix(network), convertBits(data, 8, 5, true)));
+      } else {
+        if (MULTISIG_CODE_HASH == cleanHexPrefix(script.codeHash)) {
+          // Payload: type(01) | code hash index(01, multi-sig) | args
+          String payload = TYPE_SHORT + CODE_HASH_IDX_MULTISIG + cleanHexPrefix(script.args);
+          Uint8List data = hexToList(payload);
+          Bech32Codec bech32codec = Bech32Codec();
+          return bech32codec.encode(Bech32(prefix(network), convertBits(data, 8, 5, true)));
+        }
+        return generateFullAddress(network, script);
+      }
     }
-    return address(Blake2b.blake160(publicKey));
+    return generateFullAddress(network, script);
   }
 
-  String address(String arg) {
-    // Payload: type(01) | code hash index(00, P2PH) | arg (pubkey hash)
-    String payload = AddressParams.formatType(formatType) +
-        AddressParams.codeHashIndex(codeHashIndex) +
-        cleanHexPrefix(arg);
+  static String generateFullAddress(Network network, Script script) {
+    String type = Script.Type == script.hashType ? TYPE_FULL_TYPE : TYPE_FULL_DATA;
+    // Payload: type(02/04) | code hash | args
+    String payload = type + cleanHexPrefix(script.codeHash) + cleanHexPrefix(script.args);
     Uint8List data = hexToList(payload);
     Bech32Codec bech32codec = Bech32Codec();
-    String prefix = AddressParams.network(network);
-    return bech32codec.encode(Bech32(prefix, _convertBits(data, 8, 5, true)));
+    return bech32codec.encode(Bech32(prefix(network), convertBits(data, 8, 5, true)));
   }
 
-  Bech32 parse(String address) {
-    Bech32Codec bech32codec = Bech32Codec();
-    Bech32 parsed = bech32codec.decode(address);
-    Uint8List data = _convertBits(parsed.data, 5, 8, false);
-    return data.isEmpty ? null : Bech32(parsed.hrp, data);
-  }
-
-  String blake160FromAddress(String address) {
-    Bech32 bech32 = parse(address);
-    String payload = cleanHexPrefix(listToWholeHex(bech32.data));
-    return payload.startsWith(AddressParams.formatType(formatType))
-        ? appendHexPrefix(payload.replaceAll(
-            AddressParams.formatType(formatType) +
-                AddressParams.codeHashIndex(codeHashIndex),
-            ""))
-        : null;
-  }
-
-  Uint8List _convertBits(Uint8List data, int fromBits, int toBits, bool pad) {
-    int acc = 0;
-    int bits = 0;
-    int maxv = (1 << toBits) - 1;
-    List<int> ret = List<int>();
-    for (int i = 0; i < data.length; i++) {
-      int b = data[i] & 0xff;
-      if ((b >> fromBits) > 0) {
-        throw Exception("Address format exception");
-      }
-      acc = (acc << fromBits) | b;
-      bits += fromBits;
-      while (bits >= toBits) {
-        bits -= toBits;
-        ret.add((acc >> bits) & maxv);
-      }
-    }
-
-    if (pad && (bits > 0)) {
-      ret.add((acc << (toBits - bits)) & maxv);
-    } else if (bits >= fromBits || ((acc << (toBits - bits)) & maxv) != 0) {
-      throw Exception(
-          "Strict mode was used but input couldn't be converted without padding");
-    }
-    return Uint8List.fromList(ret);
+  static String prefix(Network network) {
+    return network == Network.MAINNET ? 'ckb' : 'ckt';
   }
 }

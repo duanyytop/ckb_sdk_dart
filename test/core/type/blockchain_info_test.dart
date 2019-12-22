@@ -27,13 +27,13 @@ void main() {
     });
 
     test('fromJson', () async {
-      BlockchainInfo blockchainInfo = BlockchainInfo.fromJson(_json);
+      var blockchainInfo = BlockchainInfo.fromJson(_json);
       expect(blockchainInfo.difficulty, '0x7a1200');
       expect(blockchainInfo.alerts[0].message, 'An example alert message!');
     });
 
     test('toJson', () async {
-      BlockchainInfo blockchainInfo = BlockchainInfo.fromJson(_json);
+      var blockchainInfo = BlockchainInfo.fromJson(_json);
       var map = blockchainInfo.toJson();
       expect(map['epoch'], '0x7080018000001');
       expect(map['alerts'].runtimeType.toString(), 'List<AlertMessage>');

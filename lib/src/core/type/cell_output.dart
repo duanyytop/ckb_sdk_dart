@@ -25,7 +25,7 @@ class CellOutput {
     };
   }
 
-  int calculateByteSize(String data) {
+  int occupiedCapacity(String data) {
     if (data == null) {
       throw ('Please provide a valid data');
     }

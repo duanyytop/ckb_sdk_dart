@@ -13,9 +13,12 @@ class TransactionBuilder {
   List _witnesses = [];
 
   TransactionBuilder(Api api) {
-    SystemContract.getSystemSecpCell(api: api).then((systemScriptCell) => {
-      _cellDeps.add(CellDep(outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup))
-    });
+    SystemContract.getSystemSecpCell(api: api)
+      .then((systemScriptCell) => {
+        _cellDeps.add(CellDep(
+          outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup))
+      });
+  }
 
   void addInput(CellInput input) {
     _cellInputs.add(input);
@@ -71,13 +74,12 @@ class TransactionBuilder {
 
   Transaction buildTx() {
     if (_cellOutputsData.isEmpty) {
-      for (int i = 0; i < _cellOutputs.length; i++) {
-        _cellOutputsData.add("0x");
+      for (var i = 0; i < _cellOutputs.length; i++) {
+        _cellOutputsData.add('0x');
       }
     }
 
     return Transaction(
-        version: "0", cellDeps: _cellDeps, headerDeps: _headerDeps, inputs: _cellInputs, outputs: _cellOutputs, outputsData: _cellOutputsData, witnesses: _witnesses);
+        version: '0', cellDeps: _cellDeps, headerDeps: _headerDeps, inputs: _cellInputs, outputs: _cellOutputs, outputsData: _cellOutputsData, witnesses: _witnesses);
     }
-  }
 }

@@ -4,14 +4,14 @@ import '../base/fixed_type.dart';
 import '../base/serialize_type.dart';
 
 class Struct extends FixedType<List<SerializeType>> {
-  List<SerializeType> _value;
+  final List<SerializeType> _value;
 
   Struct(this._value);
 
   @override
   int getLength() {
-    int length = 0;
-    for (SerializeType type in _value) {
+    var length = 0;
+    for (var type in _value) {
       length += type.getLength();
     }
     return length;
@@ -24,7 +24,7 @@ class Struct extends FixedType<List<SerializeType>> {
 
   @override
   Uint8List toBytes() {
-    List<int> dest = [];
+    var dest = <int>[];
     for (var type in _value) {
       dest.addAll(type.toBytes());
     }

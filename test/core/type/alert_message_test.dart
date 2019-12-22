@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of alert message', () {
     setUp(() {
-      String alert = '''{
+      var alert = '''{
         "id": "0x2a",
         "message": "An example alert message!",
         "notice_until": "0x24bcca57c00",
@@ -17,12 +17,12 @@ void main() {
     });
 
     test('fromJson', () async {
-      AlertMessage alertMessage = AlertMessage.fromJson(_json);
+      var alertMessage = AlertMessage.fromJson(_json);
       expect(alertMessage.message, 'An example alert message!');
     });
 
     test('toJson', () async {
-      AlertMessage alertMessage = AlertMessage.fromJson(_json);
+      var alertMessage = AlertMessage.fromJson(_json);
       var map = alertMessage.toJson();
       expect(map['message'], 'An example alert message!');
       expect(map['notice_until'], '0x24bcca57c00');

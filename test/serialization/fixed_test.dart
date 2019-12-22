@@ -13,11 +13,11 @@ void main() {
     Fixed _fixed;
 
     setUp(() {
-      Byte32 byte32 = Byte32.fromHex(
-          "0x0000000000000000000000000000000000000000000000000000000000000000");
-      Uint32 index = Uint32(4294967295);
-      Uint64 since = Uint64(BigInt.from(1));
-      Struct input = Struct(<SerializeType>[
+      var byte32 = Byte32.fromHex(
+          '0x0000000000000000000000000000000000000000000000000000000000000000');
+      var index = UInt32(4294967295);
+      var since = UInt64(BigInt.from(1));
+      var input = Struct(<SerializeType>[
         since,
         Struct(<SerializeType>[byte32, index])
       ]);

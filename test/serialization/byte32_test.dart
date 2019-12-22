@@ -7,7 +7,7 @@ void main() {
     setUp(() {});
 
     test('Byte32', () {
-      Byte32 byte32 = Byte32.fromHex("0x");
+      var byte32 = Byte32.fromHex('0x');
       expect(byte32.toBytes(), [
         0,
         0,
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('Byte32', () {
-      Byte32 byte32 = Byte32.fromHex(
+      var byte32 = Byte32.fromHex(
           '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88');
       expect(
           byte32.toBytes(),
@@ -54,7 +54,7 @@ void main() {
     });
 
     test('Byte32', () {
-      Byte32 byte32 =
+      var byte32 =
           Byte32.fromHex('f879527946a537e82c7f3c1cbf6d8ebf9767437d8e');
       expect(
           byte32.toBytes(),
@@ -63,13 +63,13 @@ void main() {
     });
 
     test('Byte32 length', () {
-      Byte32 byte32 = Byte32.fromHex(
+      var byte32 = Byte32.fromHex(
           '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88');
       expect(byte32.getLength(), 32);
     });
 
     test('Byte32 getValue', () {
-      Byte32 byte32 = Byte32.fromHex(
+      var byte32 = Byte32.fromHex(
           '68d5438ac952d2f584abf879527946a537e82c7f3c1cbf6d8ebf9767437d8e88');
       expect(byte32.getValue().runtimeType.toString(), 'Uint8List');
     });

@@ -1,16 +1,18 @@
 import 'dart:typed_data';
 
+import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:pointycastle/export.dart';
 import 'package:pointycastle/impl.dart';
 
 import './ecdsa_signature.dart';
-import './key.dart';
 import '../utils/utils.dart';
 
 final ECDomainParameters params = ECCurve_secp256k1();
 final BigInt _halfCurveOrder = params.n ~/ BigInt.two;
 
 class Sign {
+  static const int SIGN_LENGTH = 65;
+
   static EcdaSignature signMessage(Uint8List messageHash, String privateKey) {
     var digest = SHA256Digest();
     var signer = ECDSASigner(null, HMac(digest, 64));
@@ -26,7 +28,7 @@ class Sign {
     }
 
     var publicKey =
-        hexToBigInt(Key.publicKeyFromPrivate(privateKey, compress: false));
+        hexToBigInt(publicKeyFromPrivate(privateKey, compress: false));
 
     var recId = -1;
     for (var i = 0; i < 4; i++) {
@@ -39,7 +41,7 @@ class Sign {
 
     if (recId == -1) {
       throw Exception(
-          "Could not construct a recoverable key. This should never happen");
+          'Could not construct a recoverable key. This should never happen');
     }
 
     return EcdaSignature(Uint8List.fromList(toBytesPadded(sig.r, 32)),
@@ -53,7 +55,7 @@ class Sign {
     var x = sig.r + (i * n);
 
     var prime = BigInt.parse(
-        "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+        'fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f',
         radix: 16);
     if (x.compareTo(prime) >= 0) return null;
 

@@ -1,7 +1,12 @@
+import 'dart:typed_data';
+
+import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
+import 'package:ckb_sdk_dart/src/serialization/dynamic/dynamic.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
+import '../../../ckb_serialization.dart';
 import 'cell_dep.dart';
 import 'cell_input.dart';
 import 'cell_output.dart';
@@ -15,7 +20,7 @@ class Transaction {
   List<CellInput> inputs;
   List<CellOutput> outputs;
   List<String> outputsData;
-  List<String> witnesses;
+  List<dynamic> witnesses;
 
   Transaction(
       {this.version,
@@ -48,7 +53,7 @@ class Transaction {
             ?.map((outputData) => outputData.toString())
             ?.toList(),
         witnesses: (json['witnesses'] as List)
-            ?.map((witness) => witness?.toString())
+            ?.map((witness) => witness)
             ?.toList());
   }
 
@@ -78,26 +83,46 @@ class Transaction {
   }
 
   String computeHash() {
-    Blake2b blake2b = Blake2b();
+    var blake2b = Blake2b();
     blake2b.update(Serializer.serializeRawTransaction(this)?.toBytes());
     return appendHexPrefix(blake2b.doFinalString());
   }
 
   Transaction sign(String privateKey) {
-    if (witnesses.length < inputs.length) {
-      throw ("Invalid number of witnesses");
+    if (witnesses.isEmpty) {
+      throw Exception('Need at least one witness!');
     }
-    String txHash = computeHash();
-    List<String> signedWitnesses = [];
-    for (String witness in witnesses) {
-      Blake2b blake2b = Blake2b();
-      blake2b.update(hexToList(txHash));
-      blake2b.update(hexToList(witness));
-      String message = blake2b.doFinalString();
+    if (witnesses[0] is! Witness) {
+      throw Exception('First witness must be of Witness type!');
+    }
+    var txHash = computeHash();
+    var emptiedWitness = witnesses[0] as Witness;
+    emptiedWitness.lock = Witness.SIGNATURE_PLACEHOLDER;
+    var witnessTable = Serializer.serializeWitnessArgs(emptiedWitness);
+    var blake2b = Blake2b();
+    blake2b.update(hexToList(txHash));
+    blake2b.update(UInt64.fromInt(witnessTable.getLength()).toBytes());
+    blake2b.update(witnessTable.toBytes());
+    for (var i = 1; i < witnesses.length; i++) {
+      Uint8List bytes;
+      if (witnesses[i] is Witness) {
+        bytes = Serializer.serializeWitnessArgs(witnesses[i] as Witness).toBytes();
+      } else {
+        bytes = hexToList(witnesses[i] as String);
+      }
+      blake2b.update(UInt64.fromInt(bytes.length).toBytes());
+      blake2b.update(bytes);
+    }
+    var message = blake2b.doFinalString();
+    (witnesses[0] as Witness).lock = listToHex(Sign.signMessage(hexToList(message), privateKey).getSignature());
 
-      String signature = listToHex(
-          Sign.signMessage(hexToList(message), privateKey).getSignature());
-      signedWitnesses.add('$signature${cleanHexPrefix(witness)}');
+    var signedWitness = [];
+    for (Object witness in witnesses) {
+      if (witness is Witness) {
+        signedWitness.add(listToHex(Serializer.serializeWitnessArgs(witness).toBytes()));
+      } else {
+        signedWitness.add(witness);
+      }
     }
 
     return Transaction(
@@ -108,6 +133,6 @@ class Transaction {
         inputs: inputs,
         outputs: outputs,
         outputsData: outputsData,
-        witnesses: signedWitnesses);
+        witnesses: signedWitness);
   }
 }

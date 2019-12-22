@@ -4,14 +4,14 @@ import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'utils/serializer.dart';
 
 class Script {
-  static const String data = 'data';
-  static const String type = 'type';
+  static const String Data = 'data';
+  static const String Type = 'type';
 
   String codeHash;
   String args;
   String hashType;
 
-  Script({this.codeHash, this.args, this.hashType = data});
+  Script({this.codeHash, this.args, this.hashType = Data});
 
   factory Script.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;

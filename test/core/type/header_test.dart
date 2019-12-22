@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of header', () {
     setUp(() {
-      String header = '''{
+      var header = '''{
         "dao": "0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000",
         "compact_target": "0x7a1200",
         "epoch": "0x7080018000001",
@@ -25,14 +25,14 @@ void main() {
     });
 
     test('fromJson', () async {
-      Header header = Header.fromJson(_json);
+      var header = Header.fromJson(_json);
       expect(header.dao,
           '0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000');
       expect(header.compactTarget, '0x7a1200');
     });
 
     test('toJson', () async {
-      Header header = Header.fromJson(_json);
+      var header = Header.fromJson(_json);
       var map = header.toJson();
       expect(map['dao'],
           '0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000');

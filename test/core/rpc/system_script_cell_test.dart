@@ -13,26 +13,26 @@ void main() {
     });
 
     test('getGenesisBlock', () async {
-      Block block = await SystemContract.getGenesisBlock(api: _api);
+      var block = await SystemContract.getGenesisBlock(api: _api);
       expect(block.toJson().isNotEmpty, true);
     }, skip: 'Skip rpc test');
 
     test('getSystemSecpCell', () async {
-      SystemScriptCell _systemSecpCell =
+      var _systemSecpCell =
           await SystemContract.getSystemSecpCell(api: _api);
       expect(_systemSecpCell.cellHash.isNotEmpty, true);
       expect(_systemSecpCell.outPoint.toJson().isNotEmpty, true);
     }, skip: 'Skip rpc test');
 
     test('getSystemDaoCell', () async {
-      SystemScriptCell _systemDaoCell =
+      var _systemDaoCell =
           await SystemContract.getSystemDaoCell(api: _api);
       expect(_systemDaoCell.cellHash.isNotEmpty, true);
       expect(_systemDaoCell.outPoint.toJson().isNotEmpty, true);
     }, skip: 'Skip rpc test');
 
     test('SystemScriptCell', () async {
-      SystemScriptCell _systemScriptCell = SystemScriptCell(
+      var _systemScriptCell = SystemScriptCell(
           cellHash: '0x111111111111111111111111111111111111111111',
           outPoint: OutPoint(
               txHash: '0x222222222222222222222222222222222222', index: '0x0'));

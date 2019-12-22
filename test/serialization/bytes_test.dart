@@ -7,18 +7,18 @@ void main() {
     setUp(() {});
 
     test('Bytes', () {
-      Bytes bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
+      var bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
       expect(bytes.toBytes(),
           hexToList('140000003954acece65096bfa81258983ddb83915fc56bd8'));
     });
 
     test('Bytes length', () {
-      Bytes bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
+      var bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
       expect(bytes.getLength(), 24);
     });
 
     test('Bytes getValue', () {
-      Bytes bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
+      var bytes = Bytes.fromHex('3954acece65096bfa81258983ddb83915fc56bd8');
       expect(bytes.getValue().runtimeType.toString(), 'Uint8List');
     });
   });

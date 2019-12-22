@@ -1,6 +1,4 @@
 import 'package:ckb_sdk_dart/ckb_core.dart';
-import 'package:ckb_sdk_dart/src/core/type/block.dart';
-import 'package:ckb_sdk_dart/src/core/type/transaction_with_status.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 
@@ -19,106 +17,106 @@ void main() {
     });
 
     test('getBlockHash', () async {
-      String hash = await _api.getBlockHash("2");
+      var hash = await _api.getBlockHash('2');
       expect(hash.isNotEmpty, true);
     });
 
     test('getBlock', () async {
-      Block block = await _api.getBlock('hash');
+      var block = await _api.getBlock('hash');
       expect(block.toJson().isNotEmpty, true);
     });
 
     test('getBlockByNumber', () async {
-      Block block = await _api.getBlockByNumber("2");
+      var block = await _api.getBlockByNumber('2');
       expect(block.toJson().isNotEmpty, true);
     });
 
     test('getTransaction', () async {
-      TransactionWithStatus transaction = await _api.getTransaction('hash');
+      var transaction = await _api.getTransaction('hash');
       expect(transaction.toJson().isNotEmpty, true);
     });
 
     test('getCellbaseOutputCapacityDetails', () async {
-      CellbaseOutputCapacity cellbaseOutputCapacity =
+      var cellbaseOutputCapacity =
           await _api.getCellbaseOutputCapacityDetails('hash');
       expect(cellbaseOutputCapacity.toJson().isNotEmpty, true);
     });
 
     test('getTipHeader', () async {
-      Header header = await _api.getTipHeader();
+      var header = await _api.getTipHeader();
       expect(header.toJson().isNotEmpty, true);
     });
 
     test('getCellsByLockHash', () async {
-      List<CellOutputWithOutPoint> list = await _api.getCellsByLockHash(
+      var list = await _api.getCellsByLockHash(
           lockHash: 'lockHash', fromNumber: '0', toNumber: '100');
       expect(list.isNotEmpty, true);
     });
 
     test('getLiveCell', () async {
-      CellWithStatus cellWithStatus = await _api.getLiveCell(
+      var cellWithStatus = await _api.getLiveCell(
           outPoint: OutPoint(txHash: '0x11111111111111111111111', index: '0x0'),
           withData: true);
       expect(cellWithStatus.runtimeType.toString(), 'CellWithStatus');
     });
 
     test('getCurrentEpoch', () async {
-      Epoch epoch = await _api.getCurrentEpoch();
+      var epoch = await _api.getCurrentEpoch();
       expect(epoch.toJson().isNotEmpty, true);
     });
 
     test('getEpochByNumber', () async {
-      Epoch epoch = await _api.getEpochByNumber("0");
+      var epoch = await _api.getEpochByNumber('0');
       expect(epoch.toJson().isNotEmpty, true);
     });
 
     test('getHeader', () async {
-      Header header = await _api.getHeader('hash');
+      var header = await _api.getHeader('hash');
       expect(header.toJson().isNotEmpty, true);
     });
 
     test('getHeaderByNumber', () async {
-      Header header = await _api.getHeaderByNumber("0");
+      var header = await _api.getHeaderByNumber('0');
       expect(header.toJson().isNotEmpty, true);
     });
 
     test('getBlockchainInfo', () async {
-      BlockchainInfo blockchainInfo = await _api.getBlockchainInfo();
+      var blockchainInfo = await _api.getBlockchainInfo();
       expect(blockchainInfo.toJson().isNotEmpty, true);
     });
 
     test('getPeersState', () async {
-      List<PeerState> list = await _api.getPeersState();
+      var list = await _api.getPeersState();
       expect(list.isNotEmpty, true);
     });
 
     test('getEpochByNumber', () async {
-      Epoch epoch = await _api.getEpochByNumber("0");
+      var epoch = await _api.getEpochByNumber('0');
       expect(epoch.toJson().isNotEmpty, true);
     });
 
     test('localNodeInfo', () async {
-      NodeInfo nodeInfo = await _api.localNodeInfo();
+      var nodeInfo = await _api.localNodeInfo();
       expect(nodeInfo.toJson().isNotEmpty, true);
     });
 
     test('getPeers', () async {
-      List<NodeInfo> list = await _api.getPeers();
+      var list = await _api.getPeers();
       expect(list.isNotEmpty, true);
     });
 
     test('localNodeInfo', () async {
-      NodeInfo nodeInfo = await _api.localNodeInfo();
+      var nodeInfo = await _api.localNodeInfo();
       expect(nodeInfo.toJson().isNotEmpty, true);
     });
 
     test('txPoolInfo', () async {
-      TxPoolInfo txPoolInfo = await _api.txPoolInfo();
+      var txPoolInfo = await _api.txPoolInfo();
       expect(txPoolInfo.toJson().isNotEmpty, true);
     });
 
     test('dryRunTransaction', () async {
-      Cycles cycles =
+      var cycles =
           await _api.dryRunTransaction(Transaction(version: '0x0', cellDeps: [
         CellDep(
             outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
@@ -139,7 +137,7 @@ void main() {
     });
 
     test('computeTransactionHash', () async {
-      String hash = await _api
+      var hash = await _api
           .computeTransactionHash(Transaction(version: '0x0', cellDeps: [
         CellDep(
             outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
@@ -160,14 +158,14 @@ void main() {
     });
 
     test('computeScriptHash', () async {
-      String hash = await _api.computeScriptHash(
+      var hash = await _api.computeScriptHash(
           Script(codeHash: '0x000022222', args: '0x2222222', hashType: 'data'));
       expect(hash.isNotEmpty, true);
     });
 
     test('getTransactionsByLockHash', () async {
-      List<CellTransaction> list =
-          await _api.getTransactionsByLockHash('lockHash', "0", "100", true);
+      var list =
+          await _api.getTransactionsByLockHash('lockHash', '0', '100', true);
       expect(list.isNotEmpty, true);
     });
   });

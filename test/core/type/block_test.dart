@@ -7,7 +7,7 @@ void main() {
   dynamic _json;
   group('A group tests of block', () {
     setUp(() {
-      String block = '''{
+      var block = '''{
         "header": {
             "dao": "0x0100000000000000005827f2ba13b000d77fa3d595aa00000061eb7ada030000",
             "difficulty": "0x7a1200",
@@ -65,7 +65,7 @@ void main() {
     });
 
     test('fromJson', () async {
-      Block block = Block.fromJson(_json);
+      var block = Block.fromJson(_json);
       expect(block.header.hash,
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');
       expect(block.transactions[0].outputs[0].lock.codeHash,
@@ -75,7 +75,7 @@ void main() {
     });
 
     test('toJson', () async {
-      Block block = Block.fromJson(_json);
+      var block = Block.fromJson(_json);
       var map = block.toJson();
       expect(map['header']['hash'],
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');

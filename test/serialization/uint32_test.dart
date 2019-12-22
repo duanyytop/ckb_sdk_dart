@@ -6,15 +6,15 @@ void main() {
     setUp(() {});
 
     test('Uint32', () {
-      expect(Uint32(256).toBytes(), [0, 1, 0, 0]);
+      expect(UInt32(256).toBytes(), [0, 1, 0, 0]);
     });
 
     test('Uint32 length', () {
-      expect(Uint32(256).getLength(), 4);
+      expect(UInt32(256).getLength(), 4);
     });
 
     test('Uint32 getValue', () {
-      expect(Uint32(256).getValue(), 256);
+      expect(UInt32(256).getValue(), 256);
     });
   });
 }

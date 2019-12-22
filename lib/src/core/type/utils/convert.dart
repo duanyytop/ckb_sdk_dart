@@ -9,19 +9,19 @@ class Convert {
   }
 
   static Transaction parseTransaction(Transaction transaction) {
-    List<CellDep> cellDeps = transaction.cellDeps
+    var cellDeps = transaction.cellDeps
         .map((cellDep) => CellDep(
             outPoint: parseOutPoint(cellDep.outPoint),
             depType: cellDep.depType))
         .toList();
 
-    List<CellInput> inputs = transaction.inputs
+    var inputs = transaction.inputs
         .map((input) => CellInput(
             previousOutput: parseOutPoint(input.previousOutput),
             since: toHexString(input.since)))
         .toList();
 
-    List<CellOutput> outputs = transaction.outputs
+    var outputs = transaction.outputs
         .map((output) => CellOutput(
             capacity: toHexString(output.capacity),
             lock: output.lock,

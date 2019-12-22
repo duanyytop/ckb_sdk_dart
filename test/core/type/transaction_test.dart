@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/rpc/api.dart';
+import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('A group tests of Transaction', () {
     dynamic _json;
     setUp(() {
-      String transaction = '''{
+      var transaction = '''{
         "cell_deps": [
             {
                 "dep_type": "code",
@@ -52,72 +53,72 @@ void main() {
     });
 
     test('Transaction hash', () async {
-      Api api = Api('http://localhost:8114');
-      Block block = await api.getBlockByNumber("0x0");
-      Transaction transaction = block.transactions[1];
-      String txHash = await api.computeTransactionHash(transaction);
+      var api = Api('http://localhost:8114');
+      var block = await api.getBlockByNumber('0x0');
+      var transaction = block.transactions[1];
+      var txHash = await api.computeTransactionHash(transaction);
       expect(transaction.computeHash(), txHash);
     }, skip: 'Skip rpc test');
 
     test('Transaction signature', () async {
-      List<CellInput> cellInputs = [
+     var cellInputs = [
         CellInput(
             previousOutput: OutPoint(
                 txHash:
-                    "0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd4",
-                index: "0x0"),
-            since: "113"),
+                    '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd4',
+                index: '0x0'),
+            since: '113'),
         CellInput(
             previousOutput: OutPoint(
                 txHash:
-                    "0x00000000000000000000000000004e4552564f5344414f494e50555430303031",
-                index: "0x0"),
-            since: "0x0")
+                    '0x00000000000000000000000000004e4552564f5344414f494e50555430303031',
+                index: '0x0'),
+            since: '0x0')
       ];
 
-      List<CellOutput> cellOutputs = [
+      var cellOutputs = [
         CellOutput(
-            capacity: "10000009045634",
+            capacity: '10000009045634',
             lock: Script(
                 codeHash:
-                    "0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd",
-                args: "0x36c329ed630d6ce750712a477543672adab57f4c"))
+                    '0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd',
+                args: '0x36c329ed630d6ce750712a477543672adab57f4c'))
       ];
 
-      List<String> witnesses = [
-        "0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb",
-        "0x"
+      var witnesses = [
+        Witness(lock: '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb'),
+        '0x'
       ];
 
-      Transaction tx = Transaction(
-          version: "0x0",
+      var tx = Transaction(
+          version: '0x0',
           cellDeps: [
             CellDep(
                 outPoint: OutPoint(
                     txHash:
-                        "0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a",
-                    index: "0x1"),
+                        '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a',
+                    index: '0x1'),
                 depType: CellDep.DepGroup)
           ],
-          headerDeps: ["0x"],
+          headerDeps: ['0x'],
           inputs: cellInputs,
           outputs: cellOutputs,
-          outputsData: ["0x"],
+          outputsData: ['0x'],
           witnesses: witnesses);
 
-      String privateKey =
-          "0xe79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3";
-      Transaction signedTx = tx.sign(privateKey);
+      var privateKey =
+          '0xe79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
+      var signedTx = tx.sign(privateKey);
 
-      List<String> expectedData = [
-        "0x8dbb53f6326240110e67c8f331140a615b37a67de5e6479fbdf4f9fb5789eaf946226a47a9c92c502b5f45b43717611a31f913f49b164846f510c92eeef69c76004107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb",
-        "0x833210c0282ec82ce1064399547d536acaea28df17b691886c80701cb18230cf1d536aaaab6cc5e3faa5d949383cfd5c082fef37499e3d120d6144a9d5ad84d900"
+      var expectedData = [
+        '0x8dbb53f6326240110e67c8f331140a615b37a67de5e6479fbdf4f9fb5789eaf946226a47a9c92c502b5f45b43717611a31f913f49b164846f510c92eeef69c76004107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb',
+        '0x833210c0282ec82ce1064399547d536acaea28df17b691886c80701cb18230cf1d536aaaab6cc5e3faa5d949383cfd5c082fef37499e3d120d6144a9d5ad84d900'
       ];
       expect(signedTx.witnesses, expectedData);
     });
 
     test('fromJson', () async {
-      Transaction transaction = Transaction.fromJson(_json);
+      var transaction = Transaction.fromJson(_json);
       expect(transaction.cellDeps[0].outPoint.txHash,
           '0x29f94532fb6c7a17f13bcde5adb6e2921776ee6f357adf645e5393bd13442141');
       expect(transaction.outputs[0].lock.codeHash,
@@ -125,7 +126,7 @@ void main() {
     });
 
     test('toJson', () async {
-      Transaction transaction = Transaction.fromJson(_json);
+      var transaction = Transaction.fromJson(_json);
       var map = transaction.toJson();
       expect(map['cell_deps'][0]['out_point']['tx_hash'],
           '0x29f94532fb6c7a17f13bcde5adb6e2921776ee6f357adf645e5393bd13442141');
