@@ -168,5 +168,12 @@ void main() {
           await _api.getTransactionsByLockHash('lockHash', '0', '100', true);
       expect(list.isNotEmpty, true);
     });
+
+    test('getCapacityByLockHash', () async {
+      var lockHashCapacity = await _api.getCapacityByLockHash('lockHash');
+      expect(lockHashCapacity.capacity.isNotEmpty, true);
+      expect(lockHashCapacity.cellsCount.isNotEmpty, true);
+      expect(lockHashCapacity.blockNumber.isNotEmpty, true);
+    });
   });
 }

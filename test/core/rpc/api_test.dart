@@ -139,5 +139,13 @@ void main() {
       var list = await _api.getTransactionsByLockHash(lockHash, '0', '100', true);
       expect(list.isNotEmpty, true);
     });
+
+    test('getTransactionsByLockHash', () async {
+      var lockHash = '0x1f2615a8dde4e28ca736ff763c2078aff990043f4cbf09eb4b3a58a140a0862d';
+      var lockHashCapacity = await _api.getCapacityByLockHash(lockHash);
+      expect(lockHashCapacity.toJson().isNotEmpty, true);
+    });
+
   }, skip: 'Skip rpc test');
+
 }

@@ -58,6 +58,8 @@ class MockAdapter extends HttpClientAdapter {
         return ResponseBody.fromString(computeScriptHash, 200);
       case 'get_transactions_by_lock_hash':
         return ResponseBody.fromString(getTransactionsByLockHash, 200);
+      case 'get_capacity_by_lock_hash':
+        return ResponseBody.fromString(getCapacityByLockHash, 200);
       default:
         break;
     }
@@ -472,4 +474,14 @@ const getTransactionsByLockHash = '''{
                     }
                 }
             ]
+        }''';
+
+const getCapacityByLockHash = '''{
+            "id": 2,
+            "jsonrpc": "2.0",
+            "result": {
+                  "capacity": "0x64",
+                  "cells_count": "0x2",
+                  "block_number": "0x235"
+              }
         }''';
