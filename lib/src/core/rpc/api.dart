@@ -200,6 +200,6 @@ class Api {
   }
 
   Future<LockHashCapacity> getCapacityByLockHash(String lockHash) async {
-    return await _rpc.post('get_capacity_by_lock_hash', [lockHash]);
+    return LockHashCapacity.fromJson(await _rpc.post('get_capacity_by_lock_hash', [lockHash]));
   }
 }
