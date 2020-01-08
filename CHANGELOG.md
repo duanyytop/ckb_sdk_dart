@@ -1,3 +1,24 @@
+## 0.26.1
+
+### Features
+
+- Update Nervos CKB transaction signature
+- Add multi keys transaction example
+- Update address generator and parser
+- Add `get_capacity_by_lock_hash` rpc
+
+### Refactor
+
+- Update apostrophe usage according to effective dart
+
+### Docs
+
+- Update readme for sending transaction usage
+
+### Breaking Changes
+
+Nervos CKB transaction signature is different from old versions, and this version adapt new ckb transaction signature.
+
 ## 0.23.3
 
 - Upgrade dio to v3.0.4
