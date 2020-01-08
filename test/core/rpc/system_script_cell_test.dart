@@ -2,7 +2,6 @@ import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/rpc/api.dart';
 import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/core/system/system_script_cell.dart';
-import 'package:ckb_sdk_dart/src/core/type/block.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -18,15 +17,13 @@ void main() {
     }, skip: 'Skip rpc test');
 
     test('getSystemSecpCell', () async {
-      var _systemSecpCell =
-          await SystemContract.getSystemSecpCell(api: _api);
+      var _systemSecpCell = await SystemContract.getSystemSecpCell(api: _api);
       expect(_systemSecpCell.cellHash.isNotEmpty, true);
       expect(_systemSecpCell.outPoint.toJson().isNotEmpty, true);
     }, skip: 'Skip rpc test');
 
     test('getSystemDaoCell', () async {
-      var _systemDaoCell =
-          await SystemContract.getSystemDaoCell(api: _api);
+      var _systemDaoCell = await SystemContract.getSystemDaoCell(api: _api);
       expect(_systemDaoCell.cellHash.isNotEmpty, true);
       expect(_systemDaoCell.outPoint.toJson().isNotEmpty, true);
     }, skip: 'Skip rpc test');

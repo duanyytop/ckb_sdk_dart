@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
-const String TYPE_SHORT = '01'; // short version for locks with popular code_hash
+const String TYPE_SHORT =
+    '01'; // short version for locks with popular code_hash
 const String TYPE_FULL_DATA = '02'; // full version with hash_type = 'Data'
 const String TYPE_FULL_TYPE = '04'; // full version with hash_type = 'Type'
 
@@ -33,7 +34,8 @@ Uint8List convertBits(Uint8List data, int fromBits, int toBits, bool pad) {
   if (pad && (bits > 0)) {
     ret.add((acc << (toBits - bits)) & maxv);
   } else if (bits >= fromBits || ((acc << (toBits - bits)) & maxv) != 0) {
-    throw Exception('Strict mode was used but input couldn\'t be converted without padding');
+    throw Exception(
+        'Strict mode was used but input couldn\'t be converted without padding');
   }
   return Uint8List.fromList(ret);
 }

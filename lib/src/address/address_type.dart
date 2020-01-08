@@ -8,17 +8,8 @@ class AddressParseResult {
   AddressParseResult(this.network, this.script, this.type);
 }
 
-enum AddressFormatType {
-  SHORT,
-  FULL
-}
+enum AddressFormatType { SHORT, FULL }
 
-enum Network {
-  MAINNET,
-  TESTNET
-}
+enum Network { MAINNET, TESTNET }
 
-enum CodeHashType {
-  BLAKE160,
-  MULTISIG
-}
+enum CodeHashType { BLAKE160, MULTISIG }

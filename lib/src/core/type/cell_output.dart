@@ -29,9 +29,8 @@ class CellOutput {
     if (data == null) {
       throw ('Please provide a valid data');
     }
-    int byteSize = 8 + hexToList(data).length + lock.calculateByteSize();
+    var byteSize = 8 + hexToList(data).length + lock.calculateByteSize();
     byteSize += type == null ? 0 : type.calculateByteSize();
     return byteSize;
   }
-
 }

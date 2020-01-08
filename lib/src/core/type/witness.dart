@@ -1,15 +1,11 @@
 class Witness {
- static final String SIGNATURE_PLACEHOLDER = '0'*130;
+  static final String SIGNATURE_PLACEHOLDER = '0' * 130;
 
   String lock;
   String inputType;
   String outputType;
 
-  Witness(
-      {this.lock,
-      this.inputType,
-      this.outputType});
-
+  Witness({this.lock, this.inputType, this.outputType});
 
   factory Witness.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;

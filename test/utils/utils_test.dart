@@ -85,7 +85,8 @@ void main() {
 
     test('ckbToShannon', () async {
       expect(ckbToShannon(number: 2343), equals(BigInt.from(234300000000)));
-      expect(ckbToShannon(bigInt: BigInt.from(265893580000)), equals(BigInt.parse('26589358000000000000', radix: 10)));
+      expect(ckbToShannon(bigInt: BigInt.from(265893580000)),
+          equals(BigInt.parse('26589358000000000000', radix: 10)));
       expect(ckbToShannon(number: 0.025), equals(BigInt.from(2500000)));
     });
   });

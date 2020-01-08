@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bip_bech32/bip_bech32.dart';
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/address/address_utils.dart';
@@ -8,7 +6,6 @@ import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'address_type.dart';
 
 class AddressParser {
-
   static String _parsePayload(String address) {
     var bech32codec = Bech32Codec();
     var parsed = bech32codec.decode(address);
@@ -33,12 +30,18 @@ class AddressParser {
       if (CODE_HASH_IDX_BLAKE160 == codeHashIndex) {
         return AddressParseResult(
             parseNetwork(address),
-            Script(codeHash: appendHexPrefix(SECP_BLAKE160_CODE_HASH), args: args, hashType: Script.Type),
+            Script(
+                codeHash: appendHexPrefix(SECP_BLAKE160_CODE_HASH),
+                args: args,
+                hashType: Script.Type),
             AddressFormatType.SHORT);
       } else if (CODE_HASH_IDX_MULTISIG == codeHashIndex) {
         return AddressParseResult(
             parseNetwork(address),
-            Script(codeHash: appendHexPrefix(MULTISIG_CODE_HASH), args: args, hashType: Script.Type),
+            Script(
+                codeHash: appendHexPrefix(MULTISIG_CODE_HASH),
+                args: args,
+                hashType: Script.Type),
             AddressFormatType.SHORT);
       } else {
         throw Exception('Short address code hash index must be 00 or 01');
@@ -48,7 +51,10 @@ class AddressParser {
     var codeHash = appendHexPrefix(payload.substring(2, 66));
     var args = appendHexPrefix(payload.substring(66));
     if (TYPE_FULL_DATA == type) {
-      return AddressParseResult(parseNetwork(address), Script(codeHash: codeHash, args: args, hashType: Script.Data), AddressFormatType.FULL);
+      return AddressParseResult(
+          parseNetwork(address),
+          Script(codeHash: codeHash, args: args, hashType: Script.Data),
+          AddressFormatType.FULL);
     } else if (TYPE_FULL_TYPE == type) {
       return AddressParseResult(
           parseNetwork(address),

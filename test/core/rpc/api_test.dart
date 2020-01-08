@@ -1,6 +1,5 @@
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/rpc/api.dart';
-import 'package:ckb_sdk_dart/src/core/type/block.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
@@ -35,8 +34,7 @@ void main() {
 
     test('getTransaction', () async {
       var block = await _api.getBlockByNumber('2');
-      var transaction =
-          await _api.getTransaction(block.transactions[0].hash);
+      var transaction = await _api.getTransaction(block.transactions[0].hash);
       expect(transaction.toJson().isNotEmpty, true);
     });
 
@@ -53,7 +51,8 @@ void main() {
     });
 
     test('getCellsByLockHash', () async {
-      var lockHash = (await generateLockScriptWithAddress('ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83'))
+      var lockHash = (await generateLockScriptWithAddress(
+              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83'))
           .computeHash();
       var list = await _api.getCellsByLockHash(
           lockHash: lockHash, fromNumber: '0', toNumber: '100');
@@ -134,18 +133,19 @@ void main() {
     });
 
     test('getTransactionsByLockHash', () async {
-      var lockHash = (await generateLockScriptWithAddress('ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83'))
+      var lockHash = (await generateLockScriptWithAddress(
+              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83'))
           .computeHash();
-      var list = await _api.getTransactionsByLockHash(lockHash, '0', '100', true);
+      var list =
+          await _api.getTransactionsByLockHash(lockHash, '0', '100', true);
       expect(list.isNotEmpty, true);
     });
 
     test('getTransactionsByLockHash', () async {
-      var lockHash = '0x1f2615a8dde4e28ca736ff763c2078aff990043f4cbf09eb4b3a58a140a0862d';
+      var lockHash =
+          '0x1f2615a8dde4e28ca736ff763c2078aff990043f4cbf09eb4b3a58a140a0862d';
       var lockHashCapacity = await _api.getCapacityByLockHash(lockHash);
       expect(lockHashCapacity.toJson().isNotEmpty, true);
     });
-
   }, skip: 'Skip rpc test');
-
 }

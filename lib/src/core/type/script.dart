@@ -30,7 +30,7 @@ class Script {
   }
 
   int calculateByteSize() {
-    int byteSize = 1;
+    var byteSize = 1;
     byteSize += codeHash == null ? 0 : hexToList(codeHash).length;
     if (args == null || args.isEmpty) {
       return byteSize;
@@ -40,7 +40,7 @@ class Script {
   }
 
   String computeHash() {
-    Blake2b blake2b = Blake2b();
+    var blake2b = Blake2b();
     blake2b.update(Serializer.serializeScript(this).toBytes());
     return appendHexPrefix(blake2b.doFinalString());
   }
