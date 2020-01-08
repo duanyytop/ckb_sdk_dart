@@ -1,3 +1,9 @@
+## 0.26.3
+
+### Features
+
+- Add `ckb_utils` to make sdk utils to public
+
 ## 0.26.2
 
 ### Refactor
