@@ -1,3 +1,9 @@
+## 0.26.2
+
+### Refactor
+
+- Format code with dartfmt
+
 ## 0.26.1
 
 ### Features
