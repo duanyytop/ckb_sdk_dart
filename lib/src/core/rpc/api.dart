@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ckb_sdk_dart/ckb_core.dart';
+import 'package:ckb_sdk_dart/src/core/type/lock_hash_capacity.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:dio/dio.dart';
 
@@ -196,5 +197,9 @@ class Api {
             [lockHash, toHexString(page), toHexString(pageSize), reverseOrder]))
         .map((cellTransaction) => CellTransaction.fromJson(cellTransaction))
         .toList();
+  }
+
+  Future<LockHashCapacity> getCapacityByLockHash(String lockHash) async {
+    return await _rpc.post('get_capacity_by_lock_hash', [lockHash]);
   }
 }

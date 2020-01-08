@@ -43,7 +43,7 @@ void main() async {
   print('Transaction hash: $hash');
 
   // waiting transaction into block, sometimes you should wait more seconds
-  sleep(Duration(microseconds: 30000));
+  sleep(Duration(seconds: 30));
 
   print('After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 

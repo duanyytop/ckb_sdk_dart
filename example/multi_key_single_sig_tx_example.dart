@@ -55,7 +55,7 @@ void main() async {
   print('First transaction hash: $hash');
 
   // waiting transaction into block, sometimes you should wait more seconds
-  sleep(Duration(microseconds: 30000));
+  sleep(Duration(seconds: 30));
 
   print('After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 
@@ -79,7 +79,7 @@ void main() async {
   print('Second transaction hash: ' + hash2);
 
   // waiting transaction into block, sometimes you should wait more seconds
-  sleep(Duration(microseconds: 30000));
+  sleep(Duration(seconds: 30));
 
   print('After transferring, first receiver1\'s balance: ${await getBalance(receivers1[0].address)} CKB');
 
