@@ -12,11 +12,11 @@ class Sha256 {
     _sha256digest = SHA256Digest();
   }
 
-  update(Uint8List input) {
+  void update(Uint8List input) {
     _sha256digest.update(input, 0, input.length);
   }
 
-  updateString(String utf8String) {
+  void updateString(String utf8String) {
     update(utf8.encode(cleanHexPrefix(utf8String)));
   }
 
@@ -29,7 +29,7 @@ class Sha256 {
   String doFinalString() => listToHex(doFinal());
 
   static String hash(String input) {
-    Sha256 sha256 = Sha256();
+    var sha256 = Sha256();
     sha256.updateString(input);
     return sha256.doFinalString();
   }

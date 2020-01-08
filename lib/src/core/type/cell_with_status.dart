@@ -18,7 +18,6 @@ class CellWithStatus {
       'status': status,
     };
   }
-  
 }
 
 class CellInfo {
@@ -30,7 +29,8 @@ class CellInfo {
   factory CellInfo.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return CellInfo(
-        data: CellData.fromJson(json['data']), output: CellOutput.fromJson(json['output']));
+        data: CellData.fromJson(json['data']),
+        output: CellOutput.fromJson(json['output']));
   }
 
   Map<String, dynamic> toJson() {
@@ -49,8 +49,7 @@ class CellData {
 
   factory CellData.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return CellData(
-        content: json['content'], hash: json['hash']);
+    return CellData(content: json['content'], hash: json['hash']);
   }
 
   Map<String, dynamic> toJson() {

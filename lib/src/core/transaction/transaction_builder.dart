@@ -1,23 +1,20 @@
-
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/core/type/cell_input.dart';
 
 class TransactionBuilder {
-
   List<CellInput> _cellInputs = [];
   List<CellOutput> _cellOutputs = [];
   List<String> _cellOutputsData = [];
-  List<CellDep> _cellDeps = [];
+  final List<CellDep> _cellDeps = [];
   List<String> _headerDeps = [];
   List _witnesses = [];
 
   TransactionBuilder(Api api) {
-    SystemContract.getSystemSecpCell(api: api)
-      .then((systemScriptCell) => {
-        _cellDeps.add(CellDep(
-          outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup))
-      });
+    SystemContract.getSystemSecpCell(api: api).then((systemScriptCell) => {
+          _cellDeps.add(CellDep(
+              outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup))
+        });
   }
 
   void addInput(CellInput input) {
@@ -80,6 +77,12 @@ class TransactionBuilder {
     }
 
     return Transaction(
-        version: '0', cellDeps: _cellDeps, headerDeps: _headerDeps, inputs: _cellInputs, outputs: _cellOutputs, outputsData: _cellOutputsData, witnesses: _witnesses);
-    }
+        version: '0',
+        cellDeps: _cellDeps,
+        headerDeps: _headerDeps,
+        inputs: _cellInputs,
+        outputs: _cellOutputs,
+        outputsData: _cellOutputsData,
+        witnesses: _witnesses);
+  }
 }

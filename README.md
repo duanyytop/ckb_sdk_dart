@@ -38,33 +38,25 @@ A simple usage example of `sendTransaction` which is in `example/wallet.dart`:
 ```dart
 
 main() async {
-  Api api = Api('http://localhost:8114', hasLogger: false);
-  String senderPrivateKey =
-      'e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
+    api = Api(NODE_URL);
 
-  AddressGenerator generator = AddressGenerator(network: Network.testnet);
-  String publicKey = Key.publicKeyFromPrivate(senderPrivateKey);
-  String senderAddress = generator.addressFromPublicKey(publicKey);
-  List<Receiver> receivers = [
-    Receiver(
-        address: 'ckt1qyqqtdpzfjwq7e667ktjwnv3hngrqkmwyhhqpa8dav',
-        capacity: BigInt.parse('10000000000')),
-    Receiver(
-        address: 'ckt1qyq9ngn77wagfurp29738apv738dqgrpqpssfhr0l6',
-        capacity: BigInt.parse('12000000000')),
-    Receiver(
-        address: 'ckt1qyq2pmuxkr0xwx8kp3ya2juryrygf27dregs44skek',
-        capacity: BigInt.parse('15000000000'))
-  ];
+    print('Before transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 
-  String balance = (await getBalance(api, senderAddress)).toString();
-  print('Receiver1:  $balance');
-  String hash = await sendCapacity(api, senderPrivateKey, receivers, fee: BigInt.from(10000));
-  print('Transaction hash: $hash');
-  Timer(Duration(seconds: 10), () async {
-    String balance1 = (await getBalance(api, senderAddress)).toString();
-    print('Receiver1:  $balance1');
-  });
+    print('Before transferring, first receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
+
+    print('Before transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
+
+    var hash = await sendCapacity(receivers, changeAddress);
+    print('Transaction hash: $hash');
+
+    // waiting transaction into block, sometimes you should wait more seconds
+    sleep(Duration(seconds: 30));
+
+    print('After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
+
+    print('After transferring, receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
+
+    print('After transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
 }
 
 ```
@@ -80,8 +72,9 @@ cd ckb_sdk_dart
 pub get                       // download and install dependences
 pub run test                  // run sdk unit tests
 
-dart ./example/rpc.dart       // run rpc request example, you should run a ckb node in your local
-dart ./example/wallet.dart    // run simple wallet example, you should run a ckb node in your local
+dart ./example/main.dart       // run rpc request example, you should run a ckb node in your local
+dart ./example/single_key_single_sig_tx_example.dart    // run simple transaction example, you should run a ckb node in your local
+dart ./example/multi_key_single_sig_tx_example.dart    // run multi keys transaction example, you should run a ckb node in your local
 ```
 
 ## Features and bugs

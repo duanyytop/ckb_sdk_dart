@@ -1,5 +1,3 @@
-import 'package:ckb_sdk_dart/src/serialization/dynamic/table.dart';
-
 import './serializer.dart';
 import '../transaction.dart';
 

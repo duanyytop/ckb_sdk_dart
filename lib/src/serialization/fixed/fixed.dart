@@ -5,7 +5,7 @@ import '../base/serialize_type.dart';
 import 'uint32.dart';
 
 class Fixed<T extends FixedType> implements SerializeType<List<T>> {
-  List<T> _value;
+  final List<T> _value;
 
   Fixed(this._value);
 

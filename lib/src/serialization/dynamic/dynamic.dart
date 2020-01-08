@@ -24,7 +24,7 @@ class Dynamic<T extends SerializeType> implements SerializeType<List<T>> {
 
   @override
   Uint8List toBytes() {
-   var dest = [...UInt32(getLength()).toBytes()];
+    var dest = [...UInt32(getLength()).toBytes()];
 
     var typeOffset = UInt32.byteSize * (1 + _value.length);
 

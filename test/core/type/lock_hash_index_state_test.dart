@@ -16,8 +16,7 @@ void main() {
     });
 
     test('fromJson', () async {
-      var lockHashIndexState =
-          LockHashIndexState.fromJson(_json);
+      var lockHashIndexState = LockHashIndexState.fromJson(_json);
       expect(lockHashIndexState.blockHash,
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');
       expect(lockHashIndexState.lockHash,
@@ -25,8 +24,7 @@ void main() {
     });
 
     test('toJson', () async {
-      var lockHashIndexState =
-          LockHashIndexState.fromJson(_json);
+      var lockHashIndexState = LockHashIndexState.fromJson(_json);
       var map = lockHashIndexState.toJson();
       expect(map['block_hash'],
           '0xc73a331428dd9ef69b8073c248bfae9dc7c27942bb1cb70581e880bd3020d7da');

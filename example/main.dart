@@ -1,4 +1,3 @@
-
 import 'package:ckb_sdk_dart/ckb_core.dart';
 
 void main() async {

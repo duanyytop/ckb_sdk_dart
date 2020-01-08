@@ -58,8 +58,10 @@ void main() {
     });
 
     test('calculateTransactionFee', () async {
-      expect(calculateTransactionFee(BigInt.from(1035), BigInt.from(900)), BigInt.from(932));
-      expect(calculateTransactionFee(BigInt.from(900), BigInt.from(900)), BigInt.from(810));
+      expect(calculateTransactionFee(BigInt.from(1035), BigInt.from(900)),
+          BigInt.from(932));
+      expect(calculateTransactionFee(BigInt.from(900), BigInt.from(900)),
+          BigInt.from(810));
     });
   });
 }

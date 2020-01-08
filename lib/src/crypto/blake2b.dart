@@ -11,7 +11,9 @@ class Blake2b {
   Blake2bDigest _blake2bDigest;
 
   Blake2b({int digestSize = 32}) {
-    _blake2bDigest = Blake2bDigest(digestSize: digestSize, personalization: utf8.encode(CkbHashPersonalization));
+    _blake2bDigest = Blake2bDigest(
+        digestSize: digestSize,
+        personalization: utf8.encode(CkbHashPersonalization));
   }
 
   void update(Uint8List input) {

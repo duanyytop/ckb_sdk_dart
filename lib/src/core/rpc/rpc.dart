@@ -15,7 +15,9 @@ class Rpc {
       dio = Dio();
       dio.httpClientAdapter = adapter;
     } else {
-      dio = Dio(BaseOptions(connectTimeout: 30000, headers: {'Content-type': 'application/json'}));
+      dio = Dio(BaseOptions(
+          connectTimeout: 30000,
+          headers: {'Content-type': 'application/json'}));
     }
     if (hasLogger) {
       dio.interceptors

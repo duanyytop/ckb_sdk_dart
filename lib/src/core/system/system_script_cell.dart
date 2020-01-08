@@ -1,4 +1,3 @@
-
 import 'package:ckb_sdk_dart/src/core/type/out_point.dart';
 
 class SystemScriptCell {

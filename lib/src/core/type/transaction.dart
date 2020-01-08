@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
-import 'package:ckb_sdk_dart/src/serialization/dynamic/dynamic.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import '../../../ckb_serialization.dart';
@@ -52,9 +51,8 @@ class Transaction {
         outputsData: (json['outputs_data'] as List)
             ?.map((outputData) => outputData.toString())
             ?.toList(),
-        witnesses: (json['witnesses'] as List)
-            ?.map((witness) => witness)
-            ?.toList());
+        witnesses:
+            (json['witnesses'] as List)?.map((witness) => witness)?.toList());
   }
 
   Map<String, dynamic> toJson() {
@@ -106,7 +104,8 @@ class Transaction {
     for (var i = 1; i < witnesses.length; i++) {
       Uint8List bytes;
       if (witnesses[i] is Witness) {
-        bytes = Serializer.serializeWitnessArgs(witnesses[i] as Witness).toBytes();
+        bytes =
+            Serializer.serializeWitnessArgs(witnesses[i] as Witness).toBytes();
       } else {
         bytes = hexToList(witnesses[i] as String);
       }
@@ -114,12 +113,14 @@ class Transaction {
       blake2b.update(bytes);
     }
     var message = blake2b.doFinalString();
-    (witnesses[0] as Witness).lock = listToHex(Sign.signMessage(hexToList(message), privateKey).getSignature());
+    (witnesses[0] as Witness).lock = listToHex(
+        Sign.signMessage(hexToList(message), privateKey).getSignature());
 
     var signedWitness = [];
     for (Object witness in witnesses) {
       if (witness is Witness) {
-        signedWitness.add(listToHex(Serializer.serializeWitnessArgs(witness).toBytes()));
+        signedWitness
+            .add(listToHex(Serializer.serializeWitnessArgs(witness).toBytes()));
       } else {
         signedWitness.add(witness);
       }

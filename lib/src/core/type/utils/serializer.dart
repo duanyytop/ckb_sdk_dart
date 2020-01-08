@@ -17,6 +17,7 @@ import 'package:ckb_sdk_dart/src/serialization/fixed/byte32.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/fixed.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/struct.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/uint32.dart';
+
 import 'convert.dart';
 
 class Serializer {
@@ -81,9 +82,14 @@ class Serializer {
 
   static Table serializeWitnessArgs(Witness witness) {
     var list = <Option>[];
-    list.add(Option(witness.lock == null? Empty() : Bytes.fromHex(witness.lock)));
-    list.add(Option(witness.inputType == null? Empty() : Bytes.fromHex(witness.inputType)));
-    list.add(Option(witness.outputType == null? Empty() : Bytes.fromHex(witness.outputType)));
+    list.add(
+        Option(witness.lock == null ? Empty() : Bytes.fromHex(witness.lock)));
+    list.add(Option(witness.inputType == null
+        ? Empty()
+        : Bytes.fromHex(witness.inputType)));
+    list.add(Option(witness.outputType == null
+        ? Empty()
+        : Bytes.fromHex(witness.outputType)));
     return Table(list);
   }
 
@@ -96,7 +102,8 @@ class Serializer {
         witnessList.add(Bytes.fromHex(witness));
       }
     }
-    witnessList = witnessList.map((witness) => witness as SerializeType).toList();
+    witnessList =
+        witnessList.map((witness) => witness as SerializeType).toList();
     return Dynamic<SerializeType>(witnessList);
   }
 
@@ -114,7 +121,9 @@ class Serializer {
   }
 
   static Table serializeTransaction(Transaction transaction) {
-    return Table([serializeRawTransaction(transaction), serializeWitnesses(transaction.witnesses)]);
+    return Table([
+      serializeRawTransaction(transaction),
+      serializeWitnesses(transaction.witnesses)
+    ]);
   }
-
 }

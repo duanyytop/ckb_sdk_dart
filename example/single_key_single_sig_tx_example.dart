@@ -33,11 +33,14 @@ String changeAddress = 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83';
 void main() async {
   api = Api(NODE_URL);
 
-  print('Before transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
+  print(
+      'Before transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 
-  print('Before transferring, first receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
+  print(
+      'Before transferring, first receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
 
-  print('Before transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
+  print(
+      'Before transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
 
   var hash = await sendCapacity(receivers, changeAddress);
   print('Transaction hash: $hash');
@@ -45,11 +48,14 @@ void main() async {
   // waiting transaction into block, sometimes you should wait more seconds
   sleep(Duration(seconds: 30));
 
-  print('After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
+  print(
+      'After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 
-  print('After transferring, receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
+  print(
+      'After transferring, receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
 
-  print('After transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
+  print(
+      'After transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
 }
 
 Future<String> getBalance(String address) async {

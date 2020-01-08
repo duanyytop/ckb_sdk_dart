@@ -57,16 +57,14 @@ void main() {
     });
 
     test('fromJson', () async {
-      var transactionWithStatus =
-          TransactionWithStatus.fromJson(_json);
+      var transactionWithStatus = TransactionWithStatus.fromJson(_json);
       expect(transactionWithStatus.transaction.inputs[0].previousOutput.txHash,
           '0x5ba156200c6310bf140fbbd3bfe7e8f03d4d5f82b612c1a8ec2501826eaabc17');
       expect(transactionWithStatus.txStatus.status, 'pending');
     });
 
     test('toJson', () async {
-      var transactionWithStatus =
-          TransactionWithStatus.fromJson(_json);
+      var transactionWithStatus = TransactionWithStatus.fromJson(_json);
       var map = transactionWithStatus.toJson();
       expect(map['transaction']['inputs'][0]['previous_output']['tx_hash'],
           '0x5ba156200c6310bf140fbbd3bfe7e8f03d4d5f82b612c1a8ec2501826eaabc17');

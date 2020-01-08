@@ -61,7 +61,7 @@ void main() {
     }, skip: 'Skip rpc test');
 
     test('Transaction signature', () async {
-     var cellInputs = [
+      var cellInputs = [
         CellInput(
             previousOutput: OutPoint(
                 txHash:
@@ -86,7 +86,9 @@ void main() {
       ];
 
       var witnesses = [
-        Witness(lock: '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb'),
+        Witness(
+            lock:
+                '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb'),
       ];
 
       var tx = Transaction(

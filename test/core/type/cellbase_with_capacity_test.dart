@@ -18,15 +18,13 @@ void main() {
     });
 
     test('fromJson', () async {
-      var cellbaseWithCapacity =
-          CellbaseOutputCapacity.fromJson(_json);
+      var cellbaseWithCapacity = CellbaseOutputCapacity.fromJson(_json);
       expect(cellbaseWithCapacity.primary, '0x102b36211d');
       expect(cellbaseWithCapacity.total, '0x1057d731c2');
     });
 
     test('toJson', () async {
-      var cellbaseWithCapacity =
-          CellbaseOutputCapacity.fromJson(_json);
+      var cellbaseWithCapacity = CellbaseOutputCapacity.fromJson(_json);
       var map = cellbaseWithCapacity.toJson();
       expect(map['primary'], '0x102b36211d');
       expect(map['total'], '0x1057d731c2');

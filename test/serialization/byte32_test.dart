@@ -54,8 +54,7 @@ void main() {
     });
 
     test('Byte32', () {
-      var byte32 =
-          Byte32.fromHex('f879527946a537e82c7f3c1cbf6d8ebf9767437d8e');
+      var byte32 = Byte32.fromHex('f879527946a537e82c7f3c1cbf6d8ebf9767437d8e');
       expect(
           byte32.toBytes(),
           hexToList(

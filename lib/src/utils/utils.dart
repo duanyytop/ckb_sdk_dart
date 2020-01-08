@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:convert/src/hex.dart';
+
+import 'package:hex/hex.dart';
 import 'package:pointycastle/src/utils.dart' as utils;
 
 String toWholeHex(String hexString) {
@@ -21,7 +22,7 @@ Uint8List hexToList(String hexString) {
   if (cleanHexPrefix(hexString).isEmpty) {
     return Uint8List.fromList([]);
   }
-  return Uint8List.fromList(hex.decode(cleanHexPrefix(toWholeHex(hexString))));
+  return Uint8List.fromList(HEX.decode(cleanHexPrefix(toWholeHex(hexString))));
 }
 
 String listToHex(Uint8List bytes) {
@@ -29,7 +30,7 @@ String listToHex(Uint8List bytes) {
 }
 
 String listToHexNoPrefix(Uint8List bytes) {
-  return hex.encode(bytes);
+  return HEX.encode(bytes);
 }
 
 String listToWholeHex(Uint8List bytes) {
@@ -110,4 +111,3 @@ List<int> regionToList(int start, int length) {
   }
   return integers;
 }
-

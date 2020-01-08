@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 
 import 'package:ckb_sdk_dart/src/serialization/base/serialize_type.dart';
@@ -6,7 +5,7 @@ import 'package:ckb_sdk_dart/src/serialization/base/serialize_type.dart';
 import '../base/dyn_type.dart';
 
 class Option extends DynType<SerializeType> {
-  SerializeType _value;
+  final SerializeType _value;
 
   Option(this._value);
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/type/lock_hash_capacity.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
@@ -200,6 +201,7 @@ class Api {
   }
 
   Future<LockHashCapacity> getCapacityByLockHash(String lockHash) async {
-    return LockHashCapacity.fromJson(await _rpc.post('get_capacity_by_lock_hash', [lockHash]));
+    return LockHashCapacity.fromJson(
+        await _rpc.post('get_capacity_by_lock_hash', [lockHash]));
   }
 }
