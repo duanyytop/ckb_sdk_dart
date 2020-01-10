@@ -25,9 +25,9 @@ class Secp256k1SighashAllBuilder {
     if (scriptGroup.inputIndexes.isEmpty) {
       throw Exception('Need at least one witness!');
     }
-    for (var i in scriptGroup.inputIndexes) {
-      groupWitnesses.add(_transaction.witnesses[i]);
-    }
+    scriptGroup.inputIndexes
+        .forEach((index) => groupWitnesses.add(_transaction.witnesses[index]));
+
     for (var i = _transaction.inputs.length;
         i < _transaction.witnesses.length;
         i++) {
