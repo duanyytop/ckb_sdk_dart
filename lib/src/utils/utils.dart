@@ -78,7 +78,10 @@ String bigIntToHex(BigInt value) {
   return appendHexPrefix(value.toRadixString(16));
 }
 
-String intToHex(int value) {
+String intToHex(int value, {isWholeHex = false}) {
+  if (isWholeHex) {
+    return toWholeHex(appendHexPrefix(value.toRadixString(16)));
+  }
   return appendHexPrefix(value.toRadixString(16));
 }
 

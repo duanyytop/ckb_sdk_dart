@@ -1,23 +1,21 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:pointycastle/digests/blake2b.dart';
+import 'package:pinenacl/public.dart' as crypto;
 
 import '../utils/utils.dart';
 
 class Blake2b {
   String CkbHashPersonalization = 'ckb-default-hash';
 
-  Blake2bDigest _blake2bDigest;
+  var state;
 
   Blake2b({int digestSize = 32}) {
-    _blake2bDigest = Blake2bDigest(
-        digestSize: digestSize,
-        personalization: utf8.encode(CkbHashPersonalization));
+    state = crypto.Blake2b.init(digestSize, null, null, utf8.encode(CkbHashPersonalization));
   }
 
   void update(Uint8List input) {
-    _blake2bDigest.update(input, 0, input.length);
+    crypto.Blake2b.update(state, input);
   }
 
   void updateWithUtf8(String utf8String) {
@@ -29,9 +27,7 @@ class Blake2b {
   }
 
   Uint8List doFinal() {
-    var out = Uint8List(_blake2bDigest.digestSize);
-    var len = _blake2bDigest.doFinal(out, 0);
-    return out.sublist(0, len);
+    return crypto.Blake2b.finalise(state);
   }
 
   String doFinalString() => listToHex(doFinal());

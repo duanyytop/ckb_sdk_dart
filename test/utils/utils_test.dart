@@ -31,6 +31,8 @@ void main() {
 
     test('intToHex', () async {
       expect(intToHex(120), equals('0x78'));
+      expect(intToHex(274), equals('0x112'));
+      expect(intToHex(274, isWholeHex: true), equals('0x0112'));
     });
 
     test('bigIntToHex', () async {
