@@ -1,6 +1,9 @@
 import 'transaction.dart';
 
 class TransactionWithStatus {
+
+  static String Committed = 'committed';
+
   TxStatus txStatus;
   Transaction transaction;
 
