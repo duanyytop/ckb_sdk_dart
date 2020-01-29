@@ -29,7 +29,7 @@ class SystemContract {
   static Future<SystemScriptCell> getSystemDaoCell({Api api}) async {
     var block = await getGenesisBlock(api: api);
     return SystemScriptCell(
-        cellHash: Blake2b.hash(block.transactions[0].outputsData[2]),
+        cellHash: block.transactions[0].outputs[2].type.computeHash(),
         outPoint: OutPoint(txHash: block.transactions[0].hash, index: '0x2'));
   }
 

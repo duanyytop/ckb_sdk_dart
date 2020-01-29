@@ -25,7 +25,7 @@ String TestPrivateKey =
     'e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
 String TestAddress = 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83';
 List<Receiver> receivers = [
-  Receiver(ReceiveAddresses[0], ckbToShannon(number: 8000)),
+  Receiver(ReceiveAddresses[0], ckbToShannon(number: 800000)),
   Receiver(ReceiveAddresses[1], ckbToShannon(number: 9000))
 ];
 String changeAddress = 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83';

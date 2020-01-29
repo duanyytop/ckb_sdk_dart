@@ -1,6 +1,10 @@
 import 'cell_output.dart';
 
 class CellWithStatus {
+
+  static String Live = 'live';
+  static String Dead = 'dead';
+
   CellInfo cell;
   String status;
 

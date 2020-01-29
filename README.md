@@ -69,12 +69,16 @@ If you want to develop by yourself, you can download this project to your local.
 git clone https://github.com/duanyytop/ckb_sdk_dart.git
 cd ckb_sdk_dart
 
-pub get                       // download and install dependences
+pub get                       // download and install dependence
 pub run test                  // run sdk unit tests
 
-dart ./example/main.dart       // run rpc request example, you should run a ckb node in your local
-dart ./example/single_key_single_sig_tx_example.dart    // run simple transaction example, you should run a ckb node in your local
-dart ./example/multi_key_single_sig_tx_example.dart    // run multi keys transaction example, you should run a ckb node in your local
+dart ./example/main.dart       // rpc request example
+dart ./example/single_key_single_sig_tx_example.dart    // single key and single signature transaction 
+dart ./example/multi_key_single_sig_tx_example.dart     // multi keys and single signature transaction 
+dart ./example/dao_deposit.dart                         // Nervos DAO deposit example
+dart ./example/dao_withdraw.dart                        // Nervos DAO withdraw phase1 and phase2 example
+dart ./example/carrot_contract.dart                     // simple contract(with carrot string) example
+dart ./example/udt.contract.dart                        // simple udt contract example
 ```
 
 ## Features and bugs
