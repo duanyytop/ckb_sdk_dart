@@ -28,12 +28,12 @@ var udtCode;
 void main() async {
   var duktape = File('./example/contract/minimal_udt/duktape');
   var data = listToHex(duktape.readAsBytesSync());
-  // duktapeTxHash = await uploadDepBinary(BigInt.from(300000)*UnitCkb, data);
-  duktapeTxHash = '0x62c5db38869f7ad548b046a93c3cae8651a41222da3e97cc12f22ff6cc88cdd3';
+  duktapeTxHash = await uploadDepBinary(BigInt.from(300000)*UnitCkb, data);
+  // duktapeTxHash = '0x33b4520c5ecc344ef4b6076818e7cf8e0183c80a7499704879548a9a5e293a21';
   duktapeDataHash = Blake2b.hash(data);
   print('Upload duktape binary to ckb and tx hash: $duktapeTxHash');
 
-  sleep(Duration(seconds: 1));
+  sleep(Duration(seconds: 20));
 
   var udt = File('./example/contract/minimal_udt/udt.js');
   udtCode = listToHex(udt.readAsBytesSync());
@@ -109,13 +109,17 @@ Future<String> createUdt(BigInt capacity, {String data = '0x'}) async {
 
   var cellOutputs = txUtils
       .generateOutputs([Receiver(TestAddress, capacity)], TestAddress);
+
+  var udtTypeScript = Script(codeHash: duktapeDataHash, args: udtCode, hashType: Script.Data);
+  cellOutputs[0].type = udtTypeScript;
   txBuilder.addOutputs(cellOutputs);
+
   txBuilder.setOutputsData([data, '0x']);
   txBuilder.addCellDep(cellDep);
 
   // You can get fee rate by rpc or set a simple number
   // BigInteger feeRate = Numeric.toBigInt(api.estimateFeeRate('5').feeRate);
-  var feeRate = BigInt.from(4000);
+  var feeRate = BigInt.from(1200);
 
   // initial_length = 2 * secp256k1_signature_byte.length
   var collectResult = await txUtils.collectInputs(
@@ -124,9 +128,6 @@ Future<String> createUdt(BigInt capacity, {String data = '0x'}) async {
   // update change output capacity after collecting cells
   cellOutputs[cellOutputs.length - 1].capacity = collectResult.changeCapacity;
   
-  var udtTypeScript = Script(codeHash: duktapeDataHash, args: udtCode, hashType: Script.Data);
-  cellOutputs[0].type = udtTypeScript;
-
   txBuilder.setOutputs(cellOutputs);
 
   var startIndex = 0;
@@ -162,13 +163,18 @@ Future<String> transaferUdt(BigInt capacity, BigInt remain) async {
 
   var cellOutputs = txUtils
       .generateOutputs([Receiver(ReceiveAddress, capacity)], TestAddress);
+
+  var udtTypeScript = Script(codeHash: duktapeDataHash, args: udtCode, hashType: Script.Data);
+  cellOutputs[0].type = udtTypeScript;
+  cellOutputs[1].type = udtTypeScript;
   txBuilder.addOutputs(cellOutputs);
+
   txBuilder.setOutputsData([bigIntToHex(capacity), bigIntToHex(remain)]);
   txBuilder.addCellDep(cellDep);
 
   // You can get fee rate by rpc or set a simple number
   // BigInteger feeRate = Numeric.toBigInt(api.estimateFeeRate('5').feeRate);
-  var feeRate = BigInt.from(6000);
+  var feeRate = BigInt.from(1024);
 
   // initial_length = 2 * secp256k1_signature_byte.length
   var collectResult = await txUtils.collectInputs(
@@ -177,10 +183,6 @@ Future<String> transaferUdt(BigInt capacity, BigInt remain) async {
   // update change output capacity after collecting cells
   cellOutputs[cellOutputs.length - 1].capacity = collectResult.changeCapacity;
   
-  var udtTypeScript = Script(codeHash: duktapeDataHash, args: udtCode, hashType: Script.Data);
-  cellOutputs[0].type = udtTypeScript;
-  cellOutputs[1].type = udtTypeScript;
-
   txBuilder.setOutputs(cellOutputs);
 
   var startIndex = 0;
