@@ -1,8 +1,18 @@
+## 0.27.1
+
+### BugFix
+
+- Fix udt contract example fee error
+
+### Refactor
+
+- Format code
+
 ## 0.27.0
 
 ### Features
 
-- Add nervos dao examples
+- Add Nervos DAO examples
 - Add smart contract examples
 
 ## 0.26.3
@@ -49,7 +59,7 @@ Nervos CKB transaction signature is different from old versions, and this versio
 
 ## 0.23.1
 
-- Update rpc module utils convert/serializer/calculator 
+- Update rpc module utils convert/serializer/calculator
 - Add tests for convert/serializer/calculator
 
 ## 0.23.0
