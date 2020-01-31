@@ -18,10 +18,8 @@ void main() {
     });
 
     test('listToBigInt', () async {
-      expect(listToBigInt(Uint8List.fromList([4, 0xd2])),
-          equals(BigInt.from(1234)));
-      expect(
-          listToBigInt(Uint8List.fromList([0xea])), equals(BigInt.from(234)));
+      expect(listToBigInt(Uint8List.fromList([4, 0xd2])), equals(BigInt.from(1234)));
+      expect(listToBigInt(Uint8List.fromList([0xea])), equals(BigInt.from(234)));
     });
 
     test('numberToBigInt', () async {
@@ -45,17 +43,13 @@ void main() {
     });
 
     test('listToHex', () async {
-      expect(listToHex(Uint8List.fromList([0x1a, 0xb2, 0x3c, 0xd4])),
-          equals('0x1ab23cd4'));
-      expect(listToHex(Uint8List.fromList([0x00, 0x01, 0xfe, 0xff])),
-          equals('0x0001feff'));
+      expect(listToHex(Uint8List.fromList([0x1a, 0xb2, 0x3c, 0xd4])), equals('0x1ab23cd4'));
+      expect(listToHex(Uint8List.fromList([0x00, 0x01, 0xfe, 0xff])), equals('0x0001feff'));
     });
 
     test('listToHexNoPrefix', () async {
-      expect(listToHexNoPrefix(Uint8List.fromList([0x1a, 0xb2, 0x3c, 0xd4])),
-          equals('1ab23cd4'));
-      expect(listToHexNoPrefix(Uint8List.fromList([0x00, 0x01, 0xfe, 0xff])),
-          equals('0001feff'));
+      expect(listToHexNoPrefix(Uint8List.fromList([0x1a, 0xb2, 0x3c, 0xd4])), equals('1ab23cd4'));
+      expect(listToHexNoPrefix(Uint8List.fromList([0x00, 0x01, 0xfe, 0xff])), equals('0001feff'));
     });
 
     test('cleanHexPrefix', () async {
@@ -81,14 +75,12 @@ void main() {
     test('toBytesPadded', () async {
       expect(toBytesPadded(BigInt.two, 1), equals([0x2]));
       expect(toBytesPadded(BigInt.from(260), 2), equals([1, 4]));
-      expect(toBytesPadded(BigInt.from(30000000), 4),
-          equals([0x1, 0xc9, 0xc3, 0x80]));
+      expect(toBytesPadded(BigInt.from(30000000), 4), equals([0x1, 0xc9, 0xc3, 0x80]));
     });
 
     test('ckbToShannon', () async {
       expect(ckbToShannon(number: 2343), equals(BigInt.from(234300000000)));
-      expect(ckbToShannon(bigInt: BigInt.from(265893580000)),
-          equals(BigInt.parse('26589358000000000000', radix: 10)));
+      expect(ckbToShannon(bigInt: BigInt.from(265893580000)), equals(BigInt.parse('26589358000000000000', radix: 10)));
       expect(ckbToShannon(number: 0.025), equals(BigInt.from(2500000)));
     });
   });
