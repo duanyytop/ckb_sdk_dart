@@ -37,8 +37,7 @@ void main() {
     });
 
     test('getCellbaseOutputCapacityDetails', () async {
-      var cellbaseOutputCapacity =
-          await _api.getCellbaseOutputCapacityDetails('hash');
+      var cellbaseOutputCapacity = await _api.getCellbaseOutputCapacityDetails('hash');
       expect(cellbaseOutputCapacity.toJson().isNotEmpty, true);
     });
 
@@ -48,15 +47,12 @@ void main() {
     });
 
     test('getCellsByLockHash', () async {
-      var list = await _api.getCellsByLockHash(
-          lockHash: 'lockHash', fromNumber: '0', toNumber: '100');
+      var list = await _api.getCellsByLockHash(lockHash: 'lockHash', fromNumber: '0', toNumber: '100');
       expect(list.isNotEmpty, true);
     });
 
     test('getLiveCell', () async {
-      var cellWithStatus = await _api.getLiveCell(
-          outPoint: OutPoint(txHash: '0x11111111111111111111111', index: '0x0'),
-          withData: true);
+      var cellWithStatus = await _api.getLiveCell(outPoint: OutPoint(txHash: '0x11111111111111111111111', index: '0x0'), withData: true);
       expect(cellWithStatus.runtimeType.toString(), 'CellWithStatus');
     });
 
@@ -116,56 +112,36 @@ void main() {
     });
 
     test('dryRunTransaction', () async {
-      var cycles =
-          await _api.dryRunTransaction(Transaction(version: '0x0', cellDeps: [
-        CellDep(
-            outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
-      ], headerDeps: [], inputs: [
-        CellInput(
-            previousOutput: OutPoint(txHash: '0x00000', index: '0x0'),
-            since: '0x0')
-      ], outputs: [
-        CellOutput(
-            capacity: '0x233',
-            lock:
-                Script(codeHash: '0x0000', args: '0x000222', hashType: 'data'),
-            type: null)
-      ], outputsData: [], witnesses: [
-        '0x00000'
-      ]));
+      var cycles = await _api.dryRunTransaction(Transaction(
+          version: '0x0',
+          cellDeps: [CellDep(outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')],
+          headerDeps: [],
+          inputs: [CellInput(previousOutput: OutPoint(txHash: '0x00000', index: '0x0'), since: '0x0')],
+          outputs: [CellOutput(capacity: '0x233', lock: Script(codeHash: '0x0000', args: '0x000222', hashType: 'data'), type: null)],
+          outputsData: [],
+          witnesses: ['0x00000']));
       expect(cycles.toJson().isNotEmpty, true);
     });
 
     test('computeTransactionHash', () async {
-      var hash = await _api
-          .computeTransactionHash(Transaction(version: '0x0', cellDeps: [
-        CellDep(
-            outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')
-      ], headerDeps: [], inputs: [
-        CellInput(
-            previousOutput: OutPoint(txHash: '0x00000', index: '0x0'),
-            since: '0x0')
-      ], outputs: [
-        CellOutput(
-            capacity: '0x233',
-            lock:
-                Script(codeHash: '0x0000', args: '0x000222', hashType: 'data'),
-            type: null)
-      ], outputsData: [], witnesses: [
-        '0x00000'
-      ]));
+      var hash = await _api.computeTransactionHash(Transaction(
+          version: '0x0',
+          cellDeps: [CellDep(outPoint: OutPoint(txHash: '0x0000', index: '0x0'), depType: 'code')],
+          headerDeps: [],
+          inputs: [CellInput(previousOutput: OutPoint(txHash: '0x00000', index: '0x0'), since: '0x0')],
+          outputs: [CellOutput(capacity: '0x233', lock: Script(codeHash: '0x0000', args: '0x000222', hashType: 'data'), type: null)],
+          outputsData: [],
+          witnesses: ['0x00000']));
       expect(hash.isNotEmpty, true);
     });
 
     test('computeScriptHash', () async {
-      var hash = await _api.computeScriptHash(
-          Script(codeHash: '0x000022222', args: '0x2222222', hashType: 'data'));
+      var hash = await _api.computeScriptHash(Script(codeHash: '0x000022222', args: '0x2222222', hashType: 'data'));
       expect(hash.isNotEmpty, true);
     });
 
     test('getTransactionsByLockHash', () async {
-      var list =
-          await _api.getTransactionsByLockHash('lockHash', '0', '100', true);
+      var list = await _api.getTransactionsByLockHash('lockHash', '0', '100', true);
       expect(list.isNotEmpty, true);
     });
 

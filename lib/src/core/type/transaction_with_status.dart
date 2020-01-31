@@ -1,7 +1,6 @@
 import 'transaction.dart';
 
 class TransactionWithStatus {
-
   static String Committed = 'committed';
 
   TxStatus txStatus;
@@ -11,16 +10,11 @@ class TransactionWithStatus {
 
   factory TransactionWithStatus.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return TransactionWithStatus(
-        txStatus: TxStatus.fromJson(json['tx_status']),
-        transaction: Transaction.fromJson(json['transaction']));
+    return TransactionWithStatus(txStatus: TxStatus.fromJson(json['tx_status']), transaction: Transaction.fromJson(json['transaction']));
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'tx_status': txStatus?.toJson(),
-      'transaction': transaction?.toJson()
-    };
+    return <String, dynamic>{'tx_status': txStatus?.toJson(), 'transaction': transaction?.toJson()};
   }
 }
 

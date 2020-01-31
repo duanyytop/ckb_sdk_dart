@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
@@ -23,8 +22,7 @@ const int DAO_MATURITY_BLOCKS = 5;
 
 const String NODE_URL = "http://localhost:8114";
 Api api;
-const String DaoTestPrivateKey =
-      '08730a367dfabcadb805d69e0e613558d5160eb8bab9d6e326980c2c46a05db2';
+const String DaoTestPrivateKey = '08730a367dfabcadb805d69e0e613558d5160eb8bab9d6e326980c2c46a05db2';
 const String DaoTestAddress = 'ckt1qyqxgp7za7dajm5wzjkye52asc8fxvvqy9eqlhp82g';
 
 void main() async {
@@ -40,7 +38,7 @@ void main() async {
 
 Future<String> getBalance(String address) async {
   var balance = await CellCollector(api).getCapacityWithAddress(address);
-  return (balance/UnitCKB).toString();
+  return (balance / UnitCKB).toString();
 }
 
 Future<Transaction> generateDepositingToDaoTx(BigInt capacity) async {
@@ -57,19 +55,13 @@ Future<Transaction> generateDepositingToDaoTx(BigInt capacity) async {
   var txBuilder = TransactionBuilder(api);
   txBuilder.addOutputs(cellOutputs);
   txBuilder.setOutputsData(cellOutputsData);
-  txBuilder.addCellDep(
-      CellDep(outPoint: (await SystemContract.getSystemDaoCell(api: api)).outPoint, depType: CellDep.Code));
+  txBuilder.addCellDep(CellDep(outPoint: (await SystemContract.getSystemDaoCell(api: api)).outPoint, depType: CellDep.Code));
 
   // You can get fee rate by rpc or set a simple number
   // BigInteger feeRate = Numeric.toBigInt(api.estimateFeeRate("5").feeRate);
   var feeRate = BigInt.from(1024);
   var collectUtils = CollectUtils(api, skipDataAndType: true);
-  var collectResult =
-      await collectUtils.collectInputs(
-          [DaoTestAddress],
-          txBuilder.buildTx(),
-          feeRate,
-          Sign.SIGN_LENGTH * 2);
+  var collectResult = await collectUtils.collectInputs([DaoTestAddress], txBuilder.buildTx(), feeRate, Sign.SIGN_LENGTH * 2);
 
   // update change output capacity after collecting cells
   cellOutputs[cellOutputs.length - 1].capacity = collectResult.changeCapacity;
@@ -81,18 +73,14 @@ Future<Transaction> generateDepositingToDaoTx(BigInt capacity) async {
     for (var i = 0; i < cellsWithAddress.inputs.length; i++) {
       txBuilder.addWitness(i == 0 ? Witness(lock: Witness.SIGNATURE_PLACEHOLDER) : '0x');
     }
-    scriptGroupWithPrivateKeysList.add(
-        ScriptGroupWithPrivateKeys(
-            ScriptGroup(regionToList(startIndex, cellsWithAddress.inputs.length)),
-            [DaoTestPrivateKey]));
+    scriptGroupWithPrivateKeysList.add(ScriptGroupWithPrivateKeys(ScriptGroup(regionToList(startIndex, cellsWithAddress.inputs.length)), [DaoTestPrivateKey]));
     startIndex += cellsWithAddress.inputs.length;
   }
 
   var signBuilder = Secp256k1SighashAllBuilder(txBuilder.buildTx());
 
   for (var scriptGroupWithPrivateKeys in scriptGroupWithPrivateKeysList) {
-    signBuilder.sign(
-        scriptGroupWithPrivateKeys.scriptGroup, scriptGroupWithPrivateKeys.privateKeys[0]);
+    signBuilder.sign(scriptGroupWithPrivateKeys.scriptGroup, scriptGroupWithPrivateKeys.privateKeys[0]);
   }
   return signBuilder.buildTx();
 }

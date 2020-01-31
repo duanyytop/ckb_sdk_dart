@@ -1,4 +1,3 @@
-
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 EpochParams parseEpoch(String hexEpoch) {
@@ -14,7 +13,6 @@ String combineEpoch(int length, int index, int number) {
   var epoch = BigInt.from((length << 40) + (index << 24) + number);
   return bigIntToHex(bigInteger + epoch);
 }
-  
 
 class EpochParams {
   int length;

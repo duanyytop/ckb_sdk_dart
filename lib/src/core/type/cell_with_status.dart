@@ -1,7 +1,6 @@
 import 'cell_output.dart';
 
 class CellWithStatus {
-
   static String Live = 'live';
   static String Dead = 'dead';
 
@@ -12,8 +11,7 @@ class CellWithStatus {
 
   factory CellWithStatus.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return CellWithStatus(
-        cell: CellInfo.fromJson(json['cell']), status: json['status']);
+    return CellWithStatus(cell: CellInfo.fromJson(json['cell']), status: json['status']);
   }
 
   Map<String, dynamic> toJson() {
@@ -32,9 +30,7 @@ class CellInfo {
 
   factory CellInfo.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return CellInfo(
-        data: CellData.fromJson(json['data']),
-        output: CellOutput.fromJson(json['output']));
+    return CellInfo(data: CellData.fromJson(json['data']), output: CellOutput.fromJson(json['output']));
   }
 
   Map<String, dynamic> toJson() {
