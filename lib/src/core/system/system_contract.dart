@@ -1,5 +1,4 @@
 import 'package:ckb_sdk_dart/ckb_core.dart';
-import 'package:ckb_sdk_dart/ckb_crypto.dart';
 
 import './system_script_cell.dart';
 
