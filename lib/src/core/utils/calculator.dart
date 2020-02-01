@@ -1,5 +1,5 @@
 import './serializer.dart';
-import '../transaction.dart';
+import '../type/transaction.dart';
 
 final int SERIALIZED_TX_OFFSET_BYTE_SIZE = 4;
 

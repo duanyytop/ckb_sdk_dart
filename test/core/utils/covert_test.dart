@@ -1,6 +1,6 @@
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/type/transaction.dart';
-import 'package:ckb_sdk_dart/src/core/type/utils/convert.dart';
+import 'package:ckb_sdk_dart/src/core/utils/convert.dart';
 import 'package:test/test.dart';
 
 void main() {
