@@ -1,0 +1,1 @@
+enum OutputsValidator { Default, Passthrough }

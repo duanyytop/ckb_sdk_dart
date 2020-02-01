@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/type/lock_hash_capacity.dart';
+import 'package:ckb_sdk_dart/src/core/type/outputs_validator.dart';
 import 'package:ckb_sdk_dart/src/core/utils/convert.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:dio/dio.dart';
@@ -118,8 +119,12 @@ class Api {
     return TxPoolInfo.fromJson(await _rpc.post('tx_pool_info', []));
   }
 
-  Future<String> sendTransaction(Transaction transaction) async {
-    return await _rpc.post('send_transaction', [Convert.parseTransaction(transaction).toRawJson()]);
+  Future<String> sendTransaction(Transaction transaction, {OutputsValidator outputsValidator}) async {
+    var outputsValidatorValue;
+    if (outputsValidator != null) {
+      outputsValidatorValue = outputsValidator == OutputsValidator.Default ? 'default' : 'passthrough';
+    }
+    return await _rpc.post('send_transaction', [Convert.parseTransaction(transaction).toRawJson(), outputsValidatorValue]);
   }
 
   // Experiment RPC
