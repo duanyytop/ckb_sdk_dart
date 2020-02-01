@@ -1,5 +1,5 @@
 import 'package:ckb_sdk_dart/ckb_core.dart';
-import 'package:ckb_sdk_dart/src/core/type/utils/serializer.dart';
+import 'package:ckb_sdk_dart/src/core/utils/serializer.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:test/test.dart';
 
@@ -8,44 +8,19 @@ void main() {
   group('A group tests of calculator', () {
     setUp(() {
       var cellInputs = [
-        CellInput(
-            previousOutput: OutPoint(
-                txHash:
-                    '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd4',
-                index: '0'),
-            since: '113'),
-        CellInput(
-            previousOutput: OutPoint(
-                txHash:
-                    '0x00000000000000000000000000004e4552564f5344414f494e50555430303031',
-                index: '0'),
-            since: '0')
+        CellInput(previousOutput: OutPoint(txHash: '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd4', index: '0'), since: '113'),
+        CellInput(previousOutput: OutPoint(txHash: '0x00000000000000000000000000004e4552564f5344414f494e50555430303031', index: '0'), since: '0')
       ];
 
       var cellOutputs = [
-        CellOutput(
-            capacity: '10000009045634',
-            lock: Script(
-                codeHash:
-                    '0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd',
-                args: '0x36c329ed630d6ce750712a477543672adab57f4c'))
+        CellOutput(capacity: '10000009045634', lock: Script(codeHash: '0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd', args: '0x36c329ed630d6ce750712a477543672adab57f4c'))
       ];
 
-      var witnesses = [
-        '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb',
-        '0x'
-      ];
+      var witnesses = ['0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb', '0x'];
 
       tx = Transaction(
           version: '0',
-          cellDeps: [
-            CellDep(
-                outPoint: OutPoint(
-                    txHash:
-                        '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a',
-                    index: '1'),
-                depType: CellDep.DepGroup)
-          ],
+          cellDeps: [CellDep(outPoint: OutPoint(txHash: '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a', index: '1'), depType: CellDep.DepGroup)],
           headerDeps: ['0x'],
           inputs: cellInputs,
           outputs: cellOutputs,
@@ -54,21 +29,16 @@ void main() {
     });
 
     test('serializeOutPoint', () async {
-      expect(
-          listToHex(Serializer.serializeOutPoint(tx.inputs[0].previousOutput)
-              .toBytes()),
-          '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd400000000');
+      expect(listToHex(Serializer.serializeOutPoint(tx.inputs[0].previousOutput).toBytes()), '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd400000000');
     });
 
     test('serializeScript', () async {
-      expect(
-          listToHex(Serializer.serializeScript(tx.outputs[0].lock).toBytes()),
+      expect(listToHex(Serializer.serializeScript(tx.outputs[0].lock).toBytes()),
           '0x49000000100000003000000031000000f1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd001400000036c329ed630d6ce750712a477543672adab57f4c');
     });
 
     test('serializeCellInput', () async {
-      expect(listToHex(Serializer.serializeCellInput(tx.inputs[0]).toBytes()),
-          '0x130100000000000091fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd400000000');
+      expect(listToHex(Serializer.serializeCellInput(tx.inputs[0]).toBytes()), '0x130100000000000091fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd400000000');
     });
 
     test('serializeCellOutput', () async {
@@ -77,13 +47,11 @@ void main() {
     });
 
     test('serializeCellDep', () async {
-      expect(listToHex(Serializer.serializeCellDep(tx.cellDeps[0]).toBytes()),
-          '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a0100000001');
+      expect(listToHex(Serializer.serializeCellDep(tx.cellDeps[0]).toBytes()), '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a0100000001');
     });
 
     test('serializeCellDeps', () async {
-      expect(listToHex(Serializer.serializeCellDeps(tx.cellDeps).toBytes()),
-          '0x01000000bffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a0100000001');
+      expect(listToHex(Serializer.serializeCellDeps(tx.cellDeps).toBytes()), '0x01000000bffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a0100000001');
     });
 
     test('serializeCellInputs', () async {
@@ -92,8 +60,7 @@ void main() {
     });
 
     test('serializeCellDeps', () async {
-      expect(listToHex(Serializer.serializeCellDeps(tx.cellDeps).toBytes()),
-          '0x01000000bffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a0100000001');
+      expect(listToHex(Serializer.serializeCellDeps(tx.cellDeps).toBytes()), '0x01000000bffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a0100000001');
     });
 
     test('serializeCellOutputs', () async {
@@ -102,13 +69,11 @@ void main() {
     });
 
     test('serializeBytes', () async {
-      expect(listToHex(Serializer.serializeBytes(tx.outputsData).toBytes()),
-          '0x140000000c000000100000000000000000000000');
+      expect(listToHex(Serializer.serializeBytes(tx.outputsData).toBytes()), '0x140000000c000000100000000000000000000000');
     });
 
     test('serializeByte32', () async {
-      expect(listToHex(Serializer.serializeByte32(tx.headerDeps).toBytes()),
-          '0x010000000000000000000000000000000000000000000000000000000000000000000000');
+      expect(listToHex(Serializer.serializeByte32(tx.headerDeps).toBytes()), '0x010000000000000000000000000000000000000000000000000000000000000000000000');
     });
 
     test('serializeRawTransaction', () async {

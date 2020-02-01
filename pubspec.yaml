@@ -1,5 +1,5 @@
 name: ckb_sdk_dart
-version: 0.27.1
+version: 0.27.2
 homepage: https://github.com/duanyytop/ckb_sdk_dart
 description: A Dart SDK for Nervos CKB which is a public/permissionless blockchain, the layer 1 of Nervos network.
 

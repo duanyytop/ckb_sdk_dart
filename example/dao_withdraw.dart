@@ -4,7 +4,7 @@ import 'package:ckb_sdk_dart/src/core/system/system_contract.dart';
 import 'package:ckb_sdk_dart/src/core/transaction/script_group.dart';
 import 'package:ckb_sdk_dart/src/core/transaction/secp256k1_sighash_all_builder.dart';
 import 'package:ckb_sdk_dart/src/core/transaction/transaction_builder.dart';
-import 'package:ckb_sdk_dart/src/core/type/utils/epoch_parser.dart';
+import 'package:ckb_sdk_dart/src/core/utils/epoch_parser.dart';
 import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/crypto/key.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';

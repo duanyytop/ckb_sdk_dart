@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/address/address_parser.dart';
-import 'package:ckb_sdk_dart/src/core/type/utils/calculator.dart';
-import 'package:ckb_sdk_dart/src/core/type/utils/serializer.dart';
+import 'package:ckb_sdk_dart/src/core/utils/calculator.dart';
+import 'package:ckb_sdk_dart/src/core/utils/serializer.dart';
 import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 

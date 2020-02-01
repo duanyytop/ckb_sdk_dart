@@ -6,6 +6,7 @@ import 'package:ckb_sdk_dart/ckb_utils.dart';
 import 'package:ckb_sdk_dart/src/core/transaction/script_group.dart';
 import 'package:ckb_sdk_dart/src/core/transaction/secp256k1_sighash_all_builder.dart';
 import 'package:ckb_sdk_dart/src/core/transaction/transaction_builder.dart';
+import 'package:ckb_sdk_dart/src/core/type/outputs_validator.dart';
 import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/crypto/blake2b.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
@@ -28,7 +29,7 @@ void main() async {
   var duktape = File('./example/contract/minimal_udt/duktape');
   var data = listToHex(duktape.readAsBytesSync());
   duktapeTxHash = await uploadDepBinary(BigInt.from(300000) * UnitCkb, data);
-  // duktapeTxHash = '0x33b4520c5ecc344ef4b6076818e7cf8e0183c80a7499704879548a9a5e293a21';
+  // duktapeTxHash = '0xe8d49063f99752b5aa23cfd110fa7d235898dec1626c09fae43e8d8d4a8b2a02';
   duktapeDataHash = Blake2b.hash(data);
   print('Upload duktape binary to ckb and tx hash: $duktapeTxHash');
 
@@ -129,7 +130,7 @@ Future<String> createUdt(BigInt capacity, {String data = '0x'}) async {
   for (ScriptGroupWithPrivateKeys scriptGroupWithPrivateKeys in scriptGroupWithPrivateKeysList) {
     signBuilder.sign(scriptGroupWithPrivateKeys.scriptGroup, scriptGroupWithPrivateKeys.privateKeys[0]);
   }
-  return api.sendTransaction(signBuilder.buildTx());
+  return api.sendTransaction(signBuilder.buildTx(), outputsValidator: OutputsValidator.Passthrough);
 }
 
 Future<String> transaferUdt(BigInt capacity, BigInt remain) async {
@@ -175,5 +176,5 @@ Future<String> transaferUdt(BigInt capacity, BigInt remain) async {
   for (ScriptGroupWithPrivateKeys scriptGroupWithPrivateKeys in scriptGroupWithPrivateKeysList) {
     signBuilder.sign(scriptGroupWithPrivateKeys.scriptGroup, scriptGroupWithPrivateKeys.privateKeys[0]);
   }
-  return api.sendTransaction(signBuilder.buildTx());
+  return api.sendTransaction(signBuilder.buildTx(), outputsValidator: OutputsValidator.Passthrough);
 }

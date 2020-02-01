@@ -1,7 +1,7 @@
 import 'package:ckb_sdk_dart/ckb_crypto.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
-import 'utils/serializer.dart';
+import '../utils/serializer.dart';
 
 class Script {
   static const String Data = 'data';
@@ -15,18 +15,11 @@ class Script {
 
   factory Script.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return Script(
-        codeHash: json['code_hash'],
-        args: json['args'],
-        hashType: json['hash_type']);
+    return Script(codeHash: json['code_hash'], args: json['args'], hashType: json['hash_type']);
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'code_hash': codeHash,
-      'args': args,
-      'hash_type': hashType
-    };
+    return <String, dynamic>{'code_hash': codeHash, 'args': args, 'hash_type': hashType};
   }
 
   int calculateByteSize() {

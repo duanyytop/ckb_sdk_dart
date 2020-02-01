@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/core/type/lock_hash_capacity.dart';
+import 'package:ckb_sdk_dart/src/core/type/outputs_validator.dart';
+import 'package:ckb_sdk_dart/src/core/utils/convert.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 import 'package:dio/dio.dart';
 
@@ -24,7 +26,6 @@ import '../type/peer_state.dart';
 import '../type/script.dart';
 import '../type/transaction.dart';
 import '../type/tx_pool_info.dart';
-import '../type/utils/convert.dart';
 
 class Api {
   Rpc _rpc;
@@ -47,37 +48,27 @@ class Api {
   }
 
   Future<Block> getBlockByNumber(String number) async {
-    return Block.fromJson(
-        await _rpc.post('get_block_by_number', [toHexString(number)]));
+    return Block.fromJson(await _rpc.post('get_block_by_number', [toHexString(number)]));
   }
 
   Future<TransactionWithStatus> getTransaction(String hash) async {
-    return TransactionWithStatus.fromJson(
-        await _rpc.post('get_transaction', [hash]));
+    return TransactionWithStatus.fromJson(await _rpc.post('get_transaction', [hash]));
   }
 
-  Future<CellbaseOutputCapacity> getCellbaseOutputCapacityDetails(
-      String blockHash) async {
-    return CellbaseOutputCapacity.fromJson(
-        await _rpc.post('get_cellbase_output_capacity_details', [blockHash]));
+  Future<CellbaseOutputCapacity> getCellbaseOutputCapacityDetails(String blockHash) async {
+    return CellbaseOutputCapacity.fromJson(await _rpc.post('get_cellbase_output_capacity_details', [blockHash]));
   }
 
   Future<Header> getTipHeader() async {
     return Header.fromJson(await _rpc.post('get_tip_header', []));
   }
 
-  Future<List<CellOutputWithOutPoint>> getCellsByLockHash(
-      {String lockHash, String fromNumber, String toNumber}) async {
-    return List.from(await _rpc.post('get_cells_by_lock_hash',
-            [lockHash, toHexString(fromNumber), toHexString(toNumber)]))
-        .map((cellOutput) => CellOutputWithOutPoint.fromJson(cellOutput))
-        .toList();
+  Future<List<CellOutputWithOutPoint>> getCellsByLockHash({String lockHash, String fromNumber, String toNumber}) async {
+    return List.from(await _rpc.post('get_cells_by_lock_hash', [lockHash, toHexString(fromNumber), toHexString(toNumber)])).map((cellOutput) => CellOutputWithOutPoint.fromJson(cellOutput)).toList();
   }
 
-  Future<CellWithStatus> getLiveCell(
-      {OutPoint outPoint, bool withData = false}) async {
-    return CellWithStatus.fromJson(await _rpc.post('get_live_cell',
-        [Convert.parseOutPoint(outPoint)?.toJson(), withData]));
+  Future<CellWithStatus> getLiveCell({OutPoint outPoint, bool withData = false}) async {
+    return CellWithStatus.fromJson(await _rpc.post('get_live_cell', [Convert.parseOutPoint(outPoint)?.toJson(), withData]));
   }
 
   Future<Epoch> getCurrentEpoch() async {
@@ -85,8 +76,7 @@ class Api {
   }
 
   Future<Epoch> getEpochByNumber(String epochNumber) async {
-    return Epoch.fromJson(
-        await _rpc.post('get_epoch_by_number', [toHexString(epochNumber)]));
+    return Epoch.fromJson(await _rpc.post('get_epoch_by_number', [toHexString(epochNumber)]));
   }
 
   Future<Header> getHeader(String blockHash) async {
@@ -94,8 +84,7 @@ class Api {
   }
 
   Future<Header> getHeaderByNumber(String blockNumber) async {
-    return Header.fromJson(
-        await _rpc.post('get_header_by_number', [toHexString(blockNumber)]));
+    return Header.fromJson(await _rpc.post('get_header_by_number', [toHexString(blockNumber)]));
   }
 
   // Stats RPC
@@ -105,22 +94,16 @@ class Api {
   }
 
   Future<List<PeerState>> getPeersState() async {
-    return List.from(await _rpc.post('get_peers_state', []))
-        .map((peerState) => PeerState.fromJson(peerState))
-        .toList();
+    return List.from(await _rpc.post('get_peers_state', [])).map((peerState) => PeerState.fromJson(peerState)).toList();
   }
 
   // Net RPC
-  Future<String> setBan(String address, String command, String banTime,
-      bool absolute, String reason) async {
-    return await _rpc
-        .post('set_ban', [address, command, banTime, absolute, reason]);
+  Future<String> setBan(String address, String command, String banTime, bool absolute, String reason) async {
+    return await _rpc.post('set_ban', [address, command, banTime, absolute, reason]);
   }
 
   Future<List<BannedAddress>> getBannedAddress() async {
-    return List.from(await _rpc.post('get_banned_address', []))
-        .map((bannedAddress) => BannedAddress.fromJson(bannedAddress))
-        .toList();
+    return List.from(await _rpc.post('get_banned_address', [])).map((bannedAddress) => BannedAddress.fromJson(bannedAddress)).toList();
   }
 
   Future<NodeInfo> localNodeInfo() async {
@@ -128,9 +111,7 @@ class Api {
   }
 
   Future<List<NodeInfo>> getPeers() async {
-    return List.from(await _rpc.post('get_peers', []))
-        .map((nodeInfo) => NodeInfo.fromJson(nodeInfo))
-        .toList();
+    return List.from(await _rpc.post('get_peers', [])).map((nodeInfo) => NodeInfo.fromJson(nodeInfo)).toList();
   }
 
   // Pool RPC
@@ -138,40 +119,34 @@ class Api {
     return TxPoolInfo.fromJson(await _rpc.post('tx_pool_info', []));
   }
 
-  Future<String> sendTransaction(Transaction transaction) async {
-    return await _rpc.post('send_transaction',
-        [Convert.parseTransaction(transaction).toRawJson()]);
+  Future<String> sendTransaction(Transaction transaction, {OutputsValidator outputsValidator}) async {
+    var outputsValidatorValue;
+    if (outputsValidator != null) {
+      outputsValidatorValue = outputsValidator == OutputsValidator.Default ? 'default' : 'passthrough';
+    }
+    return await _rpc.post('send_transaction', [Convert.parseTransaction(transaction).toRawJson(), outputsValidatorValue]);
   }
 
   // Experiment RPC
   Future<Cycles> dryRunTransaction(Transaction transaction) async {
-    return Cycles.fromJson(await _rpc.post('dry_run_transaction',
-        [Convert.parseTransaction(transaction).toRawJson()]));
+    return Cycles.fromJson(await _rpc.post('dry_run_transaction', [Convert.parseTransaction(transaction).toRawJson()]));
   }
 
   Future<String> computeTransactionHash(Transaction transaction) async {
-    return await _rpc.post('_compute_transaction_hash',
-        [Convert.parseTransaction(transaction).toRawJson()]);
+    return await _rpc.post('_compute_transaction_hash', [Convert.parseTransaction(transaction).toRawJson()]);
   }
 
   Future<String> computeScriptHash(Script script) async {
     return await _rpc.post('_compute_script_hash', [script]);
   }
 
-  Future<String> calculateDaoMaximumWithdraw(
-      OutPoint outPoint, String withdrawBlockHash) async {
-    return await _rpc.post('calculate_dao_maximum_withdraw',
-        [Convert.parseOutPoint(outPoint), withdrawBlockHash]);
+  Future<String> calculateDaoMaximumWithdraw(OutPoint outPoint, String withdrawBlockHash) async {
+    return await _rpc.post('calculate_dao_maximum_withdraw', [Convert.parseOutPoint(outPoint), withdrawBlockHash]);
   }
 
   // Indexer RPC
-  Future<LockHashIndexState> indexLockHash(String lockHash,
-      {String blockNumber}) async {
-    return LockHashIndexState.fromJson(await _rpc.post(
-        'index_lock_hash',
-        blockNumber == null
-            ? [lockHash]
-            : [lockHash, toHexString(blockNumber)]));
+  Future<LockHashIndexState> indexLockHash(String lockHash, {String blockNumber}) async {
+    return LockHashIndexState.fromJson(await _rpc.post('index_lock_hash', blockNumber == null ? [lockHash] : [lockHash, toHexString(blockNumber)]));
   }
 
   Future<List<String>> deindexLockHash(String lockHash) async {
@@ -179,29 +154,20 @@ class Api {
   }
 
   Future<List<LockHashIndexState>> getLockHashIndexStates() async {
-    return List.from(await _rpc.post('get_lock_hash_index_states', []))
-        .map((lockHash) => LockHashIndexState.fromJson(lockHash))
-        .toList();
+    return List.from(await _rpc.post('get_lock_hash_index_states', [])).map((lockHash) => LockHashIndexState.fromJson(lockHash)).toList();
   }
 
-  Future<List<LiveCell>> getLiveCellsByLockHash(
-      String lockHash, String page, String pageSize, bool reverseOrder) async {
-    return List.from(await _rpc.post('get_live_cells_by_lock_hash',
-            [lockHash, toHexString(page), toHexString(pageSize), reverseOrder]))
-        .map((liveCell) => LiveCell.fromJson(liveCell))
-        .toList();
+  Future<List<LiveCell>> getLiveCellsByLockHash(String lockHash, String page, String pageSize, bool reverseOrder) async {
+    return List.from(await _rpc.post('get_live_cells_by_lock_hash', [lockHash, toHexString(page), toHexString(pageSize), reverseOrder])).map((liveCell) => LiveCell.fromJson(liveCell)).toList();
   }
 
-  Future<List<CellTransaction>> getTransactionsByLockHash(
-      String lockHash, String page, String pageSize, bool reverseOrder) async {
-    return List.from(await _rpc.post('get_transactions_by_lock_hash',
-            [lockHash, toHexString(page), toHexString(pageSize), reverseOrder]))
+  Future<List<CellTransaction>> getTransactionsByLockHash(String lockHash, String page, String pageSize, bool reverseOrder) async {
+    return List.from(await _rpc.post('get_transactions_by_lock_hash', [lockHash, toHexString(page), toHexString(pageSize), reverseOrder]))
         .map((cellTransaction) => CellTransaction.fromJson(cellTransaction))
         .toList();
   }
 
   Future<LockHashCapacity> getCapacityByLockHash(String lockHash) async {
-    return LockHashCapacity.fromJson(
-        await _rpc.post('get_capacity_by_lock_hash', [lockHash]));
+    return LockHashCapacity.fromJson(await _rpc.post('get_capacity_by_lock_hash', [lockHash]));
   }
 }

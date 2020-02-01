@@ -1,3 +1,14 @@
+## 0.27.2
+
+### Feature
+
+- Add `OutputsValidator` to `send_capacity` rpc
+
+### Refactor
+
+- Remove ckb_cli
+- Refactor core/type/utils to core/utils
+
 ## 0.27.1
 
 ### BugFix
