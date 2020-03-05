@@ -20,6 +20,15 @@ class UInt64 extends FixedType<BigInt> {
     }
   }
 
+  // generate int value from little endian bytes
+  factory UInt64.fromBytes(Uint8List bytes) {
+    var result = 0;
+    for (var i = 7; i >= 0; i--) {
+      result += (bytes[i] & 0xff) << 8 * i;
+    }
+    return UInt64.fromInt(result);
+  }
+
   @override
   int getLength() {
     return 8;
