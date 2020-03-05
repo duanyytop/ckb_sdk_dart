@@ -1,3 +1,9 @@
+## 0.28
+
+### Refactor
+
+- Refactor epoch parser functions and test cases
+
 ## 0.27.2
 
 ### Feature
