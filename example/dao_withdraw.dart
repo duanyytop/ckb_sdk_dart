@@ -149,7 +149,7 @@ Future<Transaction> generateClaimingFromDaoTx(OutPoint depositOutPoint, OutPoint
   var minimalSinceEpochIndex = depositEpoch.index;
   var minimalSinceEpochLength = depositEpoch.length;
 
-  var minimalSince = combineEpoch(minimalSinceEpochLength, minimalSinceEpochIndex, minimalSinceEpochNumber);
+  var minimalSince = epochSince(minimalSinceEpochLength, minimalSinceEpochIndex, minimalSinceEpochNumber);
   var outputCapacity = await api.calculateDaoMaximumWithdraw(depositOutPoint, withdrawBlock.header.hash);
 
   var cellOutput = CellOutput(capacity: bigIntToHex(hexToBigInt(outputCapacity) - fee), lock: lock);
