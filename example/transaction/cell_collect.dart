@@ -108,8 +108,7 @@ class CellCollector {
   }
 
   BigInt _calculateTxFee(Transaction transaction, BigInt feeRate) {
-    var txSize = Serializer.serializeTransaction(transaction).toBytes().length;
-    return calculateTransactionFee(BigInt.from(txSize), feeRate);
+    return calculateTransactionFee(transaction, feeRate);
   }
 
   Future<BigInt> getCapacityWithAddress(String address) async {
