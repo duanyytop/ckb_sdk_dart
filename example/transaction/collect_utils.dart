@@ -2,7 +2,7 @@ import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/address/address_parser.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
-import 'cell_collect.dart';
+import 'cell_collector.dart';
 import 'collect_result.dart';
 import 'receiver.dart';
 

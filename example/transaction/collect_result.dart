@@ -5,4 +5,5 @@ class CollectResult {
   String changeCapacity;
 
   CollectResult(this.cellsWithAddresses, this.changeCapacity);
+
 }
