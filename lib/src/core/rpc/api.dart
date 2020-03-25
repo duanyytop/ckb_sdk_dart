@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
+import 'package:ckb_sdk_dart/src/core/type/block_economic_state.dart';
 import 'package:ckb_sdk_dart/src/core/type/lock_hash_capacity.dart';
 import 'package:ckb_sdk_dart/src/core/type/outputs_validator.dart';
 import 'package:ckb_sdk_dart/src/core/utils/convert.dart';
@@ -57,6 +58,10 @@ class Api {
 
   Future<CellbaseOutputCapacity> getCellbaseOutputCapacityDetails(String blockHash) async {
     return CellbaseOutputCapacity.fromJson(await _rpc.post('get_cellbase_output_capacity_details', [blockHash]));
+  }
+
+  Future<BlockEconomicState> getBlockEconomicState(String blockHash) async {
+    return BlockEconomicState.fromJson(await _rpc.post('get_block_economic_state', [blockHash]));
   }
 
   Future<Header> getTipHeader() async {
