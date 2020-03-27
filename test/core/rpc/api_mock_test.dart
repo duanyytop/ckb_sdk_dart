@@ -41,6 +41,11 @@ void main() {
       expect(cellbaseOutputCapacity.toJson().isNotEmpty, true);
     });
 
+    test('getBlockEconomicState', () async {
+      var blockEconomicState = await _api.getBlockEconomicState('hash');
+      expect(blockEconomicState.toJson().isNotEmpty, true);
+    });
+
     test('getTipHeader', () async {
       var header = await _api.getTipHeader();
       expect(header.toJson().isNotEmpty, true);

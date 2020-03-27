@@ -1,4 +1,17 @@
-## 0.28
+## 0.30.1
+
+### Feature
+
+- Export crypto/key
+
+## 0.30.0
+
+### Feature
+
+- Add `min_fee_rate` to `tx_pool_info` rpc
+- Add `get_block_economic_state` rpc
+
+## 0.28.0
 
 ### Refactor
 

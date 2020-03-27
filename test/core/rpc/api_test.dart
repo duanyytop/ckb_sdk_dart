@@ -40,9 +40,14 @@ void main() {
 
     test('getCellbaseOutputCapacityDetails', () async {
       var block = await _api.getBlockByNumber('2');
-      var cellbaseOutputCapacity =
-          await _api.getCellbaseOutputCapacityDetails(block.header.hash);
+      var cellbaseOutputCapacity = await _api.getCellbaseOutputCapacityDetails(block.header.hash);
       expect(cellbaseOutputCapacity.toJson().isNotEmpty, true);
+    });
+
+    test('getBlockEconomicState', () async {
+      var block = await _api.getBlockByNumber('2');
+      var blockEconomicState = await _api.getBlockEconomicState(block.header.hash);
+      expect(blockEconomicState.toJson().isNotEmpty, true);
     });
 
     test('getTipHeader', () async {
@@ -51,19 +56,14 @@ void main() {
     });
 
     test('getCellsByLockHash', () async {
-      var lockHash = (await generateLockScriptWithAddress(
-              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83'))
-          .computeHash();
-      var list = await _api.getCellsByLockHash(
-          lockHash: lockHash, fromNumber: '0', toNumber: '100');
+      var lockHash = (await generateLockScriptWithAddress('ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83')).computeHash();
+      var list = await _api.getCellsByLockHash(lockHash: lockHash, fromNumber: '0', toNumber: '100');
       expect(list.isNotEmpty, true);
     });
 
     test('getLiveCell', () async {
       var block = await _api.getBlockByNumber('2');
-      var cellWithStatus = await _api.getLiveCell(
-          outPoint: block.transactions[0].inputs[0].previousOutput,
-          withData: true);
+      var cellWithStatus = await _api.getLiveCell(outPoint: block.transactions[0].inputs[0].previousOutput, withData: true);
       expect(cellWithStatus.runtimeType.toString(), 'CellWithStatus');
     });
 
@@ -127,23 +127,18 @@ void main() {
 
     test('computeScriptHash', () async {
       var block = await _api.getBlockByNumber('2');
-      var hash =
-          await _api.computeScriptHash(block.transactions[0].outputs[0].lock);
+      var hash = await _api.computeScriptHash(block.transactions[0].outputs[0].lock);
       expect(hash.isNotEmpty, true);
     });
 
     test('getTransactionsByLockHash', () async {
-      var lockHash = (await generateLockScriptWithAddress(
-              'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83'))
-          .computeHash();
-      var list =
-          await _api.getTransactionsByLockHash(lockHash, '0', '100', true);
+      var lockHash = (await generateLockScriptWithAddress('ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83')).computeHash();
+      var list = await _api.getTransactionsByLockHash(lockHash, '0', '100', true);
       expect(list.isNotEmpty, true);
     });
 
     test('getTransactionsByLockHash', () async {
-      var lockHash =
-          '0x1f2615a8dde4e28ca736ff763c2078aff990043f4cbf09eb4b3a58a140a0862d';
+      var lockHash = '0x1f2615a8dde4e28ca736ff763c2078aff990043f4cbf09eb4b3a58a140a0862d';
       var lockHashCapacity = await _api.getCapacityByLockHash(lockHash);
       expect(lockHashCapacity.toJson().isNotEmpty, true);
     });

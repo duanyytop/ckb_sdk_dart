@@ -10,8 +10,7 @@ class MockAdapter extends HttpClientAdapter {
   }
 
   @override
-  Future<ResponseBody> fetch(RequestOptions options,
-      Stream<List<int>> requestStream, Future cancelFuture) async {
+  Future<ResponseBody> fetch(RequestOptions options, Stream<List<int>> requestStream, Future cancelFuture) async {
     String method = (options.data as Map)['method'];
     switch (method) {
       case 'get_tip_block_number':
@@ -26,6 +25,8 @@ class MockAdapter extends HttpClientAdapter {
         return ResponseBody.fromString(getTransaction, 200);
       case 'get_cellbase_output_capacity_details':
         return ResponseBody.fromString(getCellbaseOutputCapacityDetails, 200);
+      case 'get_block_economic_state':
+        return ResponseBody.fromString(getBlockEconomicState, 200);
       case 'get_tip_header':
         return ResponseBody.fromString(getTipHeader, 200);
       case 'get_cells_by_lock_hash':
@@ -196,6 +197,25 @@ const getCellbaseOutputCapacityDetails = '''{
                 "secondary": "0x2ca110a5",
                 "total": "0x1057d731c2",
                 "tx_fee": "0x0"
+            }
+        }''';
+
+const getBlockEconomicState = '''{
+            "id": 2,
+            "jsonrpc": "2.0",
+            "result": {
+                "finalized_at": "0xa5f5c85987a15de25661e5a214f2c1449cd803f071acc7999820f25246471f40",
+                "issuance": {
+                    "primary": "0x18ce922bca",
+                    "secondary": "0x7f02ec655"
+                },
+                "miner_reward": {
+                    "committed": "0x0",
+                    "primary": "0x18ce922bca",
+                    "proposal": "0x0",
+                    "secondary": "0x17b93605"
+                },
+                "txs_fee": "0x0"
             }
         }''';
 

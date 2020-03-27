@@ -29,12 +29,11 @@ void main() {
     });
 
     test('calculateSerializedSizeInBlock', () async {
-      expect(calculateSerializedSizeInBlock(tx), 386);
+      expect(calculateTransactionSize(tx), 386);
     });
 
     test('calculateTransactionFee', () async {
-      expect(calculateTransactionFee(BigInt.from(1035), BigInt.from(900)), BigInt.from(932));
-      expect(calculateTransactionFee(BigInt.from(900), BigInt.from(900)), BigInt.from(810));
+      expect(calculateTransactionFee(tx, BigInt.from(900)), BigInt.from(348));
     });
   });
 }
