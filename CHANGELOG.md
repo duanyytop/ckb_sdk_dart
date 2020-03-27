@@ -1,3 +1,9 @@
+## 0.30.1
+
+### Feature
+
+- Export crypto/key
+
 ## 0.30.0
 
 ### Feature
