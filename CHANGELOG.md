@@ -1,3 +1,9 @@
+## 0.30.2
+
+### Feature
+
+- Adjust core and address export
+
 ## 0.30.1
 
 ### Feature
