@@ -11,7 +11,7 @@ import 'package:ckb_sdk_dart/src/crypto/sign.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/uint64.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
-import 'transaction/cell_collectOR.dart';
+import 'transaction/cell_collector.dart';
 import 'transaction/collect_utils.dart';
 import 'transaction/script_group_with_private_keys.dart';
 

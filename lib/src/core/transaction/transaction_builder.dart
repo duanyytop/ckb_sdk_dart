@@ -11,10 +11,8 @@ class TransactionBuilder {
   List _witnesses = [];
 
   TransactionBuilder(Api api) {
-    SystemContract.getSystemSecpCell(api: api).then((systemScriptCell) => {
-          _cellDeps.add(CellDep(
-              outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup))
-        });
+    SystemContract.getSystemSecpCell(api: api).then(
+        (systemScriptCell) => {_cellDeps.add(CellDep(outPoint: systemScriptCell.outPoint, depType: CellDep.DepGroup))});
   }
 
   void addInput(CellInput input) {
@@ -63,6 +61,10 @@ class TransactionBuilder {
 
   void setOutputsData(List<String> outputsData) {
     _cellOutputsData = outputsData;
+  }
+
+  List<String> getOutputsData() {
+    return _cellOutputsData;
   }
 
   void setHeaderDeps(List<String> headerDeps) {
