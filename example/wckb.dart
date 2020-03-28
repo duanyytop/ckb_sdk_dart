@@ -156,12 +156,14 @@ Future<Transaction> swapWckbTx(BigInt transferWckbAmount) async {
   } else {
     txBuilder.setHeaderDeps([collectResult[0].blockHash, collectResult1[0].blockHash]);
   }
-  var maxHeight = max(hexToInt(collectResult[0].height), hexToInt(collectResult1[0].height));
-  var minHeight = min(hexToInt(collectResult[0].height), hexToInt(collectResult1[0].height));
+  var cellHeight1 = (await api.getHeader(intToHex(collectResult[0].blockHash))).number;
+  var cellHeight2 = (await api.getHeader(intToHex(collectResult1[0].blockHash))).number;
+  var maxHeight = max(hexToInt(cellHeight1), hexToInt(cellHeight2));
+  var minHeight = min(hexToInt(cellHeight1), hexToInt(cellHeight2);
   var maxAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(maxHeight))).header.dao).substring(8, 17);
   var minAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(minHeight))).header.dao).substring(8, 17);
   var ar = UInt32.fromBytes(hexToList(maxAR)).getValue() - UInt32.fromBytes(hexToList(minAR)).getValue();
-  var cellWithBlock = minHeight == hexToInt(collectResult[0].height) ? collectResult[0] : collectResult1[0];
+  var cellWithBlock = minHeight == hexToInt(cellHeight1) ? cellHeight1 : cellHeight2;
   var interest =
       (hexToBigInt(cellWithBlock.wckbAmount) - WCKB_MIN_CELL_CAPACITY) * BigInt.from(ar) / (BigInt.from(10).pow(16));
   var outputsData1 =
