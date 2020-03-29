@@ -157,17 +157,22 @@ Future<Transaction> swapWckbTx(BigInt transferWckbAmount) async {
   } else {
     txBuilder.setHeaderDeps([collectResult[0].blockHash, collectResult1[0].blockHash]);
   }
-  var cellHeight1 = (await api.getHeader(intToHex(collectResult[0].blockHash))).number;
-  var cellHeight2 = (await api.getHeader(intToHex(collectResult1[0].blockHash))).number;
+  var cellHeight1 = (await api.getHeader(collectResult[0].blockHash)).number;
+  var cellHeight2 = (await api.getHeader(collectResult1[0].blockHash)).number;
   var maxHeight = max(hexToInt(cellHeight1), hexToInt(cellHeight2));
-  var minHeight = min(hexToInt(cellHeight1), hexToInt(cellHeight2);
+  var minHeight = min(hexToInt(cellHeight1), hexToInt(cellHeight2));
   var maxAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(maxHeight))).header.dao).substring(8, 17);
   var minAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(minHeight))).header.dao).substring(8, 17);
-  var cellWithBlock = minHeight == hexToInt(cellHeight1) ? cellHeight1 : cellHeight2;
-  var amount1 = cellHeight1 == maxHeight ? collectResult[0].wckbAmount :
-      (hexToBigInt(collectResult[0].wckbAmount) - WCKB_OCCUPIED_CAPACITY) * UInt32.fromBytes(hexToList(maxAR)).getValue() / UInt32.fromBytes(hexToList(minAR)).getValue() + WCKB_OCCUPIED_CAPACITY;                    
-  var amount2 = cellHeight2 == maxHeight ? collectResult1[0].wckbAmount :
-      (hexToBigInt(collectResult1[0].wckbAmount) - WCKB_OCCUPIED_CAPACITY) * UInt32.fromBytes(hexToList(maxAR)).getValue() / UInt32.fromBytes(hexToList(minAR)).getValue() + WCKB_OCCUPIED_CAPACITY;                    
+  var amount1 = int.parse(cellHeight1) == maxHeight
+      ? hexToBigInt(collectResult[0].wckbAmount)
+      : BigInt.from((hexToBigInt(collectResult[0].wckbAmount) - WCKB_OCCUPIED_CAPACITY) *
+          BigInt.from(UInt32.fromBytes(hexToList(maxAR)).getValue()) /
+          (BigInt.from(UInt32.fromBytes(hexToList(minAR)).getValue()) + WCKB_OCCUPIED_CAPACITY));
+  var amount2 = int.parse(cellHeight2) == maxHeight
+      ? hexToBigInt(collectResult1[0].wckbAmount)
+      : BigInt.from((hexToBigInt(collectResult1[0].wckbAmount) - WCKB_OCCUPIED_CAPACITY) *
+          BigInt.from(UInt32.fromBytes(hexToList(maxAR)).getValue()) /
+          (BigInt.from(UInt32.fromBytes(hexToList(minAR)).getValue()) + WCKB_OCCUPIED_CAPACITY));
   var outputsData1 =
       '${listToHex(UInt128(amount1 - transferWckbAmount).toBytes())}${listToHexNoPrefix(UInt64.fromInt(maxHeight).toBytes())}';
   var outputsData2 =
