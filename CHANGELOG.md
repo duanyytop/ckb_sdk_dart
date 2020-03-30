@@ -1,3 +1,10 @@
+## 0.30.3
+
+### Reactor
+
+- Add fromBytes to UInt32
+- Rename cell collector
+
 ## 0.30.2
 
 ### Feature
