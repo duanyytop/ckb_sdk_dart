@@ -15,11 +15,11 @@ void main() {
     });
 
     test('Uint32 from bytes', () {
-      expect(UInt32.fromBytes(hexToList('2bd9a')).getValue(), BigInt.from(179610));
+      expect(UInt32.fromBytes(hexToList('0x9abd0200')).getValue(), 179610);
     });
 
     test('Uint32 getValue', () {
-      expect(UInt32(179610).getValue(), 179610);
+      expect(UInt32(179610).getValue().toString(), '179610');
     });
   });
 }
