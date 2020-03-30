@@ -43,12 +43,9 @@ class WCKBCellCollector {
         if (!udtTypeValid || !udtAmountValid || !anyoneCanPayLockValid) {
           continue;
         }
-
         var cellInput = CellInput(previousOutput: cellOutputWithOutPoint.outPoint, since: '0x0');
-        var wckbAmount =
-            UInt128.fromBytes(hexToList(cleanHexPrefix(outputsData).substring(0, 32))).getValue().toRadixString(16);
-        var height =
-            UInt64.fromBytes(hexToList(cleanHexPrefix(outputsData).substring(32))).getValue().toRadixString(16);
+        var wckbAmount = UInt128.fromBytes(hexToList(cleanHexPrefix(outputsData).substring(0, 32))).getValue();
+        var height = UInt64.fromBytes(hexToList(cleanHexPrefix(outputsData).substring(32))).getValue();
         var blockHash = (await api.getTransaction(cellOutputWithOutPoint.outPoint.txHash)).txStatus.blockHash;
 
         cellWithBlocks

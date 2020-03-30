@@ -2,9 +2,9 @@ import 'package:ckb_sdk_dart/ckb_core.dart';
 
 class CellWithBlock {
   CellInput input;
-  String height;
+  BigInt height;
   String blockHash;
-  String wckbAmount;
+  BigInt wckbAmount;
 
   CellWithBlock({this.input, this.height, this.blockHash, this.wckbAmount});
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
@@ -52,7 +53,7 @@ void main() async {
 //  print('Generate $DaoTestAddress1 wckb tx hash: $txHash');
 
   var tx = await swapWckbTx(BigInt.from(30));
-  print(tx.toJson());
+  print(json.encode(tx.toJson()));
   var hash = await api.sendTransaction(tx);
   print('Swap wckb tx hash: $hash');
 }
@@ -147,29 +148,32 @@ Future<Transaction> swapWckbTx(BigInt transferWckbAmount) async {
   txBuilder
       .addCellDep(CellDep(outPoint: OutPoint(txHash: WCKB_OUT_POINT_TX_HASH, index: '0x1'), depType: CellDep.Code));
 
-  var collectResult =
-      await WCKBCellCollector(api).collectInputs(DaoTestAddress, wckbType.computeHash(), WCKB_TRANSFER_CAPACITY);
   var collectResult1 =
+      await WCKBCellCollector(api).collectInputs(DaoTestAddress, wckbType.computeHash(), WCKB_TRANSFER_CAPACITY);
+  var collectResult2 =
       await WCKBCellCollector(api).collectInputs(DaoTestAddress1, wckbType.computeHash(), WCKB_TRANSFER_CAPACITY);
 
-  var cellHeight1 = (await api.getHeader(collectResult[0].blockHash)).number;
-  var cellHeight2 = (await api.getHeader(collectResult1[0].blockHash)).number;
-  var maxHeight = max(hexToInt(cellHeight1), hexToInt(cellHeight2));
-  var minHeight = min(hexToInt(cellHeight1), hexToInt(cellHeight2));
-  var maxAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(maxHeight))).header.dao).substring(8, 17);
-  var minAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(minHeight))).header.dao).substring(8, 17);
-  var amount1 = int.parse(cellHeight1) == maxHeight
-      ? hexToBigInt(collectResult[0].wckbAmount)
-      : BigInt.from((hexToBigInt(collectResult[0].wckbAmount) - WCKB_OCCUPIED_CAPACITY) *
-              BigInt.from(UInt32.fromBytes(hexToList(maxAR)).getValue()) /
-              BigInt.from(UInt32.fromBytes(hexToList(minAR)).getValue())) +
+  var cellHeight1 = hexToInt((await api.getHeader(collectResult1[0].blockHash)).number);
+  var cellHeight2 = hexToInt((await api.getHeader(collectResult2[0].blockHash)).number);
+
+  var maxHeight = max(cellHeight1, cellHeight2);
+  var minHeight = min(cellHeight1, cellHeight2);
+  var maxAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(maxHeight))).header.dao).substring(16, 32);
+  var minAR = cleanHexPrefix((await api.getBlockByNumber(intToHex(minHeight))).header.dao).substring(16, 32);
+
+  var amount1 = cellHeight1 == maxHeight
+      ? collectResult1[0].wckbAmount
+      : BigInt.from((collectResult1[0].wckbAmount - WCKB_OCCUPIED_CAPACITY) *
+              UInt64.fromBytes(hexToList(maxAR)).getValue() /
+              UInt64.fromBytes(hexToList(minAR)).getValue()) +
           WCKB_OCCUPIED_CAPACITY;
-  var amount2 = int.parse(cellHeight2) == maxHeight
-      ? hexToBigInt(collectResult1[0].wckbAmount)
-      : BigInt.from((hexToBigInt(collectResult1[0].wckbAmount) - WCKB_OCCUPIED_CAPACITY) *
-              BigInt.from(UInt32.fromBytes(hexToList(maxAR)).getValue()) /
-              BigInt.from(UInt32.fromBytes(hexToList(minAR)).getValue())) +
+  var amount2 = cellHeight2 == maxHeight
+      ? collectResult2[0].wckbAmount
+      : BigInt.from((collectResult2[0].wckbAmount - WCKB_OCCUPIED_CAPACITY) *
+              UInt64.fromBytes(hexToList(maxAR)).getValue() /
+              UInt64.fromBytes(hexToList(minAR)).getValue()) +
           WCKB_OCCUPIED_CAPACITY;
+
   var outputsData1 =
       '${listToHex(UInt128(amount1 - transferWckbAmount).toBytes())}${listToHexNoPrefix(UInt64.fromInt(maxHeight).toBytes())}';
   var outputsData2 =
@@ -177,18 +181,18 @@ Future<Transaction> swapWckbTx(BigInt transferWckbAmount) async {
 
   txBuilder.setOutputsData([outputsData1, outputsData2]);
 
-  if (collectResult[0].blockHash == collectResult1[0].blockHash) {
-    txBuilder.setHeaderDeps([collectResult[0].blockHash]);
-  } else if (int.parse(cellHeight1) > int.parse(cellHeight2)) {
-    txBuilder.setHeaderDeps([collectResult[0].blockHash, collectResult1[0].blockHash]);
+  if (collectResult1[0].blockHash == collectResult2[0].blockHash) {
+    txBuilder.setHeaderDeps([collectResult1[0].blockHash]);
+  } else if (cellHeight1 > cellHeight2) {
+    txBuilder.setHeaderDeps([collectResult1[0].blockHash, collectResult2[0].blockHash]);
   } else {
-    txBuilder.setHeaderDeps([collectResult1[0].blockHash, collectResult[0].blockHash]);
+    txBuilder.setHeaderDeps([collectResult2[0].blockHash, collectResult1[0].blockHash]);
   }
 
-  txBuilder.addInput(collectResult[0].input);
+  txBuilder.addInput(collectResult1[0].input);
   txBuilder
       .addWitness(Witness(lock: Witness.SIGNATURE_PLACEHOLDER, inputType: listToHex(UInt64.fromHex('0x0').toBytes())));
-  txBuilder.addInput(collectResult1[0].input);
+  txBuilder.addInput(collectResult2[0].input);
   txBuilder.addWitness('0x');
 
   var signBuilder = Secp256k1SighashAllBuilder(txBuilder.buildTx());
