@@ -1,3 +1,4 @@
+import 'package:ckb_sdk_dart/ckb_utils.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/uint32.dart';
 import 'package:test/test.dart';
 
@@ -13,8 +14,12 @@ void main() {
       expect(UInt32(256).getLength(), 4);
     });
 
+    test('Uint32 from bytes', () {
+      expect(UInt32.fromBytes(hexToList('0x9abd0200')).getValue(), 179610);
+    });
+
     test('Uint32 getValue', () {
-      expect(UInt32(256).getValue(), 256);
+      expect(UInt32(179610).getValue().toString(), '179610');
     });
   });
 }

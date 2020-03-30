@@ -1,8 +1,12 @@
 library ckb_core;
 
-export 'src/core/rpc/rpc.dart';
 export 'src/core/rpc/api.dart';
-
+export 'src/core/rpc/rpc.dart';
+export 'src/core/system/system_contract.dart';
+export 'src/core/system/system_script_cell.dart';
+export 'src/core/transaction/script_group.dart';
+export 'src/core/transaction/secp256k1_sighash_all_builder.dart';
+export 'src/core/transaction/transaction_builder.dart';
 export 'src/core/type/alert_message.dart';
 export 'src/core/type/banned_address.dart';
 export 'src/core/type/block.dart';
@@ -23,7 +27,11 @@ export 'src/core/type/node_info.dart';
 export 'src/core/type/out_point.dart';
 export 'src/core/type/peer_state.dart';
 export 'src/core/type/script.dart';
+export 'src/core/type/transaction.dart';
 export 'src/core/type/transaction_point.dart';
 export 'src/core/type/transaction_with_status.dart';
-export 'src/core/type/transaction.dart';
 export 'src/core/type/tx_pool_info.dart';
+export 'src/core/utils/calculator.dart';
+export 'src/core/utils/convert.dart';
+export 'src/core/utils/epoch_parser.dart';
+export 'src/core/utils/serializer.dart';

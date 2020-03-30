@@ -10,8 +10,16 @@ class UInt32 extends FixedType<int> {
 
   UInt32(this._value);
 
-  factory UInt32.fromHex(String hex) =>
-      UInt32(BigInt.parse(cleanHexPrefix(hex), radix: 16).toInt());
+  factory UInt32.fromHex(String hex) => UInt32(BigInt.parse(cleanHexPrefix(hex), radix: 16).toInt());
+
+  // generate int value from little endian bytes
+  factory UInt32.fromBytes(Uint8List bytes) {
+    var result = 0;
+    for (var i = 3; i >= 0; i--) {
+      result += (bytes[i] & 0xff) << 8 * i;
+    }
+    return UInt32(result);
+  }
 
   @override
   int getLength() {
@@ -25,7 +33,6 @@ class UInt32 extends FixedType<int> {
 
   @override
   Uint8List toBytes() {
-    return Uint8List.fromList(
-        <int>[_value, _value >> 8, _value >> 16, _value >> 24]);
+    return Uint8List.fromList(<int>[_value, _value >> 8, _value >> 16, _value >> 24]);
   }
 }
