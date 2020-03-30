@@ -8,7 +8,7 @@ import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/crypto/sign.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
-import 'transaction/cell_collectOR.dart';
+import 'transaction/cell_collector.dart';
 import 'transaction/collect_utils.dart';
 import 'transaction/receiver.dart';
 import 'transaction/script_group_with_private_keys.dart';
@@ -21,8 +21,7 @@ List<String> ReceiveAddresses = [
   'ckt1qyqtnz38fht9nvmrfdeunrhdtp29n0gagkps4duhek'
 ];
 
-String TestPrivateKey =
-    'e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
+String TestPrivateKey = 'e79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
 String TestAddress = 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83';
 List<Receiver> receivers = [
   Receiver(ReceiveAddresses[0], ckbToShannon(number: 800000)),
@@ -33,14 +32,11 @@ String changeAddress = 'ckt1qyqrdsefa43s6m882pcj53m4gdnj4k440axqswmu83';
 void main() async {
   api = Api(NODE_URL);
 
-  print(
-      'Before transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
+  print('Before transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 
-  print(
-      'Before transferring, first receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
+  print('Before transferring, first receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
 
-  print(
-      'Before transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
+  print('Before transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
 
   var hash = await sendCapacity(receivers, changeAddress);
   print('Transaction hash: $hash');
@@ -48,24 +44,19 @@ void main() async {
   // waiting transaction into block, sometimes you should wait more seconds
   sleep(Duration(seconds: 30));
 
-  print(
-      'After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
+  print('After transferring, sender\'s balance: ${await getBalance(TestAddress)} CKB');
 
-  print(
-      'After transferring, receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
+  print('After transferring, receiver\'s balance: ${await getBalance(ReceiveAddresses[0])} CKB');
 
-  print(
-      'After transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
+  print('After transferring, change address\'s balance: ${await getBalance(changeAddress)} CKB');
 }
 
 Future<String> getBalance(String address) async {
   var cellCollector = CellCollector(api);
-  return ((await cellCollector.getCapacityWithAddress(address)) / UnitCKB)
-      .toString();
+  return ((await cellCollector.getCapacityWithAddress(address)) / UnitCKB).toString();
 }
 
-Future<String> sendCapacity(
-    List<Receiver> receivers, String changeAddress) async {
+Future<String> sendCapacity(List<Receiver> receivers, String changeAddress) async {
   var needCapacity = BigInt.zero;
   var scriptGroupWithPrivateKeysList = [];
   for (var receiver in receivers) {
@@ -83,8 +74,7 @@ Future<String> sendCapacity(
   var feeRate = BigInt.from(1024);
 
   // initial_length = 2 * secp256k1_signature_byte.length
-  var collectResult = await txUtils.collectInputs(
-      [TestAddress], txBuilder.buildTx(), feeRate, Sign.SIGN_LENGTH * 2);
+  var collectResult = await txUtils.collectInputs([TestAddress], txBuilder.buildTx(), feeRate, Sign.SIGN_LENGTH * 2);
 
   // update change output capacity after collecting cells
   cellOutputs[cellOutputs.length - 1].capacity = collectResult.changeCapacity;
@@ -94,20 +84,16 @@ Future<String> sendCapacity(
   for (var cellsWithAddress in collectResult.cellsWithAddresses) {
     txBuilder.addInputs(cellsWithAddress.inputs);
     for (var i = 0; i < cellsWithAddress.inputs.length; i++) {
-      txBuilder.addWitness(
-          i == 0 ? Witness(lock: Witness.SIGNATURE_PLACEHOLDER) : '0x');
+      txBuilder.addWitness(i == 0 ? Witness(lock: Witness.SIGNATURE_PLACEHOLDER) : '0x');
     }
     scriptGroupWithPrivateKeysList.add(ScriptGroupWithPrivateKeys(
-        ScriptGroup(regionToList(startIndex, cellsWithAddress.inputs.length)),
-        [TestPrivateKey]));
+        ScriptGroup(regionToList(startIndex, cellsWithAddress.inputs.length)), [TestPrivateKey]));
   }
 
   var signBuilder = Secp256k1SighashAllBuilder(txBuilder.buildTx());
 
-  for (ScriptGroupWithPrivateKeys scriptGroupWithPrivateKeys
-      in scriptGroupWithPrivateKeysList) {
-    signBuilder.sign(scriptGroupWithPrivateKeys.scriptGroup,
-        scriptGroupWithPrivateKeys.privateKeys[0]);
+  for (ScriptGroupWithPrivateKeys scriptGroupWithPrivateKeys in scriptGroupWithPrivateKeysList) {
+    signBuilder.sign(scriptGroupWithPrivateKeys.scriptGroup, scriptGroupWithPrivateKeys.privateKeys[0]);
   }
   return api.sendTransaction(signBuilder.buildTx());
 }
