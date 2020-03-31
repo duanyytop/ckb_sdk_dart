@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/src/address/address_parser.dart';
+import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/core/utils/calculator.dart';
 import 'package:ckb_sdk_dart/src/core/utils/serializer.dart';
-import 'package:ckb_sdk_dart/src/core/type/witness.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import 'cells_with_address.dart';
@@ -34,7 +34,14 @@ class CellCollector {
       }
     }
 
-    var transaction = Transaction(version: '0', cellDeps: tx.cellDeps, headerDeps: tx.headerDeps, inputs: tx.inputs, outputs: tx.outputs, outputsData: tx.outputsData, witnesses: []);
+    var transaction = Transaction(
+        version: '0',
+        cellDeps: tx.cellDeps,
+        headerDeps: tx.headerDeps,
+        inputs: tx.inputs,
+        outputs: tx.outputs,
+        outputsData: tx.outputsData,
+        witnesses: []);
 
     var inputsCapacity = BigInt.zero;
     for (var cellInput in tx.inputs) {
@@ -56,9 +63,11 @@ class CellCollector {
       var toBlockNumber = hexToInt(await api.getTipBlockNumber());
       var fromBlockNumber = 1;
 
-      while (fromBlockNumber <= toBlockNumber && inputsCapacity < (needCapacity + _calculateTxFee(transaction, feeRate))) {
+      while (
+          fromBlockNumber <= toBlockNumber && inputsCapacity < (needCapacity + _calculateTxFee(transaction, feeRate))) {
         var currentToBlockNumber = min(fromBlockNumber + 100, toBlockNumber);
-        cellOutputList = await api.getCellsByLockHash(lockHash: lockHash, fromNumber: intToHex(fromBlockNumber), toNumber: intToHex(currentToBlockNumber));
+        cellOutputList = await api.getCellsByLockHash(
+            lockHash: lockHash, fromNumber: intToHex(fromBlockNumber), toNumber: intToHex(currentToBlockNumber));
         for (var cellOutputWithOutPoint in cellOutputList) {
           if (skipDataAndType) {
             var cellWithStatus = await api.getLiveCell(outPoint: cellOutputWithOutPoint.outPoint, withData: true);
@@ -76,7 +85,8 @@ class CellCollector {
           witnesses.add('0x');
           transaction.inputs = cellInputs;
           transaction.witnesses = witnesses;
-          var sumNeedCapacity = needCapacity + _calculateTxFee(transaction, feeRate) + calculateOutputSize(changeOutput);
+          var sumNeedCapacity =
+              needCapacity + _calculateTxFee(transaction, feeRate) + calculateOutputSize(changeOutput);
           if (inputsCapacity > sumNeedCapacity) {
             // update witness of group first element
             var witnessIndex = 0;
@@ -100,7 +110,8 @@ class CellCollector {
     }
     var changeCapacity = inputsCapacity - (needCapacity + _calculateTxFee(transaction, feeRate));
     var cellsWithAddresses = <CellsWithAddress>[];
-    lockInputsMap.forEach((key, value) => {cellsWithAddresses.add(CellsWithAddress(inputs: value, address: addresses[lockHashes.indexOf(key)]))});
+    lockInputsMap.forEach((key, value) =>
+        {cellsWithAddresses.add(CellsWithAddress(inputs: value, address: addresses[lockHashes.indexOf(key)]))});
     if (tx.inputs != null && tx.inputs.isNotEmpty) {
       cellsWithAddresses[0].inputs.insertAll(0, tx.inputs);
     }
@@ -122,7 +133,8 @@ class CellCollector {
 
     while (fromBlockNumber <= toBlockNumber) {
       var currentToBlockNumber = min(fromBlockNumber + 100, toBlockNumber);
-      var cellOutputs = await api.getCellsByLockHash(lockHash: lockHash, fromNumber: intToHex(fromBlockNumber), toNumber: intToHex(currentToBlockNumber));
+      var cellOutputs = await api.getCellsByLockHash(
+          lockHash: lockHash, fromNumber: intToHex(fromBlockNumber), toNumber: intToHex(currentToBlockNumber));
 
       if (cellOutputs != null && cellOutputs.isNotEmpty) {
         for (var output in cellOutputs) {
@@ -143,6 +155,6 @@ class CellCollector {
   }
 
   BigInt calculateOutputSize(CellOutput cellOutput) {
-    return BigInt.from(Serializer.serializeCellOutput(cellOutput).getLength());
+    return ckbToShannon(number: Serializer.serializeCellOutput(cellOutput).getLength());
   }
 }
