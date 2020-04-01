@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:ckb_sdk_dart/ckb_serialization.dart';
 import 'package:ckb_sdk_dart/src/address/address_parser.dart';
-import 'package:ckb_sdk_dart/src/core/utils/serializer.dart';
 import 'package:ckb_sdk_dart/src/serialization/fixed/uint128.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
@@ -60,9 +59,5 @@ class WCKBCellCollector {
       throw Exception('Capacity not enough!');
     }
     return cellWithBlocks;
-  }
-
-  BigInt calculateOutputSize(CellOutput cellOutput) {
-    return BigInt.from(Serializer.serializeCellOutput(cellOutput).getLength());
   }
 }

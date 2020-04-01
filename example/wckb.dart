@@ -27,7 +27,7 @@ const int DAO_MATURITY_BLOCKS = 5;
 
 final String ALWAYS_SUCCESS_CODE_HASH = '0x56806108025878f143d767a5e642f83b3043b185ed891a41eb71a7873b3f7284';
 final String ALWAYS_SUCCESS_OUT_POINT_TX_HASH = '0x85728ac46bb61963bcb80bca6fc200bdd4e4330dee89478de4c8df5a915eee37';
-final BigInt WCKB_OCCUPIED_CAPACITY = ckbToShannon(number: 150);
+final BigInt DAO_OCCUPIED_CAPACITY = ckbToShannon(number: 102);
 final BigInt WCKB_MIN_CELL_CAPACITY = ckbToShannon(number: 300);
 final BigInt WCKB_TRANSFER_CAPACITY = ckbToShannon(number: 280);
 final String WCKB_CODE_HASH = '0x90de6515262517d972127ca94ff6eb9bf94ac4d79dde01abcecbf56305fc5965';
@@ -163,16 +163,16 @@ Future<Transaction> swapWckbTx(BigInt transferWckbAmount) async {
 
   var amount1 = cellHeight1 == maxHeight
       ? collectResult1[0].wckbAmount
-      : BigInt.from((collectResult1[0].wckbAmount - WCKB_OCCUPIED_CAPACITY) *
+      : BigInt.from((collectResult1[0].wckbAmount - DAO_OCCUPIED_CAPACITY) *
               UInt64.fromBytes(hexToList(maxAR)).getValue() /
               UInt64.fromBytes(hexToList(minAR)).getValue()) +
-          WCKB_OCCUPIED_CAPACITY;
+          DAO_OCCUPIED_CAPACITY;
   var amount2 = cellHeight2 == maxHeight
       ? collectResult2[0].wckbAmount
-      : BigInt.from((collectResult2[0].wckbAmount - WCKB_OCCUPIED_CAPACITY) *
+      : BigInt.from((collectResult2[0].wckbAmount - DAO_OCCUPIED_CAPACITY) *
               UInt64.fromBytes(hexToList(maxAR)).getValue() /
               UInt64.fromBytes(hexToList(minAR)).getValue()) +
-          WCKB_OCCUPIED_CAPACITY;
+          DAO_OCCUPIED_CAPACITY;
 
   var outputsData1 =
       '${listToHex(UInt128(amount1 - transferWckbAmount).toBytes())}${listToHexNoPrefix(UInt64.fromInt(maxHeight).toBytes())}';
