@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Epoch {
   String number;
   String startNumber;
@@ -15,12 +17,12 @@ class Epoch {
         compactTarget: json['compact_target']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'number': number,
       'start_number': startNumber,
       'length': length,
       'compact_target': compactTarget,
-    };
+    });
   }
 }

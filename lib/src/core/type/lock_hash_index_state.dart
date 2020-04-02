@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class LockHashIndexState {
   String blockHash;
   String blockNumber;
@@ -8,16 +10,14 @@ class LockHashIndexState {
   factory LockHashIndexState.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return LockHashIndexState(
-        blockHash: json['block_hash'],
-        blockNumber: json['block_number'],
-        lockHash: json['lock_hash']);
+        blockHash: json['block_hash'], blockNumber: json['block_number'], lockHash: json['lock_hash']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'block_hash': blockHash,
       'block_number': blockNumber,
       'lock_hash': lockHash,
-    };
+    });
   }
 }

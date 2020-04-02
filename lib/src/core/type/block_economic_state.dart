@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'block_economic_state.g.dart';
@@ -15,7 +17,7 @@ class BlockEconomicState {
   BlockEconomicState({this.finalizedAt, this.issuance, this.minerReward, this.txsFee});
 
   factory BlockEconomicState.fromJson(Map<String, dynamic> json) => _$BlockEconomicStateFromJson(json);
-  Map<String, dynamic> toJson() => _$BlockEconomicStateToJson(this);
+  String toJson() => jsonEncode(_$BlockEconomicStateToJson(this));
 }
 
 @JsonSerializable()
@@ -26,7 +28,7 @@ class Issuance {
   Issuance({this.primary, this.secondary});
 
   factory Issuance.fromJson(Map<String, dynamic> json) => _$IssuanceFromJson(json);
-  Map<String, dynamic> toJson() => _$IssuanceToJson(this);
+  String toJson() => jsonEncode(_$IssuanceToJson(this));
 }
 
 @JsonSerializable()
@@ -39,5 +41,5 @@ class MinerReward {
   MinerReward({this.committed = '0', this.primary = '0', this.proposal = '0', this.secondary = '0'});
 
   factory MinerReward.fromJson(Map<String, dynamic> json) => _$MinerRewardFromJson(json);
-  Map<String, dynamic> toJson() => _$MinerRewardToJson(this);
+  String toJson() => jsonEncode(_$MinerRewardToJson(this));
 }

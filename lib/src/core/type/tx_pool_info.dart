@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class TxPoolInfo {
   String lastTxsUpdatedAt;
   String pending;
@@ -8,7 +10,15 @@ class TxPoolInfo {
   String totalTxSize;
   String minFeeRate;
 
-  TxPoolInfo({this.lastTxsUpdatedAt, this.pending, this.staging, this.orphan, this.proposed, this.totalTxCycles, this.totalTxSize, this.minFeeRate});
+  TxPoolInfo(
+      {this.lastTxsUpdatedAt,
+      this.pending,
+      this.staging,
+      this.orphan,
+      this.proposed,
+      this.totalTxCycles,
+      this.totalTxSize,
+      this.minFeeRate});
 
   factory TxPoolInfo.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -23,8 +33,8 @@ class TxPoolInfo {
         minFeeRate: json['min_fee_rate']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'last_txs_updated_at': lastTxsUpdatedAt,
       'pending': pending,
       'staging': staging,
@@ -33,6 +43,6 @@ class TxPoolInfo {
       'total_tx_cycles': totalTxCycles,
       'total_tx_size': totalTxSize,
       'min_fee_rate': minFeeRate
-    };
+    });
   }
 }

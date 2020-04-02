@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'cell_output.dart';
 import 'transaction_point.dart';
 
@@ -10,14 +12,13 @@ class LiveCell {
   factory LiveCell.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return LiveCell(
-        createdBy: TransactionPoint.fromJson(json['created_by']),
-        cellOutput: CellOutput.fromJson(json['cell_output']));
+        createdBy: TransactionPoint.fromJson(json['created_by']), cellOutput: CellOutput.fromJson(json['cell_output']));
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'created_by': createdBy?.toJson(),
       'cell_output': cellOutput?.toJson(),
-    };
+    });
   }
 }

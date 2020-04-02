@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Cycles {
   String cycles;
 
@@ -8,9 +10,9 @@ class Cycles {
     return Cycles(cycles: json['cycles']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'cycles': cycles,
-    };
+    });
   }
 }

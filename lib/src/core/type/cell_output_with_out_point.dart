@@ -1,5 +1,7 @@
-import 'script.dart';
+import 'dart:convert';
+
 import 'out_point.dart';
+import 'script.dart';
 
 class CellOutputWithOutPoint {
   String blockHash;
@@ -7,8 +9,7 @@ class CellOutputWithOutPoint {
   Script lock;
   OutPoint outPoint;
 
-  CellOutputWithOutPoint(
-      {this.blockHash, this.capacity, this.lock, this.outPoint});
+  CellOutputWithOutPoint({this.blockHash, this.capacity, this.lock, this.outPoint});
 
   factory CellOutputWithOutPoint.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -19,12 +20,8 @@ class CellOutputWithOutPoint {
         outPoint: OutPoint.fromJson(json['out_point']));
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'block_hash': blockHash,
-      'capacity': capacity,
-      'lock': lock.toJson(),
-      'out_point': outPoint.toJson()
-    };
+  String toJson() {
+    return jsonEncode(
+        {'block_hash': blockHash, 'capacity': capacity, 'lock': lock.toJson(), 'out_point': outPoint.toJson()});
   }
 }

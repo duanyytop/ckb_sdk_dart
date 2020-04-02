@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class PeerState {
   String lastUpdate;
   String blocksInFlight;
@@ -7,17 +9,14 @@ class PeerState {
 
   factory PeerState.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return PeerState(
-        lastUpdate: json['last_updated'],
-        blocksInFlight: json['blocks_in_flight'],
-        peer: json['peer']);
+    return PeerState(lastUpdate: json['last_updated'], blocksInFlight: json['blocks_in_flight'], peer: json['peer']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'last_updated': lastUpdate,
       'blocks_in_flight': blocksInFlight,
       'peer': peer,
-    };
+    });
   }
 }

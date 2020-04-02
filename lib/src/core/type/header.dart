@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Header {
   String dao;
   String compactTarget;
@@ -43,8 +45,8 @@ class Header {
         version: json['version']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'dao': dao,
       'compact_target': compactTarget,
       'hash': hash,
@@ -57,6 +59,6 @@ class Header {
       'proposals_hash': proposalsHash,
       'uncles_hash': unclesHash,
       'version': version
-    };
+    });
   }
 }

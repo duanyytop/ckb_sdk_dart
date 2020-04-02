@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'header.dart';
 import 'transaction.dart';
 
@@ -13,25 +15,18 @@ class Block {
     if (json == null) return null;
     return Block(
         header: Header.fromJson(json['header']),
-        transactions: (json['transactions'] as List)
-            ?.map((transaction) => Transaction.fromJson(transaction))
-            ?.toList(),
-        proposals: (json['proposals'] as List)
-            ?.map((proposal) => proposal?.toString())
-            ?.toList(),
-        uncles: (json['uncles'] as List)
-            ?.map((uncle) => Uncle.fromJson(uncle))
-            ?.toList());
+        transactions: (json['transactions'] as List)?.map((transaction) => Transaction.fromJson(transaction))?.toList(),
+        proposals: (json['proposals'] as List)?.map((proposal) => proposal?.toString())?.toList(),
+        uncles: (json['uncles'] as List)?.map((uncle) => Uncle.fromJson(uncle))?.toList());
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'header': header.toJson(),
       'uncles': uncles?.map((uncle) => uncle.toJson())?.toList(),
       'proposals': proposals,
-      'transactions':
-          transactions?.map((transaction) => transaction.toJson())?.toList()
-    };
+      'transactions': transactions?.map((transaction) => transaction.toJson())?.toList()
+    });
   }
 }
 
@@ -42,14 +37,10 @@ class Uncle {
   Uncle({this.header, this.proposals});
 
   factory Uncle.fromJson(Map<String, dynamic> json) {
-    return Uncle(
-        header: Header.fromJson(json['header']), proposals: json['proposals']);
+    return Uncle(header: Header.fromJson(json['header']), proposals: json['proposals']);
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'header': header?.toJson(),
-      'proposals': proposals
-    };
+    return <String, dynamic>{'header': header?.toJson(), 'proposals': proposals};
   }
 }

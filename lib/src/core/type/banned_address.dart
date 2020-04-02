@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class BannedAddress {
   String address;
   String banReason;
@@ -15,12 +17,12 @@ class BannedAddress {
         createAt: json['create_at']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'address': address,
       'ban_reason': banReason,
       'ban_until': banUntil,
       'create_at': createAt,
-    };
+    });
   }
 }

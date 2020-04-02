@@ -4,28 +4,25 @@ import 'package:ckb_sdk_dart/ckb_core.dart';
 import 'package:test/test.dart';
 
 void main() {
-  dynamic _json;
+  var _peerState;
   group('A group tests of peer state', () {
     setUp(() {
-      var peerState = '''{
+      _peerState = '''{
         "blocks_in_flight": "0x56",
         "last_updated": "0x16a95af332d",
         "peer": "0x1"
       }''';
-      _json = jsonDecode(peerState);
     });
 
     test('fromJson', () async {
-      var peerState = PeerState.fromJson(_json);
+      var peerState = PeerState.fromJson(jsonDecode(_peerState));
       expect(peerState.blocksInFlight, '0x56');
       expect(peerState.lastUpdate, '0x16a95af332d');
     });
 
     test('toJson', () async {
-      var peerState = PeerState.fromJson(_json);
-      var map = peerState.toJson();
-      expect(map['blocks_in_flight'], '0x56');
-      expect(map['last_updated'], '0x16a95af332d');
+      var peerState = PeerState.fromJson(jsonDecode(_peerState));
+      expect(peerState.toJson(), '{"last_updated":"0x16a95af332d","blocks_in_flight":"0x56","peer":"0x1"}');
     });
   });
 }

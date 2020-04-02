@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class AlertMessage {
   String id;
   String priority;
@@ -9,18 +11,15 @@ class AlertMessage {
   factory AlertMessage.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return AlertMessage(
-        id: json['id'],
-        priority: json['priority'],
-        noticeUtil: json['notice_until'],
-        message: json['message']);
+        id: json['id'], priority: json['priority'], noticeUtil: json['notice_until'], message: json['message']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'id': id,
       'priority': priority,
       'notice_until': noticeUtil,
       'message': message,
-    };
+    });
   }
 }

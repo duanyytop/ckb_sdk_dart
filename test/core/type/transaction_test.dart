@@ -7,9 +7,9 @@ import 'package:test/test.dart';
 
 void main() {
   group('A group tests of Transaction', () {
-    dynamic _json;
+    var _transaction;
     setUp(() {
-      var transaction = '''{
+      _transaction = '''{
         "cell_deps": [
             {
                 "dep_type": "code",
@@ -49,7 +49,6 @@ void main() {
         "version": "0x0",
         "witnesses": []
       }''';
-      _json = jsonDecode(transaction);
     });
 
     test('Transaction hash', () async {
@@ -63,16 +62,12 @@ void main() {
     test('Transaction signature', () async {
       var cellInputs = [
         CellInput(
-            previousOutput: OutPoint(
-                txHash:
-                    '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd4',
-                index: '0x0'),
+            previousOutput:
+                OutPoint(txHash: '0x91fcfd61f420c1090aeded6b6d91d5920a279fe53ec34353afccc59264eeddd4', index: '0x0'),
             since: '113'),
         CellInput(
-            previousOutput: OutPoint(
-                txHash:
-                    '0x00000000000000000000000000004e4552564f5344414f494e50555430303031',
-                index: '0x0'),
+            previousOutput:
+                OutPoint(txHash: '0x00000000000000000000000000004e4552564f5344414f494e50555430303031', index: '0x0'),
             since: '0x0')
       ];
 
@@ -80,15 +75,12 @@ void main() {
         CellOutput(
             capacity: '10000009045634',
             lock: Script(
-                codeHash:
-                    '0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd',
+                codeHash: '0xf1951123466e4479842387a66fabfd6b65fc87fd84ae8e6cd3053edb27fff2fd',
                 args: '0x36c329ed630d6ce750712a477543672adab57f4c'))
       ];
 
       var witnesses = [
-        Witness(
-            lock:
-                '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb'),
+        Witness(lock: '0x4107bd23eedb9f2a2a749108f6bb9720d745d50f044cc4814bafe189a01fe6fb'),
       ];
 
       var tx = Transaction(
@@ -96,9 +88,7 @@ void main() {
           cellDeps: [
             CellDep(
                 outPoint: OutPoint(
-                    txHash:
-                        '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a',
-                    index: '0x1'),
+                    txHash: '0xbffab7ee0a050e2cb882de066d3dbf3afdd8932d6a26eda44f06e4b23f0f4b5a', index: '0x1'),
                 depType: CellDep.DepGroup)
           ],
           headerDeps: ['0x'],
@@ -107,8 +97,7 @@ void main() {
           outputsData: ['0x'],
           witnesses: witnesses);
 
-      var privateKey =
-          '0xe79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
+      var privateKey = '0xe79f3207ea4980b7fed79956d5934249ceac4751a4fae01a0f7c4a96884bc4e3';
       var signedTx = tx.sign(privateKey);
 
       var expectedData = [
@@ -118,20 +107,17 @@ void main() {
     });
 
     test('fromJson', () async {
-      var transaction = Transaction.fromJson(_json);
+      var transaction = Transaction.fromJson(jsonDecode(_transaction));
       expect(transaction.cellDeps[0].outPoint.txHash,
           '0x29f94532fb6c7a17f13bcde5adb6e2921776ee6f357adf645e5393bd13442141');
-      expect(transaction.outputs[0].lock.codeHash,
-          '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
+      expect(
+          transaction.outputs[0].lock.codeHash, '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
     });
 
     test('toJson', () async {
-      var transaction = Transaction.fromJson(_json);
-      var map = transaction.toJson();
-      expect(map['cell_deps'][0]['out_point']['tx_hash'],
-          '0x29f94532fb6c7a17f13bcde5adb6e2921776ee6f357adf645e5393bd13442141');
-      expect(map['outputs'][0]['lock']['code_hash'],
-          '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
+      var transaction = Transaction.fromJson(jsonDecode(_transaction));
+      expect(transaction.toJson(),
+          '{"version":"0x0","hash":"0xba86cc2cb21832bf4a84c032eb6e8dc422385cc8f8efb84eb0bc5fe0b0b9aece","cell_deps":["{\\"out_point\\":\\"{\\\\\\"tx_hash\\\\\\":\\\\\\"0x29f94532fb6c7a17f13bcde5adb6e2921776ee6f357adf645e5393bd13442141\\\\\\",\\\\\\"index\\\\\\":\\\\\\"0x0\\\\\\"}\\",\\"dep_type\\":\\"code\\"}"],"header_deps":["0x8033e126475d197f2366bbc2f30b907d15af85c9d9533253c6f0787dcbbb509e"],"inputs":["{\\"previous_output\\":\\"{\\\\\\"tx_hash\\\\\\":\\\\\\"0x5ba156200c6310bf140fbbd3bfe7e8f03d4d5f82b612c1a8ec2501826eaabc17\\\\\\",\\\\\\"index\\\\\\":\\\\\\"0x0\\\\\\"}\\",\\"since\\":\\"0x0\\"}"],"outputs":["{\\"capacity\\":\\"0x174876e800\\",\\"lock\\":\\"{\\\\\\"code_hash\\\\\\":\\\\\\"0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5\\\\\\",\\\\\\"args\\\\\\":\\\\\\"0x\\\\\\",\\\\\\"hash_type\\\\\\":\\\\\\"data\\\\\\"}\\",\\"type\\":null}"],"outputs_data":["0x"],"witnesses":[]}');
     });
   });
 }

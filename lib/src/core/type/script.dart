@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ckb_sdk_dart/ckb_crypto.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
@@ -18,8 +20,8 @@ class Script {
     return Script(codeHash: json['code_hash'], args: json['args'], hashType: json['hash_type']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{'code_hash': codeHash, 'args': args, 'hash_type': hashType};
+  String toJson() {
+    return jsonEncode({'code_hash': codeHash, 'args': args, 'hash_type': hashType});
   }
 
   int calculateByteSize() {

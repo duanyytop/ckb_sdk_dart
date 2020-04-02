@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'cell_output.dart';
 
 class CellWithStatus {
@@ -14,11 +16,11 @@ class CellWithStatus {
     return CellWithStatus(cell: CellInfo.fromJson(json['cell']), status: json['status']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'cell': cell.toJson(),
       'status': status,
-    };
+    });
   }
 }
 
