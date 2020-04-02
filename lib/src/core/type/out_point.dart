@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class OutPoint {
   String txHash;
   String index;
@@ -9,10 +11,10 @@ class OutPoint {
     return OutPoint(txHash: json['tx_hash'], index: json['index']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'tx_hash': txHash,
       'index': index,
-    };
+    });
   }
 }

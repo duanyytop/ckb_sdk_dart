@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class CellbaseOutputCapacity {
   String primary;
   String proposalReward;
@@ -5,12 +7,7 @@ class CellbaseOutputCapacity {
   String total;
   String txFee;
 
-  CellbaseOutputCapacity(
-      {this.primary,
-      this.proposalReward,
-      this.secondary,
-      this.total,
-      this.txFee});
+  CellbaseOutputCapacity({this.primary, this.proposalReward, this.secondary, this.total, this.txFee});
 
   factory CellbaseOutputCapacity.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -22,13 +19,13 @@ class CellbaseOutputCapacity {
         txFee: json['tx_fee']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'primary': primary,
       'proposal_reward': proposalReward,
       'secondary': secondary,
       'total': total,
       'tx_fee': txFee,
-    };
+    });
   }
 }

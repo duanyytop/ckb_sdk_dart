@@ -4,10 +4,10 @@ import 'package:ckb_sdk_dart/src/core/type/cell_output.dart';
 import 'package:test/test.dart';
 
 void main() {
-  dynamic _json;
+  var _cellOutput;
   group('A group tests of cell output', () {
     setUp(() {
-      var cellOuput = '''{
+      _cellOutput = '''{
          "capacity": "0x174876e800",
           "lock": {
               "args": "0x",
@@ -16,26 +16,22 @@ void main() {
           },
           "type": null
       }''';
-      _json = jsonDecode(cellOuput);
     });
 
     test('fromJson', () async {
-      var cellOutput = CellOutput.fromJson(_json);
-      expect(cellOutput.lock.codeHash,
-          '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
+      var cellOutput = CellOutput.fromJson(jsonDecode(_cellOutput));
+      expect(cellOutput.lock.codeHash, '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
       expect(cellOutput.capacity, '0x174876e800');
     });
 
     test('toJson', () async {
-      var cellOutput = CellOutput.fromJson(_json);
-      var map = cellOutput.toJson();
-      expect(map['capacity'], '0x174876e800');
-      expect(map['lock']['code_hash'],
-          '0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5');
+      var cellOutput = CellOutput.fromJson(jsonDecode(_cellOutput));
+      expect(cellOutput.toJson(),
+          '{"capacity":"0x174876e800","lock":"{\\"code_hash\\":\\"0x28e83a1277d48add8e72fadaa9248559e1b632bab2bd60b27955ebc4c03800a5\\",\\"args\\":\\"0x\\",\\"hash_type\\":\\"data\\"}","type":null}');
     });
 
     test('calculateByteSize', () async {
-      var cellOutput = CellOutput.fromJson(_json);
+      var cellOutput = CellOutput.fromJson(jsonDecode(_cellOutput));
       expect(cellOutput.occupiedCapacity('0x'), 41);
     });
   });

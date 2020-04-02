@@ -4,24 +4,22 @@ import 'package:ckb_sdk_dart/src/core/type/cycles.dart';
 import 'package:test/test.dart';
 
 void main() {
-  dynamic _json;
+  var _cycles;
   group('A group tests of cycles', () {
     setUp(() {
-      var cycles = '''{
+      _cycles = '''{
         "cycles": "0xc"
       }''';
-      _json = jsonDecode(cycles);
     });
 
     test('fromJson', () async {
-      var cycles = Cycles.fromJson(_json);
+      var cycles = Cycles.fromJson(jsonDecode(_cycles));
       expect(cycles.cycles, '0xc');
     });
 
     test('toJson', () async {
-      var cycles = Cycles.fromJson(_json);
-      var map = cycles.toJson();
-      expect(map['cycles'], '0xc');
+      var cycles = Cycles.fromJson(jsonDecode(_cycles));
+      expect(cycles.toJson(), '{"cycles":"0xc"}');
     });
   });
 }

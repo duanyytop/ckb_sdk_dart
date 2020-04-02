@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'transaction.dart';
 
 class TransactionWithStatus {
@@ -10,11 +12,12 @@ class TransactionWithStatus {
 
   factory TransactionWithStatus.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return TransactionWithStatus(txStatus: TxStatus.fromJson(json['tx_status']), transaction: Transaction.fromJson(json['transaction']));
+    return TransactionWithStatus(
+        txStatus: TxStatus.fromJson(json['tx_status']), transaction: Transaction.fromJson(json['transaction']));
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{'tx_status': txStatus?.toJson(), 'transaction': transaction?.toJson()};
+  String toJson() {
+    return jsonEncode({'tx_status': txStatus?.toJson(), 'transaction': transaction?.toJson()});
   }
 }
 
@@ -29,7 +32,7 @@ class TxStatus {
     return TxStatus(status: json['status'], blockHash: json['block_hash']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{'status': status, 'block_hash': blockHash};
+  String toJson() {
+    return jsonEncode({'status': status, 'block_hash': blockHash});
   }
 }

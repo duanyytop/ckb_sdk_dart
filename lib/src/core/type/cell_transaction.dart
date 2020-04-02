@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'transaction_point.dart';
 
 class CellTransaction {
@@ -13,10 +15,10 @@ class CellTransaction {
         consumedBy: TransactionPoint.fromJson(json['consumed_by']));
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'created_by': createdBy?.toJson(),
       'consumed_by': consumedBy?.toJson(),
-    };
+    });
   }
 }

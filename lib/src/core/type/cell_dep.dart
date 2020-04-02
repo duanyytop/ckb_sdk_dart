@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'out_point.dart';
 
 class CellDep {
@@ -11,15 +13,13 @@ class CellDep {
 
   factory CellDep.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return CellDep(
-        outPoint: OutPoint.fromJson(json['out_point']),
-        depType: json['dep_type']);
+    return CellDep(outPoint: OutPoint.fromJson(json['out_point']), depType: json['dep_type']);
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'out_point': outPoint?.toJson(),
       'dep_type': depType,
-    };
+    });
   }
 }

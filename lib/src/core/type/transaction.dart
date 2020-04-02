@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:ckb_sdk_dart/src/core/type/witness.dart';
@@ -6,10 +7,10 @@ import 'package:ckb_sdk_dart/src/crypto/sign.dart';
 import 'package:ckb_sdk_dart/src/utils/utils.dart';
 
 import '../../../ckb_serialization.dart';
+import '../utils/serializer.dart';
 import 'cell_dep.dart';
 import 'cell_input.dart';
 import 'cell_output.dart';
-import '../utils/serializer.dart';
 
 class Transaction {
   String version;
@@ -21,7 +22,15 @@ class Transaction {
   List<String> outputsData;
   List<dynamic> witnesses;
 
-  Transaction({this.version, this.hash, this.cellDeps, this.headerDeps, this.inputs, this.outputs, this.outputsData, this.witnesses});
+  Transaction(
+      {this.version,
+      this.hash,
+      this.cellDeps,
+      this.headerDeps,
+      this.inputs,
+      this.outputs,
+      this.outputsData,
+      this.witnesses});
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -36,8 +45,8 @@ class Transaction {
         witnesses: (json['witnesses'] as List)?.map((witness) => witness)?.toList());
   }
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
+  String toJson() {
+    return jsonEncode({
       'version': version,
       'hash': hash,
       'cell_deps': cellDeps?.map((cellDep) => cellDep?.toJson())?.toList(),
@@ -46,11 +55,11 @@ class Transaction {
       'outputs': outputs?.map((output) => output?.toJson())?.toList(),
       'outputs_data': outputsData,
       'witnesses': witnesses
-    };
+    });
   }
 
-  Map<String, dynamic> toRawJson() {
-    return <String, dynamic>{
+  String toRawJson() {
+    return jsonEncode({
       'version': version,
       'cell_deps': cellDeps?.map((cellDep) => cellDep?.toJson())?.toList(),
       'header_deps': headerDeps,
@@ -58,7 +67,7 @@ class Transaction {
       'outputs': outputs?.map((output) => output?.toJson())?.toList(),
       'outputs_data': outputsData,
       'witnesses': witnesses
-    };
+    });
   }
 
   String computeHash() {
@@ -104,6 +113,14 @@ class Transaction {
       }
     }
 
-    return Transaction(version: version, hash: txHash, cellDeps: cellDeps, headerDeps: headerDeps, inputs: inputs, outputs: outputs, outputsData: outputsData, witnesses: signedWitness);
+    return Transaction(
+        version: version,
+        hash: txHash,
+        cellDeps: cellDeps,
+        headerDeps: headerDeps,
+        inputs: inputs,
+        outputs: outputs,
+        outputsData: outputsData,
+        witnesses: signedWitness);
   }
 }

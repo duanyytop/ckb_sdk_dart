@@ -1,3 +1,13 @@
+## 0.30.4
+
+### Reactor
+
+- Update toJson method for types and related test cases
+
+### BugFix
+
+- Update output size calculating method 
+
 ## 0.30.3
 
 ### Reactor
